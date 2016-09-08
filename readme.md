@@ -17,6 +17,8 @@ $ curl -I http://localhost:8080/api/v1/book
 	- book model
 	- book controller
 - authentication middleware
+	- APPID
+	- token
 - crud user
 	- write tests
 - crud server
