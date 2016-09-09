@@ -9,7 +9,6 @@ $ php artisan migrate
 
 ## testing
 Use postman or cURL, eventually add phpunit tests
-$ curl -I http://localhost:8080/api/v1/book
 
 #### To Do
 - [x] get routes working on remote
