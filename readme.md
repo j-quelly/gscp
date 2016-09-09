@@ -26,4 +26,4 @@ $ curl -I http://localhost:8080/api/v1/book
 	- [ ] write tests
 - [ ] crud server
 	- [ ] write tests
-- [ ] map to remote
+- [x] map to remote
