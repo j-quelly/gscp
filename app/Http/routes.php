@@ -9,23 +9,40 @@
 | It is a breeze. Simply tell Lumen the URIs it should respond to
 | and give it the Closure to call when that URI is requested.
 |
-*/
+ */
 
-$app->get('/', function() use ($app) {
-    return "Lumen RESTful API By CoderExample (https://coderexample.com)";
+$app->get('/', function () use ($app) {
+    return "Lumen RESTful API";
 });
- 
-$app->group(['prefix' => 'api/v1','namespace' => 'App\Http\Controllers'], function($app)
-{
-    $app->get('book','BookController@index');
-  
-    $app->get('book/{id}','BookController@getbook');
-      
-    $app->post('book','BookController@createBook');
-      
-    $app->put('book/{id}','BookController@updateBook');
-      
-    $app->delete('book/{id}','BookController@deleteBook');
+
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function ($app) {
+
+    $app->get('book', 'BookController@index');
+
+    $app->get('book/{id}', 'BookController@getbook');
+
+    $app->post('book', 'BookController@createBook');
+
+    $app->put('book/{id}', 'BookController@updateBook');
+
+    $app->delete('book/{id}', 'BookController@deleteBook');
+
+
+    /*
+     * Learning Lumen
+     */
+    $app->get('/hello/world', function () use ($app) {
+        return "Hello world!";
+    });
+
+    $app->get('/hello/{name}', function ($name) use ($app) {
+        return "Hello {$name}";
+    });
+
+    $app->get('/hello/{name}', ['middleware' => 'hello', function ($name) {
+        return "Hello {$name}";
+    }]);
+
 });
 
 // /*
