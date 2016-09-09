@@ -12,15 +12,18 @@ Use postman or cURL, eventually add phpunit tests
 $ curl -I http://localhost:8080/api/v1/book
 
 #### To Do
-- remove/replace
-	- book migration
-	- book model
-	- book controller
-- authentication middleware
-	- APPID
-	- token
-- crud user
-	- write tests
-- crud server
-	- write tests
-- put online
+- [x] get routes working on remote
+- [x] add logger middleware
+- [x] authentication middleware
+	- [ ] APPID
+	- [ ] token
+- [ ] remove/replace
+	- [ ] hello middleware & additional routes
+	- [ ] book migration
+	- [ ] book model
+	- [ ] book controller
+- [ ] crud user
+	- [ ] write tests
+- [ ] crud server
+	- [ ] write tests
+- [ ] map to remote
