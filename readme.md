@@ -13,6 +13,7 @@ $ php vendor/phpunit/phpunit/phpunit
 #### To Do
 - [x] get routes working on remote
 - [x] add logger middleware
+- [x] begin writing tests
 - [ ] authentication middleware
 	- [ ] APPID
 	- [ ] token
