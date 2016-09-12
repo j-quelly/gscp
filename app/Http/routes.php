@@ -15,9 +15,9 @@ $app->get('/', function () use ($app) {
     return "Lumen RESTful API";
 });
 
-$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function ($app) {
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function ($app) {
 
-    $app->get('book', 'BookController@index');
+    $app->get('books', 'BooksController@index');
 
     $app->get('book/{id}', 'BookController@getbook');
 
@@ -41,7 +41,7 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middlewar
 
     $app->get('/hello/{name}', ['middleware' => 'hello', function ($name) {
         return "Hello {$name}";
-    }]);
+    }]); 
 
 });
 
