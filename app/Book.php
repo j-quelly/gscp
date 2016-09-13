@@ -1,11 +1,13 @@
-<?php namespace App;
-  
+<?php
+
+namespace App;
+
 use Illuminate\Database\Eloquent\Model;
-  
+
 class Book extends Model
 {
-     
-     protected $fillable = ['title', 'author', 'isbn'];
-     
+
+		public $table = 'book';
+  // protected $fillable = ['title', 'author', 'isbn'];
+
 }
-?>
