@@ -7,6 +7,11 @@ $ php -S localhost:8888 -t public
 ## mirgrating db
 $ php artisan migrate
 
+## seeding db
+1. $ composer dump-autoload
+2. $ php artisan migrate:refresh
+3. $ php artisan db:seed
+
 ## testing
 $ php vendor/phpunit/phpunit/phpunit
 
@@ -20,6 +25,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] remove/replace
 	- [ ] hello middleware & additional routes
 	- [ ] book migration
+	- [ ] book seed
 	- [ ] book model
 	- [ ] book controller
 - [ ] crud user
