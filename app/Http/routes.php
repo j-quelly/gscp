@@ -20,9 +20,11 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function 
     /*
      * Learning Lumen
      */      
-    $app->get('books', 'BooksController@index');
+    $app->get('/books', 'BooksController@index');
 
-    $app->get('books/{id:[\d]+}', 'BooksController@show');
+    $app->get('/books/{id:[\d]+}', 'BooksController@show');
+
+    $app->post('/books', 'BooksController@store');
 
 
     /*
