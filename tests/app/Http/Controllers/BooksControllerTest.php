@@ -58,7 +58,7 @@ class BooksControllerTest extends TestCase
 /** @test **/
   public function show_should_fail_when_the_book_id_does_not_exist()
   {
-    
+
     echo "\n\r{$this->yellow}It should fail when the book id does not exist...";
 
     $this
@@ -86,7 +86,31 @@ class BooksControllerTest extends TestCase
       'BooksController@show route matching when it should not.'
     );
 
-    echo " {$this->green}[OK]{$this->white}\n\r"; 
+    echo " {$this->green}[OK]{$this->white}\n\r";
 
+  }
+
+  /** @test **/
+  public function store_should_save_new_book_in_the_database()
+  {
+    echo "\n\r{$this->yellow}It should save a new book in the database...";
+
+    $this->post('/v1/books', [
+      'title'       => 'The Invisible Man',
+      'description' => 'An invisible man is trapped in the terror of his own creation',
+      'author'      => 'H. G. Wells',
+    ]);
+
+    $this
+      ->seeJson(['created' => true])
+      ->seeInDatabase('books', ['title' => 'The Invisible Man']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test */
+  public function store_should_respond_with_a_201_and_location_header_when_successful()
+  {
+    $this->markTestIncomplete('pending');
   }
 }
