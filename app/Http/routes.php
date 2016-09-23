@@ -17,7 +17,19 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function ($app) {
 
+    /*
+     * Learning Lumen
+     */      
     $app->get('books', 'BooksController@index');
+
+    $app->get('books/{id:[\d]+}', 'BooksController@show');
+
+
+    /*
+     * Old tutorial
+     * - still better patterns IMO
+     */    
+    $app->get('book', 'BookController@index');
 
     $app->get('book/{id}', 'BookController@getbook');
 
