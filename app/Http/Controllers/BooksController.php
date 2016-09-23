@@ -38,4 +38,15 @@ class BooksController
     }
   }
 
+/**
+ * POST /books
+ * @param Request $request
+ * @return \Symfony\Component\HttpFoundation\Response
+ */
+  public function store(Request $request)
+  {
+    $book = Book::create($request->all());
+    return response()->json(['created' => true], 201);
+  }
+
 }
