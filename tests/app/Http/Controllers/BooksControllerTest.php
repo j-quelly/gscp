@@ -103,7 +103,7 @@ class BooksControllerTest extends TestCase
 
     $this
       ->seeJson(['created' => true])
-      ->seeInDatabase('books', ['title' => 'The Invisible Man']);
+      ->seeInDatabase('book', ['title' => 'The Invisible Man']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -111,6 +111,20 @@ class BooksControllerTest extends TestCase
   /** @test */
   public function store_should_respond_with_a_201_and_location_header_when_successful()
   {
-    $this->markTestIncomplete('pending');
+    echo "\n\r{$this->yellow}It should respond with a 201 and location header...";
+
+    $this->post('/v1/books', [
+      'title'       => 'The Invisible Man',
+      'description' => 'An invisible man is trapped in the terror of his own c\
+reation',
+      'author'      => 'H. G. Wells',
+    ]);
+
+    $this 
+      ->seeStatusCode(201)
+      ->seeHeaderWithRegExp('Location', '#/books/[\d]+$#');
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+
   }
 }
