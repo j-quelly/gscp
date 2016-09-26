@@ -15,6 +15,9 @@ $ php artisan migrate
 ## testing
 $ php vendor/phpunit/phpunit/phpunit
 
+## testing alternative
+$ phpunit
+
 #### To Do
 - [x] get routes working on remote
 - [x] add logger middleware
