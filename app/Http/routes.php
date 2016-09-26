@@ -12,50 +12,49 @@
  */
 
 $app->get('/', function () use ($app) {
-    return "Lumen RESTful API";
+  return "Lumen RESTful API";
 });
 
 $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function ($app) {
 
-    /*
-     * Learning Lumen
-     */      
-    $app->get('/books', 'BooksController@index');
+  /*
+   * Learning Lumen
+   */
+  $app->get('/books', 'BooksController@index');
+  $app->get('/books/{id:[\d]+}', [
+    'as'   => 'books.show',
+    'uses' => 'BooksController@show',
+  ]);
+  $app->post('/books', 'BooksController@store');
 
-    $app->get('/books/{id:[\d]+}', 'BooksController@show');
+  /*
+   * Old tutorial
+   * - still better patterns IMO
+   */
+  $app->get('book', 'BookController@index');
 
-    $app->post('/books', 'BooksController@store');
+  $app->get('book/{id}', 'BookController@getbook');
 
+  $app->post('book', 'BookController@createBook');
 
-    /*
-     * Old tutorial
-     * - still better patterns IMO
-     */    
-    $app->get('book', 'BookController@index');
+  $app->put('book/{id}', 'BookController@updateBook');
 
-    $app->get('book/{id}', 'BookController@getbook');
+  $app->delete('book/{id}', 'BookController@deleteBook');
 
-    $app->post('book', 'BookController@createBook');
+  /*
+   * Learning Lumen
+   */
+  $app->get('/hello/world', function () use ($app) {
+    return "Hello world!";
+  });
 
-    $app->put('book/{id}', 'BookController@updateBook');
+  $app->get('/hello/{name}', function ($name) use ($app) {
+    return "Hello {$name}";
+  });
 
-    $app->delete('book/{id}', 'BookController@deleteBook');
-
-
-    /*
-     * Learning Lumen
-     */
-    $app->get('/hello/world', function () use ($app) {
-        return "Hello world!";
-    });
-
-    $app->get('/hello/{name}', function ($name) use ($app) {
-        return "Hello {$name}";
-    });
-
-    $app->get('/hello/{name}', ['middleware' => 'hello', function ($name) {
-        return "Hello {$name}";
-    }]); 
+  $app->get('/hello/{name}', ['middleware' => 'hello', function ($name) {
+    return "Hello {$name}";
+  }]);
 
 });
 
