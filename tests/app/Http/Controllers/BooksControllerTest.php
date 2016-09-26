@@ -178,9 +178,46 @@ reation',
   {
     echo "\n\r{$this->yellow}Update should not match an invalid route...";
 
-    $this->put('/v1/books/this-is-invalid')
+    $this->put('/v1/adbooks/this-is-invalid')
       ->seeStatusCode(404);
 
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function destroy_should_remove_a_valid_book()
+  {
+    echo "\n\r{$this->yellow}Destroy should remove a valid book...";
+    $this
+      ->delete('/v1/books/1')
+      ->seeStatusCode(204)
+      ->isEmpty();
+
+    $this->notSeeInDatabase('book', ['id' => 1]);
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function destroy_should_return_a_404_with_an_invalid_id()
+  {
+    echo "\n\r{$this->yellow}Destroy should return a 404 with an invalid id...";
+    $this
+      ->delete('/v1/books/99999')
+      ->seeStatusCode(404)
+      ->seeJsonEquals([
+        'error' => [
+          'message' => 'Book not found',
+        ],
+      ]);
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function destroy_should_not_match_an_invalid_route()
+  {
+    echo "\n\r{$this->yellow}Destroy should not match an invalid route...";
+    $this->delete('/v1/books/this-is-invalid')
+      ->seeStatusCode(404);
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
