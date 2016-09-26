@@ -26,6 +26,7 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function 
     'uses' => 'BooksController@show',
   ]);
   $app->post('/books', 'BooksController@store');
+  $app->put('/books/{id:[\d]+}', 'BooksController@update');
 
   /*
    * Old tutorial
