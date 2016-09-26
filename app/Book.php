@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
 
-		public $table = 'book';
-  // protected $fillable = ['title', 'author', 'isbn'];
+  public $table = 'book';
+
+/**
+ * The attributes that are mass assignable
+ *
+ * @var array 
+ */
+  protected $fillable = ['title', 'description', 'author'];
 
 }
