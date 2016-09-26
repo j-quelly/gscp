@@ -36,7 +36,7 @@ class BooksControllerTest extends TestCase
   public function show_should_return_a_valid_book()
   {
 
-    echo "\n\r{$this->yellow}It should return a valid book...";
+    echo "\n\r{$this->yellow}Show should return a valid book...";
 
     $this
       ->get('/v1/books/1')
@@ -59,7 +59,7 @@ class BooksControllerTest extends TestCase
   public function show_should_fail_when_the_book_id_does_not_exist()
   {
 
-    echo "\n\r{$this->yellow}It should fail when the book id does not exist...";
+    echo "\n\r{$this->yellow}Show should fail when the book id does not exist...";
 
     $this
       ->get('/v1/books/99999')
@@ -76,7 +76,7 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function show_route_should_not_match_an_invalid_route()
   {
-    echo "\n\r{$this->yellow}It should not match an invalid route...";
+    echo "\n\r{$this->yellow}Show should not match an invalid route...";
 
     $this->get('/v1/books/this-is-invalid');
 
@@ -93,7 +93,7 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function store_should_save_new_book_in_the_database()
   {
-    echo "\n\r{$this->yellow}It should save a new book in the database...";
+    echo "\n\r{$this->yellow}Store should save a new book in the database...";
 
     $this->post('/v1/books', [
       'title'       => 'The Invisible Man',
@@ -111,7 +111,7 @@ class BooksControllerTest extends TestCase
   /** @test */
   public function store_should_respond_with_a_201_and_location_header_when_successful()
   {
-    echo "\n\r{$this->yellow}It should respond with a 201 and location header...";
+    echo "\n\r{$this->yellow}Store should respond with a 201 and location header...";
 
     $this->post('/v1/books', [
       'title'       => 'The Invisible Man',
@@ -120,11 +120,68 @@ reation',
       'author'      => 'H. G. Wells',
     ]);
 
-    $this 
+    $this
       ->seeStatusCode(201)
       ->seeHeaderWithRegExp('Location', '#/books/[\d]+$#');
 
     echo " {$this->green}[OK]{$this->white}\n\r";
 
   }
+
+  /** @test **/
+  public function update_should_only_change_fillable_fields()
+  {
+    echo "\n\r{$this->yellow}Update should only change fillable fields...";
+
+    $this->notSeeInDatabase('book', [
+      'title' => 'The War of the Worlds',
+    ]);
+
+    $this->put('/v1/books/1', [
+      'id'          => 5,
+      'title'       => 'The War of the Worlds',
+      'description' => 'The book is way better than the movie.',
+      'author'      => 'Wells, H. G.',
+    ]);
+
+    $this
+      ->seeStatusCode(200)
+      ->seeJson([
+        'id'          => 1,
+        'title'       => 'The War of the Worlds',
+        'description' => 'The book is way better than the movie.',
+        'author'      => 'Wells, H. G.'])
+      ->seeInDatabase('book', ['title' => 'The War of the Worlds']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function update_should_fail_with_an_invalid_id()
+  {
+    echo "\n\r{$this->yellow}Update should fail with an invalid id...";
+
+    $this
+      ->put('/v1/books/999999999999999')
+      ->seeStatusCode(404)
+      ->seeJsonEquals([
+        'error' => [
+          'message' => 'Book not found',
+        ],
+      ]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function update_should_not_match_an_invalid_route()
+  {
+    echo "\n\r{$this->yellow}Update should not match an invalid route...";
+
+    $this->put('/v1/books/this-is-invalid')
+      ->seeStatusCode(404);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
 }
