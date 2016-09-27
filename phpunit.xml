@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="bootstrap/app.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false">
+<phpunit backupglobals="false" backupstaticattributes="false" bootstrap="bootstrap/app.php" colors="true" converterrorstoexceptions="true" convertnoticestoexceptions="true" convertwarningstoexceptions="true" processisolation="false" stoponfailure="false" syntaxcheck="false">
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">
+                ./tests
+            </directory>
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+        <whitelist processuncoveredfilesfromwhitelist="true">
+            <directory suffix=".php">
+                ./app
+            </directory>
             <exclude>
-                <file>./app/Http/routes.php</file>
+                <file>
+                    ./app/Http/routes.php
+                </file>
             </exclude>
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
+        <env name="APP_ENV" value="local"/>
+        <!-- Test Database -->
+        <!-- Creates a lot of exceptions when running tests -->         
+        <!-- Currently not using test db -->         
+        <env name="DB_DATABASE" value="gameserv_api"/>
         <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/> 
     </php>
 </phpunit>
