@@ -38,11 +38,8 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
   {
     $this
       ->seeHasHeader($header)
-      ->assertRegExp(
-        $regexp,
-        $this->response->headers->get($header)
-      );
+      ->assertRegExp($regexp, $this->response->headers->get($header));
     return $this;
   }
-  
+
 }
