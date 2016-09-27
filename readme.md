@@ -16,12 +16,13 @@ $ php artisan migrate
 $ php vendor/phpunit/phpunit/phpunit
 
 ## testing alternative
-$ phpunit
+$ phpunit --no-globals-backup
 
 #### To Do
 - [x] get routes working on remote
 - [x] add logger middleware
 - [x] begin writing tests
+- [ ] add test db
 - [ ] authentication middleware
 	- [ ] APPID
 	- [ ] token
