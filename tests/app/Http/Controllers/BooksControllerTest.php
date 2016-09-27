@@ -6,9 +6,12 @@ namespace tests\app\Http\Controllers;
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
 use TestCase;
+// use Illuminate\Foundation\Testing\DatabaseMigrations; ** deprecated
+use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class BooksControllerTest extends TestCase
 {
+  use DatabaseMigrations;
 
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
@@ -17,17 +20,25 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function index_status_code_should_be_200()
   {
-
     echo "\n\r{$this->yellow}It should see JSON...";
 
-    $this
-      ->get('/v1/books')
-      ->seeJson([
-        'title' => 'War of the Worlds',
-      ])
-      ->seeJson([
-        'title' => 'A Wrinkle in Time',
-      ]);
+    $this->get('/v1/books')->seeStatusCode(200);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function index_should_return_a_collection_of_records()
+  {
+    echo "\n\r{$this->yellow}It should return a collection of records...";
+
+    $books = factory('App\Book', 2)->create();
+
+    $this->get('/v1/books');
+
+    foreach ($books as $book) {
+      $this->seeJson(['title' => $book->title]);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
