@@ -5,9 +5,9 @@ namespace tests\app\Http\Controllers;
 
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
-use TestCase;
-// use Illuminate\Foundation\Testing\DatabaseMigrations; ** deprecated
 use Laravel\Lumen\Testing\DatabaseMigrations;
+// use Illuminate\Foundation\Testing\DatabaseMigrations; ** deprecated
+use TestCase;
 
 class BooksControllerTest extends TestCase
 {
@@ -49,14 +49,16 @@ class BooksControllerTest extends TestCase
 
     echo "\n\r{$this->yellow}Show should return a valid book...";
 
+    $book = factory('App\Book')->create();
+
     $this
-      ->get('/v1/books/1')
+      ->get("/v1/books/{$book->id}")
       ->seeStatusCode(200)
       ->seeJson([
-        'id'          => 1,
-        'title'       => 'War of the Worlds',
-        'description' => 'A science fiction masterpiece about Martians invading London',
-        'author'      => 'H. G. Wells',
+        'id'          => $book->id,
+        'title'       => $book->title,
+        'description' => $book->description,
+        'author'      => $book->author,
       ]);
 
     $data = json_decode($this->response->getContent(), true);
@@ -144,11 +146,13 @@ reation',
   {
     echo "\n\r{$this->yellow}Update should only change fillable fields...";
 
-    $this->notSeeInDatabase('book', [
-      'title' => 'The War of the Worlds',
+    $book = factory('App\Book')->create([
+      'title'       => 'War of the Worlds',
+      'description' => 'A science fiction masterpiece about Martians invading London',
+      'author'      => 'H. G. Wells',
     ]);
 
-    $this->put('/v1/books/1', [
+    $this->put("/v1/books/{$book->id}", [
       'id'          => 5,
       'title'       => 'The War of the Worlds',
       'description' => 'The book is way better than the movie.',
@@ -199,12 +203,13 @@ reation',
   public function destroy_should_remove_a_valid_book()
   {
     echo "\n\r{$this->yellow}Destroy should remove a valid book...";
+    $book = factory('App\Book')->create();
     $this
-      ->delete('/v1/books/1')
+      ->delete("/v1/books/{$book->id}")
       ->seeStatusCode(204)
       ->isEmpty();
 
-    $this->notSeeInDatabase('book', ['id' => 1]);
+    $this->notSeeInDatabase('book', ['id' => $book->id]);
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
