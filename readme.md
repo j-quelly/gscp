@@ -22,7 +22,8 @@ $ phpunit --no-globals-backup
 - [x] get routes working on remote
 - [x] add logger middleware
 - [x] begin writing tests
-- [ ] add test db
+- [ ] add test db?
+	- [x] using model factory atm
 - [ ] authentication middleware
 	- [ ] APPID
 	- [ ] token
