@@ -11,7 +11,7 @@
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "~0.9",
+        "mockery/mockery": "^0.9.5",
         "phpunit/phpunit": "^5.5",
         "laracasts/integrated": "^0.15.6"
     },

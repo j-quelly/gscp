@@ -1,7 +1,10 @@
 <?php
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 class TestCase extends Laravel\Lumen\Testing\TestCase
 {
+  use MockeryPHPUnitIntegration;
   /**
    * Creates the application.
    *
