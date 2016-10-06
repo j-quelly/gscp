@@ -3,11 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -55,6 +55,9 @@ class Handler extends ExceptionHandler
       if ($e instanceof HttpException) {
         $response['message'] = Response::$statusTexts[$e->getStatusCode()];
         $response['status']  = $e->getStatusCode();
+      } else if ($e instanceof ModelNotFoundException) {
+        $response['message'] = Response::$statusTexts[Response::HTTP_NOT_FOUND];
+        $response['status']  = Response::HTTP_NOT_FOUND;
       }
 
       if ($this->isDebugMode()) {
