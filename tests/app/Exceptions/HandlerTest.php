@@ -5,8 +5,11 @@ namespace Tests\App\Exceptions;
 use App\Exceptions\Handler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TestCase;
 use \Mockery as m;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HandlerTest extends TestCase
 {
@@ -18,7 +21,7 @@ class HandlerTest extends TestCase
   /** @test **/
   public function it_responds_with_html_when_json_is_not_accepted()
   {
-  	echo "\n\r{$this->yellow}It responds with html when json is not accepted...";
+    echo "\n\r{$this->yellow}It responds with html when json is not accepted...";
 
     // Make the mock a partial, we only want to mock the `isDebugMode` method
     $subject = m::mock(Handler::class)->makePartial();
@@ -39,6 +42,88 @@ class HandlerTest extends TestCase
 
     // Assert that `render` does not return a JsonResponse
     $this->assertNotInstanceOf(JsonResponse::class, $result);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test */
+  public function it_responds_with_json_for_json_consumers()
+  {
+    echo "\n\r{$this->yellow}It responds with json for json consumers...";
+
+    $subject = m::mock(Handler::class)->makePartial();
+    $subject
+      ->shouldReceive('isDebugMode')
+      ->andReturn(false);
+
+    $request = m::mock(Request::class);
+    $request
+      ->shouldReceive('wantsJson')
+      ->andReturn(true);
+
+    $exception = m::mock(\Exception::class, ['Doh!']);
+    $exception
+      ->shouldReceive('getMessage')
+      ->andReturn('Doh!');
+
+    /** @var JsonResponse $result */
+    $result = $subject->render($request, $exception);
+
+    $data = $result->getData();
+
+    $this->assertInstanceOf(JsonResponse::class, $result);
+    $this->assertObjectHasAttribute('error', $data);
+    $this->assertAttributeEquals('Doh!', 'message', $data->error);
+    $this->assertAttributeEquals(400, 'status', $data->error);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+/** @test */
+  public function it_provides_json_responses_for_http_exceptions()
+  {
+    echo "\n\r{$this->yellow}It provides json responses for http exceptions...";
+
+    $subject = m::mock(Handler::class)->makePartial();
+    $subject
+      ->shouldReceive('isDebugMode')
+      ->andReturn(false);
+
+    $request = m::mock(Request::class);
+    $request->shouldReceive('wantsJson')->andReturn(true);
+
+    $examples = [
+      [
+        'mock'    => NotFoundHttpException::class,
+        'status'  => 404,
+        'message' => 'Not Found',
+      ],
+      [
+        'mock'    => AccessDeniedHttpException::class,
+        'status'  => 403,
+        'message' => 'Forbidden',
+      ],
+      [
+        'mock'    => ModelNotFoundException::class,
+        'status'  => 404,
+        'message' => 'Not Found',
+      ],
+    ];
+
+    foreach ($examples as $e) {
+
+      $exception = m::mock($e['mock']);
+      $exception->shouldReceive('getMessage')->andReturn(null);
+      $exception->shouldReceive('getStatusCode')->andReturn($e['status']);
+
+      /** @var JsonResponse $result */
+      $result = $subject->render($request, $exception);
+      $data   = $result->getData();
+
+      $this->assertEquals($e['status'], $result->getStatusCode());
+      $this->assertEquals($e['message'], $data->error->message);
+      $this->assertEquals($e['status'], $data->error->status);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
