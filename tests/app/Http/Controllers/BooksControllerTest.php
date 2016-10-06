@@ -75,12 +75,11 @@ class BooksControllerTest extends TestCase
     echo "\n\r{$this->yellow}Show should fail when the book id does not exist...";
 
     $this
-      ->get('/v1/books/99999')
+      ->get('/v1/books/99999', ['Accept' => 'application/json'])
       ->seeStatusCode(404)
       ->seeJson([
-        'error' => [
-          'message' => 'Book not found',
-        ],
+        'message' => 'Not Found',
+        'status'  => 404,
       ]);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
