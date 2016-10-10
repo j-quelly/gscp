@@ -13,10 +13,10 @@ $ php artisan migrate
 3. $ php artisan db:seed
 
 ## testing
-$ php vendor/phpunit/phpunit/phpunit
+$ phpunit --no-globals-backup
 
 ## testing alternative
-$ phpunit --no-globals-backup
+$ php vendor/phpunit/phpunit/phpunit
 
 #### To Do
 - [x] get routes working on remote
