@@ -27,12 +27,15 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] authentication middleware
 	- [ ] APPID
 	- [ ] token
-- [ ] remove/replace
+- [ ] remove or replace
 	- [ ] hello middleware & additional routes
 	- [ ] book migration
 	- [ ] book seed
 	- [ ] book model
 	- [ ] book controller
+	- [ ] books controller
+	- [ ] book transformer
+	- [ ] book factory
 - [ ] crud user
 	- [ ] write tests
 - [ ] crud server

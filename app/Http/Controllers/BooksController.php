@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Transformer\BookTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
  * Class BooksController
  * @package App\Http\Controllers
  */
-class BooksController
+class BooksController extends Controller
 {
 /**
  * GET /books
@@ -18,7 +19,7 @@ class BooksController
  */
   public function index()
   {
-    return ['data' => Book::all()->toArray()];
+    return $this->collection(Book::all(), new BookTransformer());
   }
 
 /**
@@ -28,19 +29,20 @@ class BooksController
  */
   public function show($id)
   {
-    return ['data' => Book::findOrFail($id)->toArray()];
+    return $this->item(Book::findOrFail($id), new BookTransformer());
   }
 
-/**
- * POST /books
- * @param Request $request
- * @return \Symfony\Component\HttpFoundation\Response
- */
+  /**
+   * POST /books
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response
+   */
   public function store(Request $request)
   {
     $book = Book::create($request->all());
+    $data = $this->item($book, new BookTransformer());
 
-    return response()->json(['data' => $book->toArray()], 201, [
+    return response()->json($data, 201, [
       'Location' => route('books.show', ['id' => $book->id]),
     ]);
   }
@@ -66,7 +68,7 @@ class BooksController
     $book->fill($request->all());
     $book->save();
 
-    return ['data' => $book->toArray()];
+    return $this->item($book, new BookTransformer());
   }
 
   /**
@@ -77,15 +79,15 @@ class BooksController
   public function destroy($id)
   {
     try {
-      $book = Book::findOrFail($id);  
+      $book = Book::findOrFail($id);
     } catch (ModelNotFoundException $e) {
       return response()->json([
         'error' => [
           'message' => 'Book not found',
-        ]
+        ],
       ], 404);
     }
-    
+
     $book->delete();
 
     return response(null, 204);
