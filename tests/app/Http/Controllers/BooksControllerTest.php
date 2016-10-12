@@ -215,12 +215,20 @@ reation',
         'id'          => 1,
         'title'       => 'The War of the Worlds',
         'description' => 'The book is way better than the movie.',
-        'author'      => 'Wells, H. G.'])
-      ->seeInDatabase('book', ['title' => 'The War of the Worlds']);
+        'author'      => 'Wells, H. G.',
+      ])
+      ->seeInDatabase('book', [
+        'title' => 'The War of the Worlds',
+      ]);
 
-    // Verify the data key in the response
     $body = json_decode($this->response->getContent(), true);
     $this->assertArrayHasKey('data', $body);
+
+    $data = $body['data'];
+    $this->assertArrayHasKey('created', $data);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $data['created']);
+    $this->assertArrayHasKey('updated', $data);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $data['updated']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
