@@ -39,6 +39,12 @@ class BooksController extends Controller
    */
   public function store(Request $request)
   {
+    $this->validate($request, [
+      'title'       => 'required',
+      'description' => 'required',
+      'author'      => 'required',
+    ]);
+
     $book = Book::create($request->all());
     $data = $this->item($book, new BookTransformer());
 
@@ -64,6 +70,12 @@ class BooksController extends Controller
         ],
       ], 404);
     }
+
+    $this->validate($request, [
+      'title'       => 'required',
+      'description' => 'required',
+      'author'      => 'required'
+    ]);
 
     $book->fill($request->all());
     $book->save();
