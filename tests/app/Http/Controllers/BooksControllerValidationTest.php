@@ -25,16 +25,16 @@ class BooksControllerValidationTest extends TestCase
 
     $body = json_decode($this->response->getContent(), true);
 
-  	// var_dump($body['error']['debug']['trace'][1]['args'][1]);
-
-  	$body = $body['error']['debug']['trace'][1]['args'][1];
+    // todo: this should be improved
+    $desc = $body['error']['debug']['trace'][1]['args'][2];
+    $body = $body['error']['debug']['trace'][1]['args'][1];
 
     $this->assertArrayHasKey('title', $body);
     $this->assertArrayHasKey('description', $body);
     $this->assertArrayHasKey('author', $body);
 
-    $this->assertEquals("required", $body['title']);
-    $this->assertEquals("required", $body['description']);
+    $this->assertEquals("required|max:255", $body['title']);
+    $this->assertEquals("Please fill out the description.", $desc['description.required']);
     $this->assertEquals("required", $body['author']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
@@ -53,14 +53,123 @@ class BooksControllerValidationTest extends TestCase
 
     $body = json_decode($this->response->getContent(), true);
 
+    // todo: this should be improved
+    $desc = $body['error']['debug']['trace'][1]['args'][2];
+    $body = $body['error']['debug']['trace'][1]['args'][1];
+
     $this->assertArrayHasKey('title', $body);
     $this->assertArrayHasKey('description', $body);
-    $this->assertArrayHasKey('author', $body); 
+    $this->assertArrayHasKey('author', $body);
 
-    $this->assertEquals(["The title field is required."], $body['title']);
-    $this->assertEquals(["The description field is required."], $body['description']);
-    $this->assertEquals(["The author field is required."], $body['author']);
+    $this->assertEquals("required|max:255", $body['title']);
+    $this->assertEquals("Please fill out the description.", $desc['description.required']);
+    $this->assertEquals("required", $body['author']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
+
+  /** @test **/
+  public function title_fails_create_validation_when_just_too_long()
+  {
+    echo "\n\r{$this->yellow}Title fails create validation when just too long...";
+
+    // Creating a book
+    $book        = factory(\App\Book::class)->make();
+    $book->title = str_repeat('a', 256);
+
+    $this->post("/v1/books", [
+      'title'       => $book->title,
+      'description' => $book->description,
+      'author'      => $book->author,
+    ], ['Accept' => 'application/json']); 
+
+    $this
+      ->seeStatusCode(Response::HTTP_BAD_REQUEST)
+      ->notSeeInDatabase('book', ['title' => $book->title]);
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $body = $body['error']['debug']['trace'][1]['args'][1];
+
+    $this->assertArrayHasKey('title', $body);
+
+    $this->assertEquals("required|max:255", $body['title']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function title_fails_update_validation_when_just_too_long()
+  {
+    echo "\n\r{$this->yellow}Title fails update validation when just too long...";
+
+    // Updating a book
+    $book        = factory(\App\Book::class)->create();
+    $book->title = str_repeat('a', 256);
+
+    $this->put("/v1/books/{$book->id}", [
+      'title'       => $book->title,
+      'description' => $book->description,
+      'author'      => $book->author,
+    ], ['Accept' => 'application/json']);
+
+    $this
+      ->seeStatusCode(Response::HTTP_BAD_REQUEST)
+      ->notSeeInDatabase('book', ['title' => $book->title]);
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $body = $body['error']['debug']['trace'][1]['args'][1];
+
+    $this->assertArrayHasKey('title', $body);
+
+    $this->assertEquals("required|max:255", $body['title']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+/** @test **/
+  public function title_passes_create_validation_when_exactly_max()
+  {
+    echo "\n\r{$this->yellow}Title passes create validation when exactly max...";
+
+    // Creating a new Book
+    $book        = factory(\App\Book::class)->make();
+    $book->title = str_repeat('a', 255);
+
+    $this->post("/v1/books", [
+      'title'       => $book->title,
+      'description' => $book->description,
+      'author'      => $book->author,
+    ], ['Accept' => 'application/json']);
+
+    $this
+      ->seeStatusCode(Response::HTTP_CREATED)
+      ->seeInDatabase('book', ['title' => $book->title]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function title_passes_update_validation_when_exactly_max()
+  {
+    echo "\n\r{$this->yellow}Title passes update validation when exactly max...";
+
+    // Updating a book
+    $book        = factory(\App\Book::class)->create();
+    $book->title = str_repeat('a', 255);
+
+    $this->put("/v1/books/{$book->id}", [
+      'title'       => $book->title,
+      'description' => $book->description,
+      'author'      => $book->author,
+    ], ['Accept' => 'application/json']);
+
+    $this
+      ->seeStatusCode(Response::HTTP_OK)
+      ->seeInDatabase('book', ['title' => $book->title]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
 }

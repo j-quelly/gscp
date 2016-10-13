@@ -36,6 +36,8 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] books controller
 	- [ ] book transformer
 	- [ ] book factory
+- [ ] improve book controler validation and custom messages
+	- [ ] make sure tests are passing for this as well
 - [ ] crud user
 	- [ ] write tests
 - [ ] crud server
