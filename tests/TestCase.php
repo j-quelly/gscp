@@ -12,8 +12,8 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
    */
   public function createApplication()
   {
-    $app = require __DIR__. '/../bootstrap/app.php';
-    
+    $app = require __DIR__ . '/../bootstrap/app.php';
+
     // $app->loadEnvironmentFrom('.env.testing');
 
     return $app;
@@ -49,6 +49,30 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
       ->seeHasHeader($header)
       ->assertRegExp($regexp, $this->response->headers->get($header));
     return $this;
+  }
+
+  /**
+   * Convenience method for creating a book with an author
+   *
+   * @param int $count
+   * @return mixed
+   */
+  protected function bookFactory($count = 1)
+  {
+    $author = factory(\App\Author::class)->create();
+    $books  = factory(\App\Book::class, $count)->make();
+
+    if ($count === 1) {
+      $books->author()->associate($author);
+      $books->save();
+    } else {
+      foreach ($books as $book) {
+        $book->author()->associate($author);
+        $book->save();
+      }
+    }
+
+    return $books;
   }
 
 }

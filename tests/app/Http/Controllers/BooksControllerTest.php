@@ -136,13 +136,22 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}Store should save a new book in the database...";
 
+    $author = factory(\App\Author::class)->create([
+      'name' => 'H. G. Wells',
+    ]);
+
     $this->post('/v1/books', [
       'title'       => 'The Invisible Man',
       'description' => 'An invisible man is trapped in the terror of his own creation',
-      'author'      => 'H. G. Wells',
-    ]);
+      'author_id'      => $author->id,
+    ], ['Accept' => 'application/json']);
 
     $body = json_decode($this->response->getContent(), true);
+
+    // dump data and exit
+    // dd($body);
+    // dd($body, $this->response->getStatusCode());
+
     $this->assertArrayHasKey('data', $body);
 
     $data = $body['data'];
@@ -190,32 +199,25 @@ reation',
   {
     echo "\n\r{$this->yellow}Update should only change fillable fields...";
 
-    $book = factory('App\Book')->create([
-      'title'       => 'War of the Worlds',
-      'description' => 'A science fiction masterpiece about Martians invading London',
-      'author'      => 'H. G. Wells',
-    ]);
+    $book = $this->bookFactory();
 
     $this->notSeeInDatabase('book', [
       'title'       => 'The War of the Worlds',
       'description' => 'The book is way better than the movie.',
-      'author'      => 'Wells, H. G.',
     ]);
 
     $this->put("/v1/books/{$book->id}", [
       'id'          => 5,
       'title'       => 'The War of the Worlds',
-      'description' => 'The book is way better than the movie.',
-      'author'      => 'Wells, H. G.',
-    ]);
+      'description' => 'The book is way better than the movie.'
+    ], ['Accept' => 'application/json']);
 
     $this
       ->seeStatusCode(200)
       ->seeJson([
         'id'          => 1,
         'title'       => 'The War of the Worlds',
-        'description' => 'The book is way better than the movie.',
-        'author'      => 'Wells, H. G.',
+        'description' => 'The book is way better than the movie.'
       ])
       ->seeInDatabase('book', [
         'title' => 'The War of the Worlds',
@@ -265,13 +267,16 @@ reation',
   public function destroy_should_remove_a_valid_book()
   {
     echo "\n\r{$this->yellow}Destroy should remove a valid book...";
-    $book = factory('App\Book')->create();
+
+    $book = $this->bookFactory();
+
     $this
       ->delete("/v1/books/{$book->id}")
       ->seeStatusCode(204)
       ->isEmpty();
 
     $this->notSeeInDatabase('book', ['id' => $book->id]);
+    
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
