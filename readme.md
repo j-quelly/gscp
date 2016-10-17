@@ -28,7 +28,8 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] APPID
 	- [ ] token
 - [ ] remove or replace
-	- [ ] hello middleware & additional routes
+	- [ ] hello middleware 
+	- [x] hello routes
 	- [ ] book migration
 	- [ ] book seed
 	- [ ] book model

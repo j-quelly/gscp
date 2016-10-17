@@ -11,14 +11,16 @@
 |
  */
 
+$version = 'v1';
+
 $app->get('/', function () use ($app) {
   return "Lumen RESTful API";
 });
 
-$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], function ($app) {
 
   /*
-   * Learning Lumen
+   * Books
    */
   $app->get('/books', 'BooksController@index');
   $app->get('/books/{id:[\d]+}', [
@@ -28,37 +30,6 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function 
   $app->put('/books/{id:[\d]+}', 'BooksController@update');
   $app->post('/books', 'BooksController@store');
   $app->delete('/books/{id:[\d]+}', 'BooksController@destroy');
-
-  /*
-   * Old tutorial
-   * - still better patterns IMO
-   */
-  $app->get('book', 'BookController@index');
-
-  $app->get('book/{id}', 'BookController@getbook');
-
-  $app->post('book', 'BookController@createBook');
-
-  $app->put('book/{id}', 'BookController@updateBook');
-
-  $app->delete('book/{id}', 'BookController@deleteBook');
-
-  /*
-   * Learning Lumen
-   */
-  $app->get('/hello/world', function () use ($app) {
-    return "Hello world!";
-  });
-
-  $app->get('/hello/{name}', function ($name) use ($app) {
-    return "Hello {$name}";
-  });
-
-  $app->get('/hello/{name}', ['middleware' => 'hello', function ($name) {
-    return "Hello {$name}";
-  }]);
-
-});
 
 // /*
 // * User
@@ -72,4 +43,19 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function 
 // // get single user
 // $app->get('user/{id}', function ($id) {
 //     return 'get single user {'.$id.'} from DB in JSON';
-// });
+// });  
+
+});
+
+  /*
+   * Authors
+   */
+  $app->group(['prefix' => $version.'/authors', 'namespace' => 'App\Http\Controllers'], function ($app) {
+    $app->get('/', 'AuthorsController@index');
+    $app->post('/', 'AuthorsController@store');
+    $app->get('/{id:[\d]+}', 'AuthorsController@show');
+    $app->put('/{id:[\d]+}', 'AuthorsController@update');
+    $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');
+  });
+
+
