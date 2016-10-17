@@ -48,7 +48,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}It should return a collection of records...";
 
-    $books = factory('App\Book', 2)->create();
+    $books = $this->bookFactory(2);
 
     $this->get('/v1/books');
 
@@ -60,7 +60,7 @@ class BooksControllerTest extends TestCase
         'id'          => $book->id,
         'title'       => $book->title,
         'description' => $book->description,
-        'author'      => $book->author,
+        'author'      => $book->author->name, // Check the author's name
         'created'     => $book->created_at->toIso8601String(),
         'updated'     => $book->updated_at->toIso8601String(),
       ]);
@@ -75,7 +75,7 @@ class BooksControllerTest extends TestCase
 
     echo "\n\r{$this->yellow}Show should return a valid book...";
 
-    $book = factory('App\Book')->create();
+    $book = $this->bookFactory();
 
     $this
       ->get("/v1/books/{$book->id}")
@@ -90,7 +90,7 @@ class BooksControllerTest extends TestCase
     $this->assertEquals($book->id, $data['id']);
     $this->assertEquals($book->title, $data['title']);
     $this->assertEquals($book->description, $data['description']);
-    $this->assertEquals($book->author, $data['author']);
+    $this->assertEquals($book->author->name, $data['author']);
     $this->assertEquals($book->created_at->toIso8601String(), $data['created']);
     $this->assertEquals($book->updated_at->toIso8601String(), $data['created']);
 
@@ -143,7 +143,7 @@ class BooksControllerTest extends TestCase
     $this->post('/v1/books', [
       'title'       => 'The Invisible Man',
       'description' => 'An invisible man is trapped in the terror of his own creation',
-      'author_id'      => $author->id,
+      'author_id'   => $author->id,
     ], ['Accept' => 'application/json']);
 
     $body = json_decode($this->response->getContent(), true);
@@ -179,11 +179,13 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}Store should respond with a 201 and location header...";
 
+    $author = factory(\App\Author::class)->create();
+
     $this->post('/v1/books', [
       'title'       => 'The Invisible Man',
       'description' => 'An invisible man is trapped in the terror of his own c\
 reation',
-      'author'      => 'H. G. Wells',
+      'author_id' => $author->id
     ]);
 
     $this
@@ -209,7 +211,7 @@ reation',
     $this->put("/v1/books/{$book->id}", [
       'id'          => 5,
       'title'       => 'The War of the Worlds',
-      'description' => 'The book is way better than the movie.'
+      'description' => 'The book is way better than the movie.',
     ], ['Accept' => 'application/json']);
 
     $this
@@ -217,7 +219,7 @@ reation',
       ->seeJson([
         'id'          => 1,
         'title'       => 'The War of the Worlds',
-        'description' => 'The book is way better than the movie.'
+        'description' => 'The book is way better than the movie.',
       ])
       ->seeInDatabase('book', [
         'title' => 'The War of the Worlds',
@@ -276,7 +278,7 @@ reation',
       ->isEmpty();
 
     $this->notSeeInDatabase('book', ['id' => $book->id]);
-    
+
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 

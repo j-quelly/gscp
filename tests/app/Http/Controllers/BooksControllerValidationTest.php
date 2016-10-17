@@ -31,11 +31,9 @@ class BooksControllerValidationTest extends TestCase
 
     $this->assertArrayHasKey('title', $body);
     $this->assertArrayHasKey('description', $body);
-    $this->assertArrayHasKey('author', $body);
 
     $this->assertEquals("required|max:255", $body['title']);
     $this->assertEquals("Please fill out the description.", $desc['description.required']);
-    $this->assertEquals("required", $body['author']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -45,7 +43,7 @@ class BooksControllerValidationTest extends TestCase
   {
     echo "\n\r{$this->yellow}It validates required fields when updating a new book...";
 
-    $book = factory(\App\Book::class)->create();
+    $book = $this->bookFactory();
 
     $this->put("/v1/books/{$book->id}", [], ['Accept' => 'application/json']);
 
@@ -59,11 +57,9 @@ class BooksControllerValidationTest extends TestCase
 
     $this->assertArrayHasKey('title', $body);
     $this->assertArrayHasKey('description', $body);
-    $this->assertArrayHasKey('author', $body);
 
     $this->assertEquals("required|max:255", $body['title']);
     $this->assertEquals("Please fill out the description.", $desc['description.required']);
-    $this->assertEquals("required", $body['author']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -74,14 +70,14 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}Title fails create validation when just too long...";
 
     // Creating a book
-    $book        = factory(\App\Book::class)->make();
+    $book        = $this->bookFactory();
     $book->title = str_repeat('a', 256);
 
     $this->post("/v1/books", [
       'title'       => $book->title,
       'description' => $book->description,
-      'author'      => $book->author,
-    ], ['Accept' => 'application/json']); 
+      'author_id'   => $book->author->id,
+    ], ['Accept' => 'application/json']);
 
     $this
       ->seeStatusCode(Response::HTTP_BAD_REQUEST)
@@ -104,13 +100,13 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}Title fails update validation when just too long...";
 
     // Updating a book
-    $book        = factory(\App\Book::class)->create();
+    $book        = $this->bookFactory();
     $book->title = str_repeat('a', 256);
 
     $this->put("/v1/books/{$book->id}", [
       'title'       => $book->title,
       'description' => $book->description,
-      'author'      => $book->author,
+      'author_id'   => $book->author->id,
     ], ['Accept' => 'application/json']);
 
     $this
@@ -134,13 +130,13 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}Title passes create validation when exactly max...";
 
     // Creating a new Book
-    $book        = factory(\App\Book::class)->make();
+    $book        = $this->bookFactory();
     $book->title = str_repeat('a', 255);
 
     $this->post("/v1/books", [
       'title'       => $book->title,
       'description' => $book->description,
-      'author'      => $book->author,
+      'author_id'   => $book->author->id,
     ], ['Accept' => 'application/json']);
 
     $this
@@ -156,13 +152,13 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}Title passes update validation when exactly max...";
 
     // Updating a book
-    $book        = factory(\App\Book::class)->create();
+    $book        = $this->bookFactory();
     $book->title = str_repeat('a', 255);
 
     $this->put("/v1/books/{$book->id}", [
       'title'       => $book->title,
       'description' => $book->description,
-      'author'      => $book->author,
+      'author_id'   => $book->author->id,
     ], ['Accept' => 'application/json']);
 
     $this

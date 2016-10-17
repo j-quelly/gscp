@@ -31,7 +31,7 @@ class BookTransformerTest extends TestCase
   {
     echo "\n\r{$this->yellow}It transforms a book model...";
 
-    $book    = factory('App\Book')->create();
+    $book = $this->bookFactory();
     $subject = new BookTransformer();
 
     $transform = $subject->transform($book);
