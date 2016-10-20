@@ -21,7 +21,8 @@ class HandlerTest extends TestCase
   /** @test **/
   public function it_responds_with_html_when_json_is_not_accepted()
   {
-    echo "\n\r{$this->yellow}It responds with html when json is not accepted...";
+    echo "\n\r{$this->green}Handler Tests:";
+    echo "\n\r{$this->yellow}    It responds with html when json is not accepted...";
 
     // Make the mock a partial, we only want to mock the `isDebugMode` method
     $subject = m::mock(Handler::class)->makePartial();
@@ -49,7 +50,7 @@ class HandlerTest extends TestCase
   /** @test */
   public function it_responds_with_json_for_json_consumers()
   {
-    echo "\n\r{$this->yellow}It responds with json for json consumers...";
+    echo "\n\r{$this->yellow}    It responds with json for json consumers...";
 
     $subject = m::mock(Handler::class)->makePartial();
     $subject
@@ -82,7 +83,7 @@ class HandlerTest extends TestCase
 /** @test */
   public function it_provides_json_responses_for_http_exceptions()
   {
-    echo "\n\r{$this->yellow}It provides json responses for http exceptions...";
+    echo "\n\r{$this->yellow}    It provides json responses for http exceptions...";
 
     $subject = m::mock(Handler::class)->makePartial();
     $subject

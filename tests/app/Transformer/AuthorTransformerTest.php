@@ -15,6 +15,7 @@ class AuthorTransformerTest extends TestCase
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
 
+
   public function setUp()
   {
     parent::setUp();
@@ -24,7 +25,8 @@ class AuthorTransformerTest extends TestCase
   /** @test **/
   public function it_can_be_initialized()
   {
-    echo "\n\r{$this->yellow}It can be initialized...";
+    echo "\n\r{$this->green}Author Transformer Tests:"; 
+    echo "\n\r{$this->yellow}    It can be initialized...";
 
     $this->assertInstanceOf(AuthorTransformer::class, $this->subject);
 
@@ -34,7 +36,7 @@ class AuthorTransformerTest extends TestCase
   /** @test **/
   public function it_can_transform_an_author()
   {
-    echo "\n\r{$this->yellow}It can transform an author...";
+    echo "\n\r{$this->yellow}    It can transform an author...";
 
     $author = factory(\App\Author::class)->create();
 
@@ -52,6 +54,20 @@ class AuthorTransformerTest extends TestCase
       $author->updated_at->toIso8601String(),
       $actual['created']
     );
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function it_can_transform_related_books()
+  {
+    echo "\n\r{$this->yellow}    It can transform related books...";
+
+    $book   = $this->bookFactory();
+    $author = $book->author;
+
+    $data = $this->subject->includeBooks($author);
+    $this->assertInstanceOf(\League\Fractal\Resource\Collection::class, $data);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }

@@ -17,7 +17,8 @@ class BooksControllerValidationTest extends TestCase
   /** @test **/
   public function it_validates_required_fields_when_creating_a_new_book()
   {
-    echo "\n\r{$this->yellow}It validates required fields when creating a new book...";
+    echo "\n\r{$this->green}Books Controller Validation Tests:";
+    echo "\n\r{$this->yellow}    It validates required fields when creating a new book...";
 
     $this->post('/v1/books', [], ['Accept' => 'application/json']);
 
@@ -41,7 +42,7 @@ class BooksControllerValidationTest extends TestCase
   /** @test **/
   public function it_validates_requied_fields_when_updating_a_book()
   {
-    echo "\n\r{$this->yellow}It validates required fields when updating a new book...";
+    echo "\n\r{$this->yellow}    It validates required fields when updating a new book...";
 
     $book = $this->bookFactory();
 
@@ -67,7 +68,7 @@ class BooksControllerValidationTest extends TestCase
   /** @test **/
   public function title_fails_create_validation_when_just_too_long()
   {
-    echo "\n\r{$this->yellow}Title fails create validation when just too long...";
+    echo "\n\r{$this->yellow}    Title fails create validation when just too long...";
 
     // Creating a book
     $book        = $this->bookFactory();
@@ -97,7 +98,7 @@ class BooksControllerValidationTest extends TestCase
   /** @test **/
   public function title_fails_update_validation_when_just_too_long()
   {
-    echo "\n\r{$this->yellow}Title fails update validation when just too long...";
+    echo "\n\r{$this->yellow}    Title fails update validation when just too long...";
 
     // Updating a book
     $book        = $this->bookFactory();
@@ -127,7 +128,7 @@ class BooksControllerValidationTest extends TestCase
 /** @test **/
   public function title_passes_create_validation_when_exactly_max()
   {
-    echo "\n\r{$this->yellow}Title passes create validation when exactly max...";
+    echo "\n\r{$this->yellow}    Title passes create validation when exactly max...";
 
     // Creating a new Book
     $book        = $this->bookFactory();
@@ -149,7 +150,7 @@ class BooksControllerValidationTest extends TestCase
   /** @test **/
   public function title_passes_update_validation_when_exactly_max()
   {
-    echo "\n\r{$this->yellow}Title passes update validation when exactly max...";
+    echo "\n\r{$this->yellow}    Title passes update validation when exactly max...";
 
     // Updating a book
     $book        = $this->bookFactory();

@@ -36,7 +36,8 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function index_status_code_should_be_200()
   {
-    echo "\n\r{$this->yellow}It should see JSON...";
+    echo "\n\r{$this->green}Books Controller Tests:";
+    echo "\n\r{$this->yellow}    It should see JSON...";
 
     $this->get('/v1/books')->seeStatusCode(200);
 
@@ -46,7 +47,7 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function index_should_return_a_collection_of_records()
   {
-    echo "\n\r{$this->yellow}It should return a collection of records...";
+    echo "\n\r{$this->yellow}    It should return a collection of records...";
 
     $books = $this->bookFactory(2);
 
@@ -73,7 +74,7 @@ class BooksControllerTest extends TestCase
   public function show_should_return_a_valid_book()
   {
 
-    echo "\n\r{$this->yellow}Show should return a valid book...";
+    echo "\n\r{$this->yellow}    Show should return a valid book...";
 
     $book = $this->bookFactory();
 
@@ -101,7 +102,7 @@ class BooksControllerTest extends TestCase
   public function show_should_fail_when_the_book_id_does_not_exist()
   {
 
-    echo "\n\r{$this->yellow}Show should fail when the book id does not exist...";
+    echo "\n\r{$this->yellow}    Show should fail when the book id does not exist...";
 
     $this
       ->get('/v1/books/99999', ['Accept' => 'application/json'])
@@ -117,7 +118,7 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function show_route_should_not_match_an_invalid_route()
   {
-    echo "\n\r{$this->yellow}Show should not match an invalid route...";
+    echo "\n\r{$this->yellow}    Show should not match an invalid route...";
 
     $this->get('/v1/books/this-is-invalid');
 
@@ -134,7 +135,7 @@ class BooksControllerTest extends TestCase
   /** @test **/
   public function store_should_save_new_book_in_the_database()
   {
-    echo "\n\r{$this->yellow}Store should save a new book in the database...";
+    echo "\n\r{$this->yellow}    Store should save a new book in the database...";
 
     $author = factory(\App\Author::class)->create([
       'name' => 'H. G. Wells',
@@ -177,7 +178,7 @@ class BooksControllerTest extends TestCase
   /** @test */
   public function store_should_respond_with_a_201_and_location_header_when_successful()
   {
-    echo "\n\r{$this->yellow}Store should respond with a 201 and location header...";
+    echo "\n\r{$this->yellow}    Store should respond with a 201 and location header...";
 
     $author = factory(\App\Author::class)->create();
 
@@ -199,7 +200,7 @@ reation',
   /** @test **/
   public function update_should_only_change_fillable_fields()
   {
-    echo "\n\r{$this->yellow}Update should only change fillable fields...";
+    echo "\n\r{$this->yellow}    Update should only change fillable fields...";
 
     $book = $this->bookFactory();
 
@@ -240,7 +241,7 @@ reation',
   /** @test **/
   public function update_should_fail_with_an_invalid_id()
   {
-    echo "\n\r{$this->yellow}Update should fail with an invalid id...";
+    echo "\n\r{$this->yellow}    Update should fail with an invalid id...";
 
     $this
       ->put('/v1/books/999999999999999')
@@ -257,7 +258,7 @@ reation',
   /** @test **/
   public function update_should_not_match_an_invalid_route()
   {
-    echo "\n\r{$this->yellow}Update should not match an invalid route...";
+    echo "\n\r{$this->yellow}    Update should not match an invalid route...";
 
     $this->put('/v1/adbooks/this-is-invalid')
       ->seeStatusCode(404);
@@ -268,7 +269,7 @@ reation',
   /** @test **/
   public function destroy_should_remove_a_valid_book()
   {
-    echo "\n\r{$this->yellow}Destroy should remove a valid book...";
+    echo "\n\r{$this->yellow}    Destroy should remove a valid book...";
 
     $book = $this->bookFactory();
 
@@ -285,7 +286,7 @@ reation',
   /** @test **/
   public function destroy_should_return_a_404_with_an_invalid_id()
   {
-    echo "\n\r{$this->yellow}Destroy should return a 404 with an invalid id...";
+    echo "\n\r{$this->yellow}    Destroy should return a 404 with an invalid id...";
     $this
       ->delete('/v1/books/99999')
       ->seeStatusCode(404)
@@ -300,7 +301,7 @@ reation',
   /** @test **/
   public function destroy_should_not_match_an_invalid_route()
   {
-    echo "\n\r{$this->yellow}Destroy should not match an invalid route...";
+    echo "\n\r{$this->yellow}    Destroy should not match an invalid route...";
     $this->delete('/v1/books/this-is-invalid')
       ->seeStatusCode(404);
     echo " {$this->green}[OK]{$this->white}\n\r";

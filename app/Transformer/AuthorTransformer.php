@@ -1,10 +1,20 @@
 <?php
 namespace App\Transformer;
 
+use App\Author;
 use League\Fractal\TransformerAbstract;
 
 class AuthorTransformer extends TransformerAbstract
 {
+
+  protected $availableIncludes = [
+    'books',
+  ];
+
+  public function includeBooks(Author $author)
+  {
+    return $this->collection($author->books, new BookTransformer());
+  }
 
   /**
    * Transform an author model
