@@ -32,30 +32,31 @@ $app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], funct
   $app->delete('/books/{id:[\d]+}', 'BooksController@destroy');
 
 // /*
-// * User
-// */
+  // * User
+  // */
 
 // // get all users
-// $app->get('user', function () {
-//     return 'get users from DB in JSON';
-// });
+  // $app->get('user', function () {
+  //     return 'get users from DB in JSON';
+  // });
 
 // // get single user
-// $app->get('user/{id}', function ($id) {
-//     return 'get single user {'.$id.'} from DB in JSON';
-// });  
+  // $app->get('user/{id}', function ($id) {
+  //     return 'get single user {'.$id.'} from DB in JSON';
+  // });
 
 });
 
-  /*
-   * Authors
-   */
-  $app->group(['prefix' => $version.'/authors', 'namespace' => 'App\Http\Controllers'], function ($app) {
-    $app->get('/', 'AuthorsController@index');
-    $app->post('/', 'AuthorsController@store');
-    $app->get('/{id:[\d]+}', 'AuthorsController@show');
-    $app->put('/{id:[\d]+}', 'AuthorsController@update');
-    $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');
-  });
-
-
+/*
+ * Authors
+ */
+$app->group(['prefix' => $version . '/authors', 'namespace' => 'App\Http\Controllers'], function ($app) {
+  $app->get('/', 'AuthorsController@index');
+  $app->post('/', 'AuthorsController@store');
+  $app->get('/{id:[\d]+}', [
+    'as'   => 'authors.show',
+    'uses' => 'AuthorsController@show',
+  ]);
+  $app->put('/{id:[\d]+}', 'AuthorsController@update');
+  $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');
+});

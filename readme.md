@@ -28,13 +28,12 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] APPID
 	- [ ] token
 - [ ] remove or replace
-	- [ ] hello middleware 
+	- [x] hello middleware 
 	- [x] hello routes
 	- [ ] book migration
 	- [ ] book seed
 	- [ ] book model
 	- [ ] book controller
-	- [ ] books controller
 	- [ ] book transformer
 	- [ ] book factory
 	- [ ] everything related to authors

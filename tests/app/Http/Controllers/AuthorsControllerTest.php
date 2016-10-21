@@ -161,4 +161,37 @@ class AuthorsControllerTest extends TestCase
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
+
+  /** @test **/
+  public function update_can_update_an_existing_author()
+  {
+    echo "\n\r{$this->yellow}    Update can update an existing author...";
+
+    $author = factory(\App\Author::class)->create();
+
+    $requestData = [
+      'name'      => 'New Author Name',
+      'gender'    => $author->gender === 'male' ? 'female' : 'male',
+      'biography' => 'An updated biography',
+    ];
+
+    $this
+      ->put(
+        "/v1/authors/{$author->id}",
+        $requestData,
+        ['Accept' => 'application/json']
+      )
+      ->seeStatusCode(200)
+      ->seeJson($requestData)
+      ->seeInDatabase('authors', [
+        'name' => 'New Author Name',
+      ])
+      ->notSeeInDatabase('authors', [
+        'name' => $author->name,
+      ]);
+
+    $this->assertArrayHasKey('data', $this->response->getData(true));
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
 }

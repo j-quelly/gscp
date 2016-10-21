@@ -64,7 +64,7 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'hello' => App\Http\Middleware\HelloMiddleware::class,
+    // 'hello' => App\Http\Middleware\HelloMiddleware::class,
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
