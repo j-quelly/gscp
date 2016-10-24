@@ -194,4 +194,33 @@ class AuthorsControllerTest extends TestCase
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
+
+  /** @test **/
+  public function delete_can_remove_an_author_and_his_or_her_books()
+  {
+    echo "\n\r{$this->yellow}    Delete can remove an author and his or her books...";
+
+    $author = factory(\App\Author::class)->create();
+
+    $this
+      ->delete("/v1/authors/{$author->id}")
+      ->seeStatusCode(204)
+      ->notSeeInDatabase('authors', ['id' => $author->id])
+      ->notSeeInDatabase('book', ['author_id' => $author->id]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function deleting_an_invalid_author_should_return_a_404()
+  {
+    echo "\n\r{$this->yellow}    Deleting an invalid author should return a 404...";
+
+    $this
+      ->delete('/v1/authors/99999', [],
+        ['Accept' => 'application/json'])
+      ->seeStatusCode(404);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
 }

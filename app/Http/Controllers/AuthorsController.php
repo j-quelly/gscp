@@ -48,6 +48,13 @@ class AuthorsController extends Controller
     return response()->json($data, 200);
   }
 
+  public function destroy($id)
+  {
+    Author::findOrFail($id)->delete();
+
+    return response(null, 204);
+  }
+
   /**
    * Validate author updates from the request.
    *
