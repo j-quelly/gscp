@@ -22,11 +22,12 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] get routes working on remote
 - [x] add logger middleware
 - [x] begin writing tests
-- [ ] add test db?
-	- [x] using model factory atm
 - [ ] authentication middleware
 	- [ ] APPID
 	- [ ] token
+	- [ ] improve code in auth service provider
+- [ ] add test db?
+	- [x] using model factory atm	
 - [ ] remove or replace
 	- [x] hello middleware 
 	- [x] hello routes
@@ -44,3 +45,4 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] crud server
 	- [ ] write tests
 - [x] map to remote
+- [ ] customize exception handler

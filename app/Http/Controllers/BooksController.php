@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
  */
 class BooksController extends Controller
 {
+
+  // public function __construct()
+  // {
+  //   $this->middleware('auth', ['only' => [
+  //     'store',
+  //     'update',
+  //     'destroy',
+  //   ]]);
+  // }
+
 /**
  * GET /books
  * @return array
@@ -42,7 +52,7 @@ class BooksController extends Controller
     $this->validate($request, [
       'title'       => 'required|max:255',
       'description' => 'required',
-      'author_id'      => 'required|exists:authors,id',
+      'author_id'   => 'required|exists:authors,id',
     ], [
       'description.required' => 'Please fill out the description.',
     ]);
@@ -76,7 +86,7 @@ class BooksController extends Controller
     $this->validate($request, [
       'title'       => 'required|max:255',
       'description' => 'required',
-      'author_id'      => 'exists:authors,id',
+      'author_id'   => 'exists:authors,id',
     ], [
       'description.required' => 'Please fill out the description.',
     ]);

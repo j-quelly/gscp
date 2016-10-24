@@ -13,23 +13,11 @@
 
 $version = 'v1';
 
-$app->get('/', function () use ($app) {
+$app->get('/' . $version, function () use ($app) {
   return "Lumen RESTful API";
 });
 
 $app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], function ($app) {
-
-  /*
-   * Books
-   */
-  $app->get('/books', 'BooksController@index');
-  $app->get('/books/{id:[\d]+}', [
-    'as'   => 'books.show',
-    'uses' => 'BooksController@show',
-  ]);
-  $app->put('/books/{id:[\d]+}', 'BooksController@update');
-  $app->post('/books', 'BooksController@store');
-  $app->delete('/books/{id:[\d]+}', 'BooksController@destroy');
 
 // /*
   // * User
@@ -45,6 +33,20 @@ $app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], funct
   //     return 'get single user {'.$id.'} from DB in JSON';
   // });
 
+});
+
+/*
+ * Books
+ */
+$app->group(['prefix' => $version . '/books', 'namespace' => 'App\Http\Controllers'], function ($app) {
+  $app->get('/', 'BooksController@index');
+  $app->get('/{id:[\d]+}', [
+    'as'   => 'books.show',
+    'uses' => 'BooksController@show',
+  ]);
+  $app->put('/{id:[\d]+}', 'BooksController@update');
+  $app->post('/', 'BooksController@store');
+  $app->delete('/{id:[\d]+}', 'BooksController@destroy');
 });
 
 /*
