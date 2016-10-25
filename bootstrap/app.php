@@ -27,6 +27,7 @@ $app->withFacades();
 
 $app->withEloquent();
 
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -65,7 +66,7 @@ $app->middleware([
 
 $app->routeMiddleware([
     // 'hello' => App\Http\Middleware\HelloMiddleware::class,
-    'auth' => App\Http\Middleware\Authenticate::class,
+    // 'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
 /*
@@ -80,9 +81,10 @@ $app->routeMiddleware([
  */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-$app->register(App\Providers\AuthServiceProvider::class); 
+// $app->register(App\Providers\AuthServiceProvider::class); 
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\App\Providers\FractalServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------

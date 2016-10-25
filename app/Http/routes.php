@@ -13,10 +13,6 @@
 
 $version = 'v1';
 
-$app->get('/' . $version, function () use ($app) {
-  return "Lumen RESTful API";
-});
-
 $app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], function ($app) {
 
 // /*

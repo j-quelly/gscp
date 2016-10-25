@@ -45,4 +45,3 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] crud server
 	- [ ] write tests
 - [x] map to remote
-- [ ] customize exception handler
