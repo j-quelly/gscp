@@ -2,17 +2,22 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\ServiceProvider;
 
-class FractalServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
 {
-  public function register()
-  {
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton([CacheManager::class => 'cache'], function ($app) {
+            $app->configure('cache');
 
-  }
-
-  public function boot()
-  {
-
-  }
+            return new CacheManager($app);
+        });
+    }
 }

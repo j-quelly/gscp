@@ -1,6 +1,43 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Register The Composer Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader
+| for our application. We just need to utilize it! We'll require it
+| into the script here so that we do not have to worry about the
+| loading of any our classes "manually". Feels great to relax.
+|
+*/
+
 require_once __DIR__ . '/../vendor/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Include The Compiled Class File
+|--------------------------------------------------------------------------
+|
+| To dramatically increase your application's performance, you may use a
+| compiled class file which contains all of the classes commonly used
+| by a request. The Artisan "optimize" is used to create this file.
+|
+*/
+
+$compiledPath = __DIR__.'/cache/compiled.php';
+
+if (file_exists($compiledPath)) {
+    require $compiledPath;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Load your environment file
+|--------------------------------------------------------------------------
+|
+| You know, to load your environment file.
+*/
 
 try {
     (new Dotenv\Dotenv(__DIR__ . '/../'))->load();
@@ -24,6 +61,9 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+
+class_exists(JWTAuth::class) or class_alias(Tymon\JWTAuth\Facades\JWTAuth::class, JWTAuth::class);
+class_exists(JWTFactory::class) or class_alias(Tymon\JWTAuth\Facades\JWTFactory::class, JWTFactory::class);
 
 $app->withEloquent();
 
@@ -49,6 +89,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    Illuminate\Contracts\Routing\ResponseFactory::class,
+    Illuminate\Routing\ResponseFactory::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -60,6 +105,10 @@ $app->singleton(
 |
  */
 
+// $app->middleware([
+//    App\Http\Middleware\ExampleMiddleware::class
+// ]);
+
 $app->middleware([
     App\Http\Middleware\RequestLogMiddleware::class,
 ]);
@@ -67,6 +116,8 @@ $app->middleware([
 $app->routeMiddleware([
     // 'hello' => App\Http\Middleware\HelloMiddleware::class,
     // 'auth' => App\Http\Middleware\Authenticate::class,
+    'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+    'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,    
 ]);
 
 /*
@@ -80,10 +131,23 @@ $app->routeMiddleware([
 |
  */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class); 
+// JWTAuth Dependency
+$app->configure('session');
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+$app->register(Illuminate\Cookie\CookieServiceProvider::class);
+$app->register(Illuminate\Cache\CacheServiceProvider::class);
+
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class); 
+// $app->register(App\Providers\GuardServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\App\Providers\FractalServiceProvider::class);
+
+// JWTAuth
+$app->configure('jwt');
+$app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
+
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 
 /*

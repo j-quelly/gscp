@@ -13,48 +13,90 @@
 
 $version = 'v1';
 
-$app->group(['prefix' => $version, 'namespace' => 'App\Http\Controllers'], function ($app) {
+/**
+ * Auth
+ */
 
-// /*
-  // * User
-  // */
-
-// // get all users
-  // $app->get('user', function () {
-  //     return 'get users from DB in JSON';
-  // });
-
-// // get single user
-  // $app->get('user/{id}', function ($id) {
-  //     return 'get single user {'.$id.'} from DB in JSON';
-  // });
-
+$app->group([
+  'prefix'    => $version,
+  'namespace' => 'App\Http\Controllers',
+], function ($app) {
+  $app->post('/auth/login', ['uses' => 'Auth\AuthController@postLogin', 'as' => 'api.auth.login']);
 });
 
-/*
+/**
+ * Auth Restricted
+ */
+
+$app->group([
+  'prefix'     => $version . '/auth',
+  'middleware' => 'jwt.auth',
+  'namespace'  => 'App\Http\Controllers',
+], function ($app) {
+  $app->get('/', ['uses' => 'APIController@getIndex', 'as' => 'api.index']);
+  $app->get('/user', ['uses' => 'Auth\AuthController@getUser', 'as' => 'api.auth.user']);
+  $app->patch('/refresh', ['uses' => 'Auth\AuthController@patchRefresh', 'as' => 'api.auth.refresh']);
+  $app->delete('/invalidate', ['uses' => 'Auth\AuthController@deleteInvalidate', 'as' => 'api.auth.invalidate']);
+});
+
+/**
+ * Users
+ */
+$app->group([
+  'prefix'     => $version . '/user',
+  'namespace'  => 'App\Http\Controllers',
+], function ($app) {
+  $app->get('/', 'UsersController@index');
+  $app->get('/{id:[\d]+}', 'UsersController@show');
+});
+
+/**
  * Books
  */
-$app->group(['prefix' => $version . '/books', 'namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group([
+  'prefix'    => $version . '/books',
+  'namespace' => 'App\Http\Controllers',
+], function ($app) {
   $app->get('/', 'BooksController@index');
-  $app->get('/{id:[\d]+}', [
-    'as'   => 'books.show',
-    'uses' => 'BooksController@show',
-  ]);
+  $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
+});
+
+/**
+ * Books Restricted
+ */
+
+$app->group([
+  'prefix'     => $version . '/books',
+  'middleware' => 'jwt.auth',
+  'namespace'  => 'App\Http\Controllers',
+], function ($app) {
   $app->put('/{id:[\d]+}', 'BooksController@update');
   $app->post('/', 'BooksController@store');
   $app->delete('/{id:[\d]+}', 'BooksController@destroy');
 });
 
-/*
+/**
  * Authors
  */
-$app->group(['prefix' => $version . '/authors', 'namespace' => 'App\Http\Controllers'], function ($app) {
+
+$app->group([
+  'prefix'    => $version . '/authors',
+  'namespace' => 'App\Http\Controllers',
+], function ($app) {
   $app->get('/', 'AuthorsController@index');
+  $app->get('/{id:[\d]+}', ['as'   => 'authors.show', 'uses' => 'AuthorsController@show',]);
+});
+
+/**
+ * Authors Restricted
+ */
+
+$app->group([
+  'prefix'     => $version . '/authors',
+  'middleware' => 'jwt.auth',
+  'namespace'  => 'App\Http\Controllers',
+], function ($app) {
   $app->post('/', 'AuthorsController@store');
-  $app->get('/{id:[\d]+}', [
-    'as'   => 'authors.show',
-    'uses' => 'AuthorsController@show',
-  ]);
   $app->put('/{id:[\d]+}', 'AuthorsController@update');
   $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');
 });

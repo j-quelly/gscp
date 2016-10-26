@@ -22,10 +22,9 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] get routes working on remote
 - [x] add logger middleware
 - [x] begin writing tests
-- [ ] authentication middleware
-	- [ ] APPID
-	- [ ] token
-	- [ ] improve code in auth service provider
+- [x] authentication middleware (JWT)
+	- [x] restrict put post and delete endpoints
+	- [ ] writes tests for auth
 - [ ] add test db?
 	- [x] using model factory atm	
 - [ ] remove or replace
@@ -39,9 +38,15 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book factory
 	- [ ] everything related to authors
 - [ ] improve book controler validation and custom messages
-	- [ ] make sure tests are passing for this as well
+	- [ ] run tests not in debug mode to see what responses are 
+	- [ ] make sure tests are passing for this as well	
 - [ ] crud user
 	- [ ] write tests
 - [ ] crud server
 	- [ ] write tests
 - [x] map to remote
+- [ ] test remote is working
+- [ ] may need php_memcache.dll and memcached service
+- [ ] confirm use of APIController.php
+- [ ] change all nouns to singular
+- [ ] get tests working
