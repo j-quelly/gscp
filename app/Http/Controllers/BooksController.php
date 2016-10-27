@@ -40,13 +40,7 @@ class BooksController extends Controller
    */
   public function store(Request $request)
   {
-    $this->validate($request, [
-      'title'       => 'required|max:255',
-      'description' => 'required',
-      'author_id'   => 'required|exists:authors,id',
-    ], [
-      'description.required' => 'Please fill out the description.',
-    ]);
+    $this->validateBook($request);
 
     $book = Book::create($request->all());
     $data = $this->item($book, new BookTransformer());
@@ -74,13 +68,7 @@ class BooksController extends Controller
       ], 404);
     }
 
-    $this->validate($request, [
-      'title'       => 'required|max:255',
-      'description' => 'required',
-      'author_id'   => 'exists:authors,id',
-    ], [
-      'description.required' => 'Please fill out the description.',
-    ]);
+    $this->validateBook($request);
 
     $book->fill($request->all());
     $book->save();
@@ -109,5 +97,21 @@ class BooksController extends Controller
 
     return response(null, 204);
   }
+
+  /**
+   * Validate book updates from the request.
+   *
+   * @param Request $request
+   */
+  private function validateBook(Request $request)
+  {
+    $this->validate($request, [
+      'title'       => 'required|max:255',
+      'description' => 'required',
+      'author_id'   => 'required|exists:authors,id',
+    ], [
+      'description.required' => 'Please fill out the description.',
+    ]);
+  }  
 
 }

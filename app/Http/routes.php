@@ -40,14 +40,18 @@ $app->group([
 });
 
 /**
- * Users
+ * Users 
+ * todo: restrict all of these!
  */
 $app->group([
-  'prefix'     => $version . '/user',
+  'prefix'     => $version . '/users',
   'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', 'UsersController@index');
-  $app->get('/{id:[\d]+}', 'UsersController@show');
+  $app->get('/{id:[\d]+}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
+  $app->post('/', 'UsersController@store');
+  $app->put('/{id:[\d]+}', 'UsersController@update');
+  $app->delete('/{id:[\d]+}', 'UsersController@destroy');
 });
 
 /**

@@ -40,13 +40,14 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] improve book controler validation and custom messages
 	- [ ] run tests not in debug mode to see what responses are 
 	- [ ] make sure tests are passing for this as well	
-- [ ] crud user
+- [x] crud user
+	- [ ] user roles
 	- [ ] write tests
 - [ ] crud server
 	- [ ] write tests
 - [x] map to remote
 - [ ] test remote is working
-- [ ] may need php_memcache.dll and memcached service
+	- [ ] may need php_memcache.dll and memcached service
 - [ ] confirm use of APIController.php
-- [ ] change all nouns to singular
 - [ ] get tests working
+	- [ ] test all routes
