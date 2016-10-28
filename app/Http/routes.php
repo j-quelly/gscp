@@ -14,7 +14,7 @@
 $version = 'v1';
 
 /**
- * Auth
+ * Auth Public
  */
 
 $app->group([
@@ -27,7 +27,6 @@ $app->group([
 /**
  * Auth Restricted
  */
-
 $app->group([
   'prefix'     => $version . '/auth',
   'middleware' => 'jwt.auth',
@@ -40,11 +39,11 @@ $app->group([
 });
 
 /**
- * Users 
- * todo: restrict all of these!
+ * Users Restricted
  */
 $app->group([
   'prefix'     => $version . '/users',
+  'middleware' => 'jwt.auth',
   'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', 'UsersController@index');
@@ -55,51 +54,30 @@ $app->group([
 });
 
 /**
- * Books
- */
-$app->group([
-  'prefix'    => $version . '/books',
-  'namespace' => 'App\Http\Controllers',
-], function ($app) {
-  $app->get('/', 'BooksController@index');
-  $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
-});
-
-/**
  * Books Restricted
  */
-
 $app->group([
   'prefix'     => $version . '/books',
   'middleware' => 'jwt.auth',
   'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
+  $app->get('/', 'BooksController@index');
+  $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
   $app->put('/{id:[\d]+}', 'BooksController@update');
   $app->post('/', 'BooksController@store');
   $app->delete('/{id:[\d]+}', 'BooksController@destroy');
 });
 
 /**
- * Authors
- */
-
-$app->group([
-  'prefix'    => $version . '/authors',
-  'namespace' => 'App\Http\Controllers',
-], function ($app) {
-  $app->get('/', 'AuthorsController@index');
-  $app->get('/{id:[\d]+}', ['as'   => 'authors.show', 'uses' => 'AuthorsController@show',]);
-});
-
-/**
  * Authors Restricted
  */
-
 $app->group([
   'prefix'     => $version . '/authors',
   'middleware' => 'jwt.auth',
   'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
+  $app->get('/', 'AuthorsController@index');
+  $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);  
   $app->post('/', 'AuthorsController@store');
   $app->put('/{id:[\d]+}', 'AuthorsController@update');
   $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');

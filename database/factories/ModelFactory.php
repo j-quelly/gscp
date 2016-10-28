@@ -11,19 +11,19 @@
 |
  */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-  return [
-    'name'  => $faker->name,
-    'email' => $faker->email,
-  ];
-});
-
-// $factory->define(App\User::class, function ($faker) {
-//     return [
-//         'name' => $faker->name,
-//         'email' => $faker->email,
-//     ];
+// $factory->define(App\User::class, function (Faker\Generator $faker) {
+//   return [
+//     'name'  => $faker->name,
+//     'email' => $faker->email,
+//   ];
 // });
+
+$factory->define(App\User::class, function ($faker) {
+    return [
+        'name' => $faker->name,
+        'email' => $faker->email,
+    ];
+});
 
 $factory->define(App\Book::class, function ($faker) {
   $title = $faker->sentence(rand(3, 10));

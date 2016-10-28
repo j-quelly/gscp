@@ -24,9 +24,10 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] begin writing tests
 - [x] authentication middleware (JWT)
 	- [x] restrict put post and delete endpoints
-	- [ ] writes tests for auth
-- [ ] add test db?
-	- [x] using model factory atm	
+	- [ ] finish writing tests for auth
+- [ ] add test db
+- [ ] make sure remote uses production db
+- [ ] ability to seed production db
 - [ ] remove or replace
 	- [x] hello middleware 
 	- [x] hello routes
@@ -40,14 +41,14 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] improve book controler validation and custom messages
 	- [ ] run tests not in debug mode to see what responses are 
 	- [ ] make sure tests are passing for this as well	
+- [ ] improve author controler validation and custom messages
+	- [ ] run tests not in debug mode to see what responses are 
+	- [ ] make sure tests are passing for this as well	
 - [x] crud user
 	- [ ] user roles
 	- [ ] write tests
 - [ ] crud server
 	- [ ] write tests
-- [x] map to remote
 - [ ] test remote is working
 	- [ ] may need php_memcache.dll and memcached service
-- [ ] confirm use of APIController.php
-- [ ] get tests working
-	- [ ] test all routes
+- [x] confirm use of APIController.php (index)
