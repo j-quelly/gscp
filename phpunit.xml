@@ -24,7 +24,7 @@
         <!-- Test Database -->
         <!-- Creates a lot of exceptions when running tests -->
         <!-- Currently not using test db -->         
-        <env name="DB_DATABASE" value="gameserv_api"/>
+        <env name="DB_DATABASE" value="gameserv_gscpdev"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/> 

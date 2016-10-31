@@ -6,6 +6,7 @@ namespace tests\app\Http\Controllers;
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
 // use Illuminate\Foundation\Testing\DatabaseMigrations; ** deprecated
+use JWTAuth;
 use TestCase;
 
 class AuthControllerTest extends TestCase
@@ -92,13 +93,7 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth valid login should return a jwt ...";
 
-    $user = factory(\App\User::class, 1)->create(['password' => app('hash')->make('supersecret')]);
-
-    // $this->actingAs($user)->post('/v1/auth/login', ['Accept' => 'application/json']);
-
-    // $token = JWTAuth::fromUser($user);
-    // JWTAuth::setToken($token);
-    // $headers['Authorization'] = 'Bearer ' . $token;
+    $user = $this->userFactory();
 
     $this->post($this->path . '/login', [
       'email'    => $user->email,
@@ -116,6 +111,81 @@ class AuthControllerTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
+  /** @test **/
+  public function auth_index_should_return_version_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth index should return version when using a valid token...";
+
+    $user = $this->userFactory();
+
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $headers = array(
+      "Accept"        => "application/json",
+      "Authorization" => "Bearer " . $token,
+    );
+
+    $this->get($this->path, $headers);
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('message', $body);
+    $this->assertEquals('Lumen (5.3.1) (Laravel Components 5.3.*)', $body['message']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function auth_refresh_should_return_jwt_token_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth refresh should return jwt token when using a valid token...";
+
+    $user = $this->userFactory();
+
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $headers = array(
+      "Accept"        => "application/json",
+      "Authorization" => "Bearer " . $token,
+    );
+
+    $this->patch($this->path . '/refresh', [], $headers);
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('message', $body);
+    $this->assertArrayHasKey('token', $body);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function auth_invalidate_should_delete_jwt_token_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth invalidate should delete jwt token when using a valid token...";
+
+    $user = $this->userFactory();
+
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $headers = array(
+      "Accept"        => "application/json",
+      "Authorization" => "Bearer " . $token,
+    );
+
+    $this->delete($this->path . '/invalidate', [], $headers);
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('message', $body);
+    $this->assertEquals('token_invalidated', $body['message']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }  
+
   /**
    * Provides boilerplate test instructions for assertions.
    *
@@ -128,5 +198,7 @@ class AuthControllerTest extends TestCase
     $this->assertEquals('token_not_provided', $body['error']);
     $this->seeStatusCode(400);
   }
+
+
 
 }

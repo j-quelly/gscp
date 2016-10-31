@@ -1,5 +1,5 @@
 # lumen gscp api
-Building an open source game server control panel API with Lumen 5.x
+Building an open source game server control panel API with Lumen 5.3
 
 ## getting started
 $ php -S localhost:8888 -t public
@@ -24,9 +24,12 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] begin writing tests
 - [x] authentication middleware (JWT)
 	- [x] restrict put post and delete endpoints
-	- [ ] finish writing tests for auth
-- [ ] add test db
-- [ ] make sure remote uses production db
+	- [x] finish writing tests for auth controller
+	- [ ] auth tests may be creating too many users in DB, find a solution to this
+	- [ ] cleanup tests (remove repeatitive code)
+			- [ ] auth controller should return data like all other controllers
+- [x] add test db
+- [x] make sure remote uses production db
 - [ ] ability to seed production db
 - [ ] remove or replace
 	- [x] hello middleware 
@@ -51,4 +54,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] write tests
 - [ ] test remote is working
 	- [ ] may need php_memcache.dll and memcached service
+- [ ] confirm there is no issue with memcached othewise switch to redis
+		- [ ] memcache removed temporarily 
+- [ ] look into security concerns with using JWT
 - [x] confirm use of APIController.php (index)

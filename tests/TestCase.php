@@ -93,4 +93,17 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     return $headers;
   }
 
+/**
+ * Convenience method for creating a user
+ *
+ * @return $user
+ */
+  protected function userFactory()
+  {
+
+    $user = factory(\App\User::class, 1)->create(['password' => app('hash')->make('supersecret')]);
+
+    return $user;
+  }
+
 }
