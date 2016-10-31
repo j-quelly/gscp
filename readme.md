@@ -19,9 +19,6 @@ $ phpunit --no-globals-backup
 $ php vendor/phpunit/phpunit/phpunit
 
 #### To Do
-- [x] get routes working on remote
-- [x] add logger middleware
-- [x] begin writing tests
 - [x] authentication middleware (JWT)
 	- [x] restrict put post and delete endpoints
 	- [x] finish writing tests for auth controller
@@ -29,11 +26,9 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] cleanup tests (remove repeatitive code)
 			- [ ] auth controller should return data like all other controllers
 - [x] add test db
-- [x] make sure remote uses production db
+- [ ] make sure remote uses production db
 - [ ] ability to seed production db
 - [ ] remove or replace
-	- [x] hello middleware 
-	- [x] hello routes
 	- [ ] book migration
 	- [ ] book seed
 	- [ ] book model
@@ -55,6 +50,5 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] test remote is working
 	- [ ] may need php_memcache.dll and memcached service
 - [ ] confirm there is no issue with memcached othewise switch to redis
-		- [ ] memcache removed temporarily 
+		- [ ] memcache removed temporarily, set to file
 - [ ] look into security concerns with using JWT
-- [x] confirm use of APIController.php (index)
