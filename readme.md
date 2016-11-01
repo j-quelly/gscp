@@ -21,10 +21,23 @@ $ php vendor/phpunit/phpunit/phpunit
 #### To Do
 - [x] authentication middleware (JWT)
 	- [x] restrict put post and delete endpoints
-	- [x] finish writing tests for auth controller
-	- [ ] auth tests may be creating too many users in DB, find a solution to this
-	- [ ] cleanup tests (remove repeatitive code)
-			- [ ] auth controller should return data like all other controllers
+	- [x] finish writing tests for auth controller	
+	- [ ] refactor auth tests again (remove repeatitive code)
+	- [x] test invalid token	
+	- [ ] test auth login validation
+	- [ ] auth controller should return data in the same format as other controllers
+	- [ ] work on status codes
+		- 200 - OK
+		- 201 - Created
+		- 304 - Not modified
+		- 400 - Bad Request
+		- 401 - Unauthorized
+		- 403 - Forbidden
+		- 404 - Not found		
+		- 405 - Method not allowed
+		- 500 - Internal Server Error
+	- [ ] auth tests may be creating too many users in DB, find a solution to this		
+	- [x] cleanup tests (remove repeatitive code)
 - [x] add test db
 - [ ] make sure remote uses production db
 - [ ] ability to seed production db

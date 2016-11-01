@@ -30,7 +30,7 @@ class AuthController extends Controller
       return new JsonResponse([
         'error' => [
           'message'     => 'invalid_auth',
-          'status_code' => Response::HTTP_BAD_REQUEST,
+          'status' => Response::HTTP_BAD_REQUEST,
         ],
       ], Response::HTTP_BAD_REQUEST);
     }

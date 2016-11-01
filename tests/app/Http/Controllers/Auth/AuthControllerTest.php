@@ -16,17 +16,15 @@ class AuthControllerTest extends TestCase
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
-  private $path   = '/v1/auth';
+  private $url    = '/v1/auth';
 
   /** @test **/
-  public function auth_should_error_when_no_token()
+  public function auth_index_should_error_when_no_token()
   {
     echo "\n\r{$this->green}Auth Controller Tests:";
-    echo "\n\r{$this->yellow}    Auth should error when no token...";
+    echo "\n\r{$this->yellow}    Auth index should error when no token...";
 
-    $this->get($this->path, [], ['Accept' => 'application/json']);
-
-    $this->assertTokenNotProvided();
+    $this->assertTokenNotProvided('get', $this->url);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -36,9 +34,7 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth user should error when no token...";
 
-    $this->get($this->path . '/user', [], ['Accept' => 'application/json']);
-
-    $this->assertTokenNotProvided();
+    $this->assertTokenNotProvided('get', $this->url . '/user');
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -48,9 +44,7 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth refresh should error when no token...";
 
-    $this->patch($this->path . '/refresh', [], ['Accept' => 'application/json']);
-
-    $this->assertTokenNotProvided();
+    $this->assertTokenNotProvided('patch', $this->url . '/refresh');
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -60,9 +54,7 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth invalidate should error when no token...";
 
-    $this->delete($this->path . '/invalidate', [], ['Accept' => 'application/json']);
-
-    $this->assertTokenNotProvided();
+    $this->assertTokenNotProvided('delete', $this->url . '/invalidate');
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -73,7 +65,7 @@ class AuthControllerTest extends TestCase
     echo "\n\r{$this->yellow}    Auth invalid login should return an error ...";
 
     // Test unauthenticated access.
-    $this->post($this->path . '/login', [
+    $this->post($this->url . '/login', [
       'email'    => 'email@domain.com',
       'password' => 'supersecret',
     ], ['Accept' => 'application/json']);
@@ -91,11 +83,11 @@ class AuthControllerTest extends TestCase
   /** @test **/
   public function auth_valid_login_should_return_a_jwt()
   {
-    echo "\n\r{$this->yellow}    Auth valid login should return a jwt ...";
+    echo "\n\r{$this->yellow}    Auth valid login should return a token ...";
 
     $user = $this->userFactory();
 
-    $this->post($this->path . '/login', [
+    $this->post($this->url . '/login', [
       'email'    => $user->email,
       'password' => 'supersecret',
     ], ['Accept' => 'application/json']);
@@ -112,22 +104,41 @@ class AuthControllerTest extends TestCase
   }
 
   /** @test **/
+  public function auth_should_error_when_using_an_invalid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth should error when using an invalid token...";
+
+    $tests = [
+      ['method' => 'get', 'url' => $this->url],
+      ['method' => 'patch', 'url' => $this->url . '/refresh'],
+      ['method' => 'delete', 'url' => $this->url . '/invalidate'],
+      ['method' => 'get', 'url' => $this->url . '/user'],
+    ];
+
+    foreach ($tests as $test) {
+      $token = '1232123.123213.123123';
+      JWTAuth::setToken($token);
+      $headers = array(
+        "Accept"        => "application/json",
+        "Authorization" => "Bearer " . $token,
+      );
+      $method = $test['method'];
+      $this->{$method}($test['url'], [], $headers);
+      $body = json_decode($this->response->getContent(), true);
+      $this->assertArrayHasKey('error', $body);
+      $this->assertEquals('token_invalid', $body['error']['message']);
+      $this->seeStatusCode(400);
+    }
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
   public function auth_index_should_return_version_when_using_a_valid_token()
   {
     echo "\n\r{$this->yellow}    Auth index should return version when using a valid token...";
 
-    $user = $this->userFactory();
-
-    $token = JWTAuth::fromUser($user);
-    JWTAuth::setToken($token);
-    $headers = array(
-      "Accept"        => "application/json",
-      "Authorization" => "Bearer " . $token,
-    );
-
-    $this->get($this->path, $headers);
-
-    $body = json_decode($this->response->getContent(), true);
+    $body = $this->jwtAuthTest('get', $this->url);
 
     $this->seeStatusCode(200);
     $this->assertArrayHasKey('message', $body);
@@ -141,18 +152,7 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth refresh should return jwt token when using a valid token...";
 
-    $user = $this->userFactory();
-
-    $token = JWTAuth::fromUser($user);
-    JWTAuth::setToken($token);
-    $headers = array(
-      "Accept"        => "application/json",
-      "Authorization" => "Bearer " . $token,
-    );
-
-    $this->patch($this->path . '/refresh', [], $headers);
-
-    $body = json_decode($this->response->getContent(), true);
+    $body = $this->jwtAuthTest('patch', $this->url . '/refresh');
 
     $this->seeStatusCode(200);
     $this->assertArrayHasKey('message', $body);
@@ -166,6 +166,48 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth invalidate should delete jwt token when using a valid token...";
 
+    $body = $this->jwtAuthTest('delete', $this->url . '/invalidate');
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('message', $body);
+    $this->assertEquals('token_invalidated', $body['message']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /**
+   * Provides boilerplate test instructions for assertions.
+   *
+   */
+  private function assertTokenNotProvided($method, $url)
+  {
+    switch ($method) {
+      case 'get':
+        $this->get($url, [], ['Accept' => 'application/json']);
+        break;
+      case 'post':
+        $this->post($url, [], ['Accept' => 'application/json']);
+        break;
+      case 'put':
+        $this->put($url, [], ['Accept' => 'application/json']);
+        break;
+      case 'patch':
+        $this->patch($url, [], ['Accept' => 'application/json']);
+        break;
+      case 'delete':
+        $this->delete($url, [], ['Accept' => 'application/json']);
+        break;
+    }
+
+    $body = json_decode($this->response->getContent(), true);
+
+    $this->assertArrayHasKey('error', $body);
+    $this->assertEquals('token_not_provided', $body['error']['message']);
+    $this->seeStatusCode(400);
+  }
+
+  private function jwtAuthTest($method, $url)
+  {
     $user = $this->userFactory();
 
     $token = JWTAuth::fromUser($user);
@@ -175,30 +217,27 @@ class AuthControllerTest extends TestCase
       "Authorization" => "Bearer " . $token,
     );
 
-    $this->delete($this->path . '/invalidate', [], $headers);
+    switch ($method) {
+      case 'get':
+        $this->get($url, [], $headers);
+        break;
+      case 'post':
+        $this->post($url, [], $headers);
+        break;
+      case 'put':
+        $this->put($url, [], $headers);
+        break;
+      case 'patch':
+        $this->patch($url, [], $headers);
+        break;
+      case 'delete':
+        $this->delete($url, [], $headers);
+        break;
+    }
 
     $body = json_decode($this->response->getContent(), true);
 
-    $this->seeStatusCode(200);
-    $this->assertArrayHasKey('message', $body);
-    $this->assertEquals('token_invalidated', $body['message']);
-
-    echo " {$this->green}[OK]{$this->white}\n\r";
-  }  
-
-  /**
-   * Provides boilerplate test instructions for assertions.
-   *
-   */
-  private function assertTokenNotProvided()
-  {
-    $body = json_decode($this->response->getContent(), true);
-
-    $this->assertArrayHasKey('error', $body);
-    $this->assertEquals('token_not_provided', $body['error']);
-    $this->seeStatusCode(400);
+    return $body;
   }
-
-
 
 }

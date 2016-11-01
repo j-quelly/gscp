@@ -116,7 +116,8 @@ $app->middleware([
 $app->routeMiddleware([
     // 'hello' => App\Http\Middleware\HelloMiddleware::class,
     // 'auth' => App\Http\Middleware\Authenticate::class,
-    'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+    // 'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+    'jwt.auth'    => App\Http\Middleware\GetUserFromToken::class,
     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,    
 ]);
 
