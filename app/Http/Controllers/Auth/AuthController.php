@@ -29,8 +29,8 @@ class AuthController extends Controller
     } catch (HttpResponseException $e) {
       return new JsonResponse([
         'error' => [
-          'message'     => 'invalid_auth',
-          'status' => Response::HTTP_BAD_REQUEST,
+          'message' => 'Invalid auth',
+          'status'  => Response::HTTP_BAD_REQUEST,
         ],
       ], Response::HTTP_BAD_REQUEST);
     }
@@ -42,7 +42,8 @@ class AuthController extends Controller
       if (!$token = JWTAuth::attempt($credentials)) {
         return new JsonResponse([
           'error' => [
-            'message' => 'invalid_credentials',
+            'message' => 'Invalid credentials',
+            'status'  => Response::HTTP_UNAUTHORIZED,
           ],
         ], Response::HTTP_UNAUTHORIZED);
       }
@@ -50,18 +51,17 @@ class AuthController extends Controller
       // Something went wrong whilst attempting to encode the token
       return new JsonResponse([
         'error' => [
-          'message' => 'could_not_create_token',
+          'message' => 'Could not create token',
+          'status'  => Response::HTTP_INTERNAL_SERVER_ERROR,
         ],
       ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     // All good so return the token
-    return new JsonResponse([
-      'success' => [
-        'message' => 'token_generated',
-        'token'   => $token,
-      ],
-    ]);
+    return new JsonResponse(['data' => [
+      'message' => 'Token generated',
+      'token'   => $token,
+    ]]);
   }
 
   /**
@@ -87,7 +87,7 @@ class AuthController extends Controller
 
     $token->invalidate();
 
-    return new JsonResponse(['message' => 'token_invalidated']);
+    return new JsonResponse(['data' => ['message' => 'Token invalidated']]);
   }
 
   /**
@@ -101,10 +101,10 @@ class AuthController extends Controller
 
     $newToken = $token->refresh();
 
-    return new JsonResponse([
-      'message' => 'token_refreshed',
+    return new JsonResponse(['data' => [
+      'message' => 'Token refreshed',
       'token'   => $newToken,
-    ]);
+    ]]);
   }
 
   /**
@@ -115,9 +115,7 @@ class AuthController extends Controller
   public function getUser()
   {
     return new JsonResponse([
-      'success' => [
-        'user' => JWTAuth::parseToken()->authenticate(),
-      ],
+      'data' => JWTAuth::parseToken()->authenticate(),
     ]);
   }
 }

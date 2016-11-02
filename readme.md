@@ -22,10 +22,10 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] authentication middleware (JWT)
 	- [x] restrict put post and delete endpoints
 	- [x] finish writing tests for auth controller	
-	- [ ] refactor auth tests again (remove repeatitive code)
+	- [x] refactor auth tests again (remove repeatitive code)
 	- [x] test invalid token	
-	- [ ] test auth login validation
-	- [ ] auth controller should return data in the same format as other controllers
+	- [x] test validation
+	- [x] auth controller should return data in the same format as other controllers
 	- [ ] work on status codes
 		- 200 - OK
 		- 201 - Created
