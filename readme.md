@@ -26,7 +26,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [x] test invalid token	
 	- [x] test validation
 	- [x] auth controller should return data in the same format as other controllers
-	- [ ] work on status codes
+	- [x] work on status codes
 		- 200 - OK
 		- 201 - Created
 		- 304 - Not modified
@@ -36,8 +36,8 @@ $ php vendor/phpunit/phpunit/phpunit
 		- 404 - Not found		
 		- 405 - Method not allowed
 		- 500 - Internal Server Error
-	- [ ] auth tests may be creating too many users in DB, find a solution to this		
 	- [x] cleanup tests (remove repeatitive code)
+	- [ ] auth tests may be creating too many users in DB, find a solution to this		
 - [x] add test db
 - [ ] make sure remote uses production db
 - [ ] ability to seed production db
