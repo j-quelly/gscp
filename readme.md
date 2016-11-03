@@ -37,18 +37,10 @@ $ php vendor/phpunit/phpunit/phpunit
 		- 405 - Method not allowed
 		- 500 - Internal Server Error
 	- [x] cleanup tests (remove repeatitive code)
-	- [ ] auth tests may be creating too many users in DB, find a solution to this		
+	- [ ] find a way to mock user authentication 
 - [x] add test db
-- [ ] make sure remote uses production db
-- [ ] ability to seed production db
-- [ ] remove or replace
-	- [ ] book migration
-	- [ ] book seed
-	- [ ] book model
-	- [ ] book controller
-	- [ ] book transformer
-	- [ ] book factory
-	- [ ] everything related to authors
+- [x] make sure remote uses production db
+- [x] ability to migrate and seed the production db
 - [ ] improve book controler validation and custom messages
 	- [ ] run tests not in debug mode to see what responses are 
 	- [ ] make sure tests are passing for this as well	
@@ -60,8 +52,18 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] write tests
 - [ ] crud server
 	- [ ] write tests
-- [ ] test remote is working
-	- [ ] may need php_memcache.dll and memcached service
-- [ ] confirm there is no issue with memcached othewise switch to redis
-		- [ ] memcache removed temporarily, set to file
-- [ ] look into security concerns with using JWT
+- [x] test remote is working
+	- [x] memcache removed temporarily, set to file
+- [ ] look into security concerns with using JWT on client side
+- [ ] setup cache
+	- [ ] confirm there is no issue with memcached 
+			- [ ] may need php_memcache.dll and memcached service		
+	- [ ] othewise switch to redis?
+- [ ] remove or replace
+	- [ ] book migration
+	- [ ] book seed
+	- [ ] book model
+	- [ ] book controller
+	- [ ] book transformer
+	- [ ] book factory
+	- [ ] everything related to authors

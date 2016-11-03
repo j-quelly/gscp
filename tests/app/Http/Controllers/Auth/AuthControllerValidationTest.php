@@ -80,6 +80,26 @@ class AuthControllerValidationTest extends TestCase
   }
 
   /** @test **/
+  public function auth_login_is_invalid_when_email_is_invalid()
+  {
+    echo "\n\r{$this->yellow}    Auth login is invalid when email is invalid...";
+
+    $this->post($this->url . '/login', [
+      'email'    => 'jerpaderp',
+      'password' => 'supersecret',
+    ], ['Accept' => 'application/json']);
+
+    $body = $this->response->getData(true);
+
+    $this->seeStatusCode(400);
+    $this->assertArrayHasKey('error', $body);
+    $this->assertArrayHasKey('message', $body['error']);
+    $this->assertEquals('The given data failed to pass validation.', $body['error']['message']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+    /** @test **/
   public function auth_login_is_invalid_when_email_is_too_long()
   {
     echo "\n\r{$this->yellow}    Auth login is invalid when email is too long...";

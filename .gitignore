@@ -4,5 +4,7 @@ Homestead.json
 Homestead.yaml
 .env
 .env.testing
+.env.production
 sftp-config.json
 sftp-config-alt.json
+/config/database.php
