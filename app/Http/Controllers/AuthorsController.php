@@ -17,10 +17,7 @@ class AuthorsController extends Controller
 
   public function show($id)
   {
-    return $this->item(
-      Author::findorFail($id),
-      new AuthorTransformer()
-    );
+    return $this->item(Author::findOrFail($id), new AuthorTransformer());
   }
 
   public function store(Request $request)

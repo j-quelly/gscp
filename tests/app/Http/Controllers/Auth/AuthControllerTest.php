@@ -3,17 +3,35 @@
 // use Laravel\Lumen\Testing\DatabaseTransactions;
 namespace tests\app\Http\Controllers;
 
+use JWTAuth;
+// use Illuminate\Support\Facades\Artisan as Artisan;
+
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
-use JWTAuth;
+use Laravel\Lumen\Testing\DatabaseMigrations;
 use TestCase;
 
 class AuthControllerTest extends TestCase
 {
+  use DatabaseMigrations;
+
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
   private $url    = '/v1/auth';
+
+  // public function setUp()
+  // {
+  //   parent::setUp();
+  //   // Artisan::call('migrate');
+
+  // }
+
+  // public function tearDown()
+  // {
+  //   // Artisan::call('migrate:reset');
+  //   parent::tearDown();
+  // }
 
   /** @test **/
   public function auth_should_error_when_no_token()
@@ -64,7 +82,7 @@ class AuthControllerTest extends TestCase
     }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
-  }  
+  }
 
   /** @test **/
   public function auth_invalid_login_should_return_an_error()

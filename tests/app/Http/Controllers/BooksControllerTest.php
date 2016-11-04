@@ -18,20 +18,20 @@ class BooksControllerTest extends TestCase
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
 
-  public function setUp()
-  {
-    parent::setUp();
+  // public function setUp()
+  // {
+  //   parent::setUp();
 
-    Carbon::setTestNow(Carbon::now('UTC'));
+  //   Carbon::setTestNow(Carbon::now('UTC'));
 
-  }
+  // }
 
-  public function tearDown()
-  {
-    parent::tearDown();
+  // public function tearDown()
+  // {
+  //   parent::tearDown();
 
-    Carbon::setTestNow();
-  }
+  //   Carbon::setTestNow();
+  // }
 
   /** @test **/
   public function index_status_code_should_be_200()
@@ -186,7 +186,7 @@ class BooksControllerTest extends TestCase
       'title'       => 'The Invisible Man',
       'description' => 'An invisible man is trapped in the terror of his own c\
 reation',
-      'author_id' => $author->id
+      'author_id'   => $author->id,
     ]);
 
     $this

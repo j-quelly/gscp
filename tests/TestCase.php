@@ -20,6 +20,24 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
 
     // return require __DIR__ . '/../bootstrap/app.php';
   }
+ 
+  // public function setUp()
+  // {
+  //   parent::setUp();
+
+  //   // $this->refreshApplication();
+
+  //   $this->artisan('migrate');
+  // }
+
+  // public function tearDown()
+  // {
+  //   $this->artisan('migrate:reset');
+
+  //   parent::tearDown();
+  // }
+
+  // todo: maybe add a method for seeding the database
 
 /**
  * See if the response has a header.
@@ -75,23 +93,23 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     return $books;
   }
 
-/**
- * Return request headers needed to interact with the API.
- *
- * @return Array array of headers.
- */
-  protected function headers($user = null)
-  {
-    $headers = ['Accept' => 'application/json'];
+// /**
+  //  * Return request headers needed to interact with the API.
+  //  *
+  //  * @return Array array of headers.
+  //  */
+  //   protected function headers($user = null)
+  //   {
+  //     $headers = ['Accept' => 'application/json'];
 
-    if (!is_null($user)) {
-      $token = JWTAuth::fromUser($user);
-      JWTAuth::setToken($token);
-      $headers['Authorization'] = 'Bearer ' . $token;
-    }
+//     if (!is_null($user)) {
+  //       $token = JWTAuth::fromUser($user);
+  //       JWTAuth::setToken($token);
+  //       $headers['Authorization'] = 'Bearer ' . $token;
+  //     }
 
-    return $headers;
-  }
+//     return $headers;
+  //   }
 
 /**
  * Convenience method for creating a user

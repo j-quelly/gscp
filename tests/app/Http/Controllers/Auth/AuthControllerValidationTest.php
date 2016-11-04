@@ -3,16 +3,33 @@
 // use Laravel\Lumen\Testing\DatabaseTransactions;
 namespace tests\app\Http\Controllers;
 
+use Laravel\Lumen\Testing\DatabaseMigrations;
+
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
 use TestCase;
 
 class AuthControllerValidationTest extends TestCase
 {
+  use DatabaseMigrations;
+
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
   private $url    = '/v1/auth';
+
+  // public function setUp()
+  // {
+  //   parent::setUp();
+  //   // Artisan::call('migrate');
+
+  // }
+
+  // public function tearDown()
+  // {
+  //   // Artisan::call('migrate:reset');
+  //   parent::tearDown();
+  // }
 
   /** @test **/
   public function auth_validation_validates_required_fields()
@@ -99,7 +116,7 @@ class AuthControllerValidationTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
-    /** @test **/
+  /** @test **/
   public function auth_login_is_invalid_when_email_is_too_long()
   {
     echo "\n\r{$this->yellow}    Auth login is invalid when email is too long...";
