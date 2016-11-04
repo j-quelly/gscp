@@ -93,24 +93,6 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     return $books;
   }
 
-// /**
-  //  * Return request headers needed to interact with the API.
-  //  *
-  //  * @return Array array of headers.
-  //  */
-  //   protected function headers($user = null)
-  //   {
-  //     $headers = ['Accept' => 'application/json'];
-
-//     if (!is_null($user)) {
-  //       $token = JWTAuth::fromUser($user);
-  //       JWTAuth::setToken($token);
-  //       $headers['Authorization'] = 'Bearer ' . $token;
-  //     }
-
-//     return $headers;
-  //   }
-
 /**
  * Convenience method for creating a user
  *
@@ -158,9 +140,9 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
         break;
     }
 
-    $body = json_decode($this->response->getContent(), true);
+    $data = json_decode($this->response->getContent(), true);
 
-    return $body;
+    return $data;
   }
 
 }

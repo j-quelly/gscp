@@ -90,15 +90,14 @@ class AuthorsControllerTest extends TestCase
     $body = $this->jwtAuthTest('get', '/v1/authors/1234');
 
     $this->seeStatusCode(Response::HTTP_NOT_FOUND);
-
-    var_dump($body);
-    
-    // $this->seeJson([
-    //   'message' => 'Not Found',
-    //   'status'  => Response::HTTP_NOT_FOUND,
-    // ]);
+    $this->seeJson([
+      'message' => 'Not Found',
+      'status'  => Response::HTTP_NOT_FOUND,
+    ]);
 
     // $body = json_decode($this->response->getContent(), true);
+
+    var_dump($body);
 
     // dd($body);
 
