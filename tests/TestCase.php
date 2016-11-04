@@ -20,7 +20,7 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
 
     // return require __DIR__ . '/../bootstrap/app.php';
   }
- 
+
   // public function setUp()
   // {
   //   parent::setUp();
@@ -117,14 +117,11 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
 
     $token = JWTAuth::fromUser($user);
     JWTAuth::setToken($token);
-    $headers = array(
-      "Accept"        => "application/json",
-      "Authorization" => "Bearer " . $token,
-    );
+    $headers = array('Accept' => 'application/json', 'Authentication' => 'Bearer ' . $token);
 
     switch ($method) {
       case 'get':
-        $this->get($url, $body, $headers);
+        $this->get($url, $headers);
         break;
       case 'post':
         $this->post($url, $body, $headers);

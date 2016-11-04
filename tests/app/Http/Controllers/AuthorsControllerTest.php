@@ -83,11 +83,8 @@ class AuthorsControllerTest extends TestCase
   public function show_should_fail_on_an_invalid_author()
   {
     echo "\n\r{$this->yellow}    Show should fail on an invalid author...";
-
-    // $this->withoutMiddleware();
-
-    // $this->get('/v1/authors/1234', [], ['Accept' => 'application/json']);
-    $body = $this->jwtAuthTest('get', '/v1/authors/1234');
+    
+    $body = $this->jwtAuthTest('get', '/v1/authors/1234'); 
 
     $this->seeStatusCode(Response::HTTP_NOT_FOUND);
     $this->seeJson([
@@ -95,16 +92,10 @@ class AuthorsControllerTest extends TestCase
       'status'  => Response::HTTP_NOT_FOUND,
     ]);
 
-    // $body = json_decode($this->response->getContent(), true);
-
-    var_dump($body);
-
-    // dd($body);
-
-    // $this->assertArrayHasKey('error', $body);
-    // $error = $body['error'];
-    // $this->assertEquals('Not Found', $error['message']);
-    // $this->assertEquals(Response::HTTP_NOT_FOUND, $error['status']);
+    $this->assertArrayHasKey('error', $body);
+    $error = $body['error'];
+    $this->assertEquals('Not Found', $error['message']);
+    $this->assertEquals(Response::HTTP_NOT_FOUND, $error['status']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
