@@ -187,38 +187,4 @@ class AuthControllerTest extends TestCase
     $this->seeStatusCode(400);
   }
 
-  private function jwtAuthTest($method, $url)
-  {
-    $user = $this->userFactory();
-
-    $token = JWTAuth::fromUser($user);
-    JWTAuth::setToken($token);
-    $headers = array(
-      "Accept"        => "application/json",
-      "Authorization" => "Bearer " . $token,
-    );
-
-    switch ($method) {
-      case 'get':
-        $this->get($url, [], $headers);
-        break;
-      case 'post':
-        $this->post($url, [], $headers);
-        break;
-      case 'put':
-        $this->put($url, [], $headers);
-        break;
-      case 'patch':
-        $this->patch($url, [], $headers);
-        break;
-      case 'delete':
-        $this->delete($url, [], $headers);
-        break;
-    }
-
-    $body = json_decode($this->response->getContent(), true);
-
-    return $body;
-  }
-
 }

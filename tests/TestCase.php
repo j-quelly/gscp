@@ -106,4 +106,43 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     return $user;
   }
 
+/**
+ * Convenience method for getting jwt and authenticating
+ *
+ * @return $body
+ */
+  protected function jwtAuthTest($method, $url, $body = [])
+  {
+    $user = $this->userFactory();
+
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $headers = array(
+      "Accept"        => "application/json",
+      "Authorization" => "Bearer " . $token,
+    );
+
+    switch ($method) {
+      case 'get':
+        $this->get($url, $body, $headers);
+        break;
+      case 'post':
+        $this->post($url, $body, $headers);
+        break;
+      case 'put':
+        $this->put($url, $body, $headers);
+        break;
+      case 'patch':
+        $this->patch($url, $body, $headers);
+        break;
+      case 'delete':
+        $this->delete($url, $body, $headers);
+        break;
+    }
+
+    $body = json_decode($this->response->getContent(), true);
+
+    return $body;
+  }
+
 }
