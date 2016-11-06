@@ -1,24 +1,22 @@
-# lumen gscp api
+# lumen gscp api 0.1.1
 Building an open source game server control panel API with Lumen 5.3
 
-### Current Version: 0.1.1
-
-## getting started
+### getting started
 $ php -S localhost:8888 -t public
 
-## mirgrating db
+### mirgrating db
 $ php artisan migrate
 $ php artisan migrate -database=mysql-prod
 
-## seeding db
+### seeding db
 1. $ composer dump-autoload
 2. $ php artisan migrate:refresh
 3. $ php artisan db:seed
 
-## testing
+### testing
 $ phpunit --no-globals-backup
 
-## testing alternative
+### testing alternative
 $ php vendor/phpunit/phpunit/phpunit
 
 ## Changelog
