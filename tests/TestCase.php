@@ -2,6 +2,7 @@
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
+
 class TestCase extends Laravel\Lumen\Testing\TestCase
 {
   use MockeryPHPUnitIntegration;
@@ -14,30 +15,9 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
   {
     $app = require __DIR__ . '/../bootstrap/app.php';
 
-    // $app->loadEnvironmentFrom('.env.testing');
-
-    return $app;
-
     // return require __DIR__ . '/../bootstrap/app.php';
+    return $app;    
   }
-
-  // public function setUp()
-  // {
-  //   parent::setUp();
-
-  //   // $this->refreshApplication();
-
-  //   $this->artisan('migrate');
-  // }
-
-  // public function tearDown()
-  // {
-  //   $this->artisan('migrate:reset');
-
-  //   parent::tearDown();
-  // }
-
-  // todo: maybe add a method for seeding the database
 
 /**
  * See if the response has a header.
@@ -117,7 +97,10 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
 
     $token = JWTAuth::fromUser($user);
     JWTAuth::setToken($token);
-    $headers = array('Accept' => 'application/json', 'Authentication' => 'Bearer ' . $token);
+    $headers = array(
+      'Accept'        => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    );
 
     switch ($method) {
       case 'get':
@@ -127,6 +110,7 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
         $this->post($url, $body, $headers);
         break;
       case 'put':
+        // var_dump($body);
         $this->put($url, $body, $headers);
         break;
       case 'patch':

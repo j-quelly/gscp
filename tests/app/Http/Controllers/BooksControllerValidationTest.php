@@ -3,16 +3,16 @@
 namespace Tests\App\Http\Controllers;
 
 use Illuminate\Http\Response;
-use Laravel\Lumen\Testing\DatabaseMigrations;
 use TestCase;
 
 class BooksControllerValidationTest extends TestCase
 {
-  use DatabaseMigrations;
+  // use DatabaseMigrations;
 
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
+  private $url    = "/v1/books";
 
   /** @test **/
   public function it_validates_required_fields_when_creating_a_new_book()
@@ -20,21 +20,13 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->green}Books Controller Validation Tests:";
     echo "\n\r{$this->yellow}    It validates required fields when creating a new book...";
 
-    $this->post('/v1/books', [], ['Accept' => 'application/json']);
+    $data = $this->jwtAuthTest('post', $this->url);
 
     $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->response->getStatusCode());
-
-    $body = json_decode($this->response->getContent(), true);
-
-    // todo: this should be improved
-    $desc = $body['error']['debug']['trace'][1]['args'][2];
-    $body = $body['error']['debug']['trace'][1]['args'][1];
-
-    $this->assertArrayHasKey('title', $body);
-    $this->assertArrayHasKey('description', $body);
-
-    $this->assertEquals("required|max:255", $body['title']);
-    $this->assertEquals("Please fill out the description.", $desc['description.required']);
+    $this->assertArrayHasKey('error', $data);
+    $this->assertArrayHasKey('message', $data['error']);
+    $this->assertArrayHasKey('status', $data['error']);
+    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -45,22 +37,13 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}    It validates required fields when updating a new book...";
 
     $book = $this->bookFactory();
-
-    $this->put("/v1/books/{$book->id}", [], ['Accept' => 'application/json']);
+    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}");
 
     $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->response->getStatusCode());
-
-    $body = json_decode($this->response->getContent(), true);
-
-    // todo: this should be improved
-    $desc = $body['error']['debug']['trace'][1]['args'][2];
-    $body = $body['error']['debug']['trace'][1]['args'][1];
-
-    $this->assertArrayHasKey('title', $body);
-    $this->assertArrayHasKey('description', $body);
-
-    $this->assertEquals("required|max:255", $body['title']);
-    $this->assertEquals("Please fill out the description.", $desc['description.required']);
+    $this->assertArrayHasKey('error', $data);
+    $this->assertArrayHasKey('message', $data['error']);
+    $this->assertArrayHasKey('status', $data['error']);
+    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -74,23 +57,22 @@ class BooksControllerValidationTest extends TestCase
     $book        = $this->bookFactory();
     $book->title = str_repeat('a', 256);
 
-    $this->post("/v1/books", [
+    $postData = [
       'title'       => $book->title,
       'description' => $book->description,
       'author_id'   => $book->author->id,
-    ], ['Accept' => 'application/json']);
+    ];
+
+    $data = $this->jwtAuthTest('post', $this->url, $postData);
 
     $this
       ->seeStatusCode(Response::HTTP_BAD_REQUEST)
       ->notSeeInDatabase('book', ['title' => $book->title]);
 
-    $body = json_decode($this->response->getContent(), true);
-
-    $body = $body['error']['debug']['trace'][1]['args'][1];
-
-    $this->assertArrayHasKey('title', $body);
-
-    $this->assertEquals("required|max:255", $body['title']);
+    $this->assertArrayHasKey('error', $data);
+    $this->assertArrayHasKey('message', $data['error']);
+    $this->assertArrayHasKey('status', $data['error']);
+    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -104,23 +86,21 @@ class BooksControllerValidationTest extends TestCase
     $book        = $this->bookFactory();
     $book->title = str_repeat('a', 256);
 
-    $this->put("/v1/books/{$book->id}", [
+    $postData = [
       'title'       => $book->title,
       'description' => $book->description,
       'author_id'   => $book->author->id,
-    ], ['Accept' => 'application/json']);
+    ];
+
+    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
 
     $this
       ->seeStatusCode(Response::HTTP_BAD_REQUEST)
       ->notSeeInDatabase('book', ['title' => $book->title]);
-
-    $body = json_decode($this->response->getContent(), true);
-
-    $body = $body['error']['debug']['trace'][1]['args'][1];
-
-    $this->assertArrayHasKey('title', $body);
-
-    $this->assertEquals("required|max:255", $body['title']);
+    $this->assertArrayHasKey('error', $data);
+    $this->assertArrayHasKey('message', $data['error']);
+    $this->assertArrayHasKey('status', $data['error']);
+    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -134,11 +114,13 @@ class BooksControllerValidationTest extends TestCase
     $book        = $this->bookFactory();
     $book->title = str_repeat('a', 255);
 
-    $this->post("/v1/books", [
+    $postData = [
       'title'       => $book->title,
       'description' => $book->description,
       'author_id'   => $book->author->id,
-    ], ['Accept' => 'application/json']);
+    ];
+
+    $data = $this->jwtAuthTest('post', $this->url, $postData);
 
     $this
       ->seeStatusCode(Response::HTTP_CREATED)
@@ -156,11 +138,13 @@ class BooksControllerValidationTest extends TestCase
     $book        = $this->bookFactory();
     $book->title = str_repeat('a', 255);
 
-    $this->put("/v1/books/{$book->id}", [
+    $postData = [
       'title'       => $book->title,
       'description' => $book->description,
       'author_id'   => $book->author->id,
-    ], ['Accept' => 'application/json']);
+    ];
+
+    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
 
     $this
       ->seeStatusCode(Response::HTTP_OK)

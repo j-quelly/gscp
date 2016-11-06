@@ -1,35 +1,15 @@
 <?php
 
-// use Laravel\Lumen\Testing\DatabaseTransactions;
 namespace tests\app\Http\Controllers;
-
-use Laravel\Lumen\Testing\DatabaseMigrations;
-
-// use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
 use TestCase;
 
 class AuthControllerValidationTest extends TestCase
 {
-  use DatabaseMigrations;
-
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
   private $url    = '/v1/auth';
-
-  // public function setUp()
-  // {
-  //   parent::setUp();
-  //   // Artisan::call('migrate');
-
-  // }
-
-  // public function tearDown()
-  // {
-  //   // Artisan::call('migrate:reset');
-  //   parent::tearDown();
-  // }
 
   /** @test **/
   public function auth_validation_validates_required_fields()

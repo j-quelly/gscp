@@ -6,32 +6,55 @@ namespace tests\app\Http\Controllers;
 // use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
 
 use Carbon\Carbon;
-use Laravel\Lumen\Testing\DatabaseMigrations;
 // use Illuminate\Foundation\Testing\DatabaseMigrations; ** deprecated
+use Illuminate\Support\Facades\Artisan as Artisan;
 use TestCase;
 
 class BooksControllerTest extends TestCase
 {
-  use DatabaseMigrations;
+  // use DatabaseMigrations;
 
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
+  private $url    = "/v1/books";
 
-  // public function setUp()
-  // {
-  //   parent::setUp();
+  /**
+   * Disclaimer:
+   * the "right" way to do testing, that gives you the greatest 
+   * confidence your tests methods don't get subtly interdependent in 
+   * bug-hiding ways, is to re-seed your db before every test method, so 
+   * just put seeding code in plain setUp if you can afford the 
+   * performance penalty
+   */
 
-  //   Carbon::setTestNow(Carbon::now('UTC'));
+  protected static $dbInitiated = false;
 
-  // }
+  protected static function initDB()
+  {
+    echo "\n\r\e[0;31mRefreshing the database...\n\r";
+    Artisan::call('migrate:refresh');
+    Artisan::call('db:seed');
+  }
 
-  // public function tearDown()
-  // {
-  //   parent::tearDown();
+  public function setUp()
+  {
+    parent::setUp();
 
-  //   Carbon::setTestNow();
-  // }
+    if (!static::$dbInitiated) {
+      static::$dbInitiated = true;
+      static::initDB();
+    }
+
+    Carbon::setTestNow(Carbon::now('UTC'));
+  }
+
+  public function tearDown()
+  {
+    parent::tearDown();
+
+    Carbon::setTestNow();
+  }
 
   /** @test **/
   public function index_status_code_should_be_200()
@@ -39,7 +62,8 @@ class BooksControllerTest extends TestCase
     echo "\n\r{$this->green}Books Controller Tests:";
     echo "\n\r{$this->yellow}    It should see JSON...";
 
-    $this->get('/v1/books')->seeStatusCode(200);
+    $data = $this->jwtAuthTest('get', $this->url);
+    $this->seeStatusCode(200);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -51,9 +75,8 @@ class BooksControllerTest extends TestCase
 
     $books = $this->bookFactory(2);
 
-    $this->get('/v1/books');
+    $content = $this->jwtAuthTest('get', $this->url);
 
-    $content = json_decode($this->response->getContent(), true);
     $this->assertArrayHasKey('data', $content);
 
     foreach ($books as $book) {
@@ -78,9 +101,9 @@ class BooksControllerTest extends TestCase
 
     $book = $this->bookFactory();
 
-    $this
-      ->get("/v1/books/{$book->id}")
-      ->seeStatusCode(200);
+    $content = $this->jwtAuthTest('get', $this->url . "/{$book->id}");
+
+    $this->seeStatusCode(200);
 
     // Get the response and assert the data key exists
     $content = json_decode($this->response->getContent(), true);
@@ -104,8 +127,9 @@ class BooksControllerTest extends TestCase
 
     echo "\n\r{$this->yellow}    Show should fail when the book id does not exist...";
 
+    $data = $this->jwtAuthTest('get', $this->url . "/99999");
+
     $this
-      ->get('/v1/books/99999', ['Accept' => 'application/json'])
       ->seeStatusCode(404)
       ->seeJson([
         'message' => 'Not Found',
@@ -120,7 +144,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Show should not match an invalid route...";
 
-    $this->get('/v1/books/this-is-invalid');
+    $data = $this->jwtAuthTest('get', $this->url . "/this-is-invalid");
 
     $this->assertNotRegExp(
       '/Book not found/',
@@ -141,17 +165,13 @@ class BooksControllerTest extends TestCase
       'name' => 'H. G. Wells',
     ]);
 
-    $this->post('/v1/books', [
+    $postData = [
       'title'       => 'The Invisible Man',
       'description' => 'An invisible man is trapped in the terror of his own creation',
       'author_id'   => $author->id,
-    ], ['Accept' => 'application/json']);
+    ];
 
-    $body = json_decode($this->response->getContent(), true);
-
-    // dump data and exit
-    // dd($body);
-    // dd($body, $this->response->getStatusCode());
+    $body = $this->jwtAuthTest('post', $this->url, $postData);
 
     $this->assertArrayHasKey('data', $body);
 
@@ -182,12 +202,13 @@ class BooksControllerTest extends TestCase
 
     $author = factory(\App\Author::class)->create();
 
-    $this->post('/v1/books', [
+    $postData = [
       'title'       => 'The Invisible Man',
-      'description' => 'An invisible man is trapped in the terror of his own c\
-reation',
+      'description' => 'An invisible man is trapped in the terror of his own creation',
       'author_id'   => $author->id,
-    ]);
+    ];
+
+    $body = $this->jwtAuthTest('post', $this->url, $postData);
 
     $this
       ->seeStatusCode(201)
@@ -209,16 +230,19 @@ reation',
       'description' => 'The book is way better than the movie.',
     ]);
 
-    $this->put("/v1/books/{$book->id}", [
+    $postData = [
       'id'          => 5,
       'title'       => 'The War of the Worlds',
       'description' => 'The book is way better than the movie.',
-    ], ['Accept' => 'application/json']);
+      'author_id'   => 1,
+    ];
+
+    $body = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
 
     $this
       ->seeStatusCode(200)
       ->seeJson([
-        'id'          => 1,
+        'id'          => $book->id,
         'title'       => 'The War of the Worlds',
         'description' => 'The book is way better than the movie.',
       ])
@@ -226,7 +250,6 @@ reation',
         'title' => 'The War of the Worlds',
       ]);
 
-    $body = json_decode($this->response->getContent(), true);
     $this->assertArrayHasKey('data', $body);
 
     $data = $body['data'];
@@ -243,8 +266,9 @@ reation',
   {
     echo "\n\r{$this->yellow}    Update should fail with an invalid id...";
 
+    $body = $this->jwtAuthTest('put', $this->url . "/999999999");
+
     $this
-      ->put('/v1/books/999999999999999')
       ->seeStatusCode(404)
       ->seeJsonEquals([
         'error' => [
@@ -260,8 +284,10 @@ reation',
   {
     echo "\n\r{$this->yellow}    Update should not match an invalid route...";
 
-    $this->put('/v1/adbooks/this-is-invalid')
-      ->seeStatusCode(404);
+    $body = $this->jwtAuthTest('put', $this->url . "/this-is-invalid");
+
+    // $this->put('/v1/adbooks/this-is-invalid')
+    $this->seeStatusCode(404);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -273,8 +299,9 @@ reation',
 
     $book = $this->bookFactory();
 
+    $body = $this->jwtAuthTest('delete', $this->url . "/{$book->id}");
+
     $this
-      ->delete("/v1/books/{$book->id}")
       ->seeStatusCode(204)
       ->isEmpty();
 
@@ -287,8 +314,10 @@ reation',
   public function destroy_should_return_a_404_with_an_invalid_id()
   {
     echo "\n\r{$this->yellow}    Destroy should return a 404 with an invalid id...";
+
+    $body = $this->jwtAuthTest('delete', $this->url . "/99999");
+
     $this
-      ->delete('/v1/books/99999')
       ->seeStatusCode(404)
       ->seeJsonEquals([
         'error' => [
@@ -302,8 +331,11 @@ reation',
   public function destroy_should_not_match_an_invalid_route()
   {
     echo "\n\r{$this->yellow}    Destroy should not match an invalid route...";
-    $this->delete('/v1/books/this-is-invalid')
-      ->seeStatusCode(404);
+
+    $body = $this->jwtAuthTest('delete', $this->url . "/this-is-invalid");
+
+    $this->seeStatusCode(404);
+
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 

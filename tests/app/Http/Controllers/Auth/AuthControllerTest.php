@@ -1,37 +1,45 @@
 <?php
 
-// use Laravel\Lumen\Testing\DatabaseTransactions;
 namespace tests\app\Http\Controllers;
 
+use Illuminate\Support\Facades\Artisan as Artisan;
 use JWTAuth;
-// use Illuminate\Support\Facades\Artisan as Artisan;
-
-// use Laracasts\Integrated\Extensions\Goutte as IntegrationTest;
-
-use Laravel\Lumen\Testing\DatabaseMigrations;
 use TestCase;
 
 class AuthControllerTest extends TestCase
 {
-  use DatabaseMigrations;
-
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
   private $url    = '/v1/auth';
 
-  // public function setUp()
-  // {
-  //   parent::setUp();
-  //   // Artisan::call('migrate');
+  /**
+   * Disclaimer:
+   * the "right" way to do testing, that gives you the greatest
+   * confidence your tests methods don't get subtly interdependent in
+   * bug-hiding ways, is to re-seed your db before every test method, so
+   * just put seeding code in plain setUp if you can afford the
+   * performance penalty
+   */
 
-  // }
+  protected static $dbInitiated = false;
 
-  // public function tearDown()
-  // {
-  //   // Artisan::call('migrate:reset');
-  //   parent::tearDown();
-  // }
+  protected static function initDB()
+  {
+    echo "\n\r\e[0;31mRefreshing the database...\n\r";
+    Artisan::call('migrate:refresh');
+    Artisan::call('db:seed');
+  }
+
+  public function setUp()
+  {
+    parent::setUp();
+
+    if (!static::$dbInitiated) {
+      static::$dbInitiated = true;
+      static::initDB();
+    }
+  }
 
   /** @test **/
   public function auth_should_error_when_no_token()
@@ -44,7 +52,6 @@ class AuthControllerTest extends TestCase
       ['method' => 'patch', 'url' => $this->url . '/refresh'],
       ['method' => 'delete', 'url' => $this->url . '/invalidate'],
       ['method' => 'get', 'url' => $this->url . '/user'],
-      // ['method' => 'get', 'url' => $this->url . '/user'],
     ];
 
     foreach ($tests as $test) {
