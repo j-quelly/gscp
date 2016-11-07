@@ -181,6 +181,39 @@ class AuthControllerTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
+  /** @test **/
+  public function auth_invalid_users_are_restricted_from_private_routes()
+  {
+    echo "\n\r{$this->yellow}    Invalid users are restricted from private routes...";
+
+    $tests = [
+      ['method' => 'get', 'url' => '/v1/users'],
+      ['method' => 'get', 'url' => '/v1/users/1'],
+      ['method' => 'post', 'url' => '/v1/users'],
+      ['method' => 'put', 'url' => '/v1/users/1'],
+      ['method' => 'delete', 'url' => '/v1/users/1'],
+
+      ['method' => 'get', 'url' => '/v1/books'],
+      ['method' => 'get', 'url' => '/v1/books/1'],
+      ['method' => 'post', 'url' => '/v1/books'],
+      ['method' => 'put', 'url' => '/v1/books/1'],
+      ['method' => 'delete', 'url' => '/v1/books/1'], 
+
+      ['method' => 'get', 'url' => '/v1/authors'],
+      ['method' => 'get', 'url' => '/v1/authors/1'],
+      ['method' => 'post', 'url' => '/v1/authors'],
+      ['method' => 'put', 'url' => '/v1/authors/1'],
+      ['method' => 'delete', 'url' => '/v1/authors/1'],             
+    ];
+
+    foreach($tests as $test) {
+      $this->assertTokenNotProvided($test['method'], $test['url']);
+      echo "\n\r        {$this->green}{$test['url']}{$this->white}";
+    }
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }  
+
   /**
    * Provides boilerplate test instructions for assertions.
    *

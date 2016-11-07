@@ -40,13 +40,13 @@ class Handler extends ExceptionHandler
   /**
    * Render an exception into an HTTP response.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \Exception  $e
+   * @param \Illuminate\Http\Request $request
+   * @param \Exception $e
    * @return \Illuminate\Http\Response
    */
   public function render($request, Exception $e)
   {
-    if ($request->wantsJson()) {
+    if ($request->wantsJson() && !($e instanceof ValidationException)) {
       $response = [
         'message' => (string) $e->getMessage(),
         'status'  => 400,
@@ -71,7 +71,6 @@ class Handler extends ExceptionHandler
     }
 
     return parent::render($request, $e);
-
   }
 
   /**

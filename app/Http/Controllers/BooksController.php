@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  */
 class BooksController extends Controller
 {
-  
+
 /**
  * GET /books
  * @return array
@@ -112,6 +112,6 @@ class BooksController extends Controller
     ], [
       'description.required' => 'Please fill out the description.',
     ]);
-  }  
+  }
 
 }
