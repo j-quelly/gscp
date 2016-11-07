@@ -25,6 +25,10 @@ class AuthController extends Controller
       $this->validate($request, [
         'email'    => 'required|email|max:255',
         'password' => 'required',
+      ], [
+        'email.required' => 'The email field is required.',
+        'email.email' => 'The email field must be a valid email.', 
+        'password.required' => 'The password field is required.',
       ]);
     } catch (HttpResponseException $e) {
       return new JsonResponse([

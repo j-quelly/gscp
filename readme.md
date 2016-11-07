@@ -1,4 +1,4 @@
-# lumen gscp api 0.1.1
+# lumen gscp api 0.2.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -40,23 +40,27 @@ $ php vendor/phpunit/phpunit/phpunit
 	- 405 - Method not allowed
 	- 500 - Internal Server Error
 - [x] cleanup tests (remove repeatitive code)
-- [ ] find a way to properly mock user authentication 
 - [x] test restricted routes [11/6/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
+- [x] improve validation error responses [11/7/2016]
+- [ ] find a way to properly mock user authentication 
 
 ### Authors
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
 - [x] make sure tests are passing for this as well	[11/5/2016]
-- [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
+- [x] validation messages are still not verbose enough for front-end devs 
+[11/6/2016]
+- [x] improve validation error responses [11/7/2016]
 
 ### Books
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
 - [x] make sure tests are passing for this as well	[11/5/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
+- [x] improve validation error responses [11/7/2016]
 
 ### Users
 - [x] crud user
-- [ ] user roles
+- [ ] user roles https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
 - [ ] write tests
 
 ### Servers
@@ -87,4 +91,3 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ### Bugs
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
-- [ ] fix all tests

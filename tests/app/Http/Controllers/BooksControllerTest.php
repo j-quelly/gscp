@@ -12,8 +12,6 @@ use TestCase;
 
 class BooksControllerTest extends TestCase
 {
-  // use DatabaseMigrations;
-
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";

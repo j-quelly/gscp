@@ -21,10 +21,14 @@ class AuthControllerValidationTest extends TestCase
 
     $body = $this->response->getData(true);
 
-    $this->seeStatusCode(400);
-    $this->assertArrayHasKey('error', $body);
-    $this->assertArrayHasKey('message', $body['error']);
-    $this->assertEquals('The given data failed to pass validation.', $body['error']['message']);
+    $fields = ["email", "password"];
+
+    $this->seeStatusCode(422);
+
+    foreach ($fields as $field) {
+      $this->assertArrayHasKey($field, $body);
+      $this->assertEquals(["The {$field} field is required."], $body[$field]);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -44,10 +48,14 @@ class AuthControllerValidationTest extends TestCase
 
     $body = $this->response->getData(true);
 
-    $this->seeStatusCode(400);
-    $this->assertArrayHasKey('error', $body);
-    $this->assertArrayHasKey('message', $body['error']);
-    $this->assertEquals('The given data failed to pass validation.', $body['error']['message']);
+    $fields = ["password"];
+
+    $this->seeStatusCode(422);
+
+    foreach ($fields as $field) {
+      $this->assertArrayHasKey($field, $body);
+      $this->assertEquals(["The {$field} field is required."], $body[$field]);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -88,10 +96,14 @@ class AuthControllerValidationTest extends TestCase
 
     $body = $this->response->getData(true);
 
-    $this->seeStatusCode(400);
-    $this->assertArrayHasKey('error', $body);
-    $this->assertArrayHasKey('message', $body['error']);
-    $this->assertEquals('The given data failed to pass validation.', $body['error']['message']);
+    $fields = ["email"];
+
+    $this->seeStatusCode(422);
+
+    foreach ($fields as $field) {
+      $this->assertArrayHasKey($field, $body);
+      $this->assertEquals(["The {$field} field must be a valid {$field}."], $body[$field]);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -110,11 +122,15 @@ class AuthControllerValidationTest extends TestCase
     ], ['Accept' => 'application/json']);
 
     $body = $this->response->getData(true);
+    
+    $fields = ["email"];
 
-    $this->seeStatusCode(400);
-    $this->assertArrayHasKey('error', $body);
-    $this->assertArrayHasKey('message', $body['error']);
-    $this->assertEquals('The given data failed to pass validation.', $body['error']['message']);
+    $this->seeStatusCode(422);
+
+    foreach ($fields as $field) {
+      $this->assertArrayHasKey($field, $body);
+      $this->assertEquals(["The {$field} field must be a valid {$field}."], $body[$field]);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }

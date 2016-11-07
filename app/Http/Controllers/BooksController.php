@@ -110,7 +110,10 @@ class BooksController extends Controller
       'description' => 'required',
       'author_id'   => 'required|exists:authors,id',
     ], [
-      'description.required' => 'Please fill out the description.',
+      'title.required'       => 'The title field is required.',
+      'title.max'           => 'The title field must be less than 256 characters.',
+      'description.required' => 'The description field is required.',
+      'author_id.required'   => 'The author_id field is required.',
     ]);
   }
 

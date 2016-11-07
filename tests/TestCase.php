@@ -110,7 +110,6 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
         $this->post($url, $body, $headers);
         break;
       case 'put':
-        // var_dump($body);
         $this->put($url, $body, $headers);
         break;
       case 'patch':

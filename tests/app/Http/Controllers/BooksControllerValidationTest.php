@@ -7,8 +7,6 @@ use TestCase;
 
 class BooksControllerValidationTest extends TestCase
 {
-  // use DatabaseMigrations;
-
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
@@ -20,13 +18,7 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->green}Books Controller Validation Tests:";
     echo "\n\r{$this->yellow}    It validates required fields when creating a new book...";
 
-    $data = $this->jwtAuthTest('post', $this->url);
-
-    $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->response->getStatusCode());
-    $this->assertArrayHasKey('error', $data);
-    $this->assertArrayHasKey('message', $data['error']);
-    $this->assertArrayHasKey('status', $data['error']);
-    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+    $this->assertInvalidData('post', $this->url);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -37,13 +29,7 @@ class BooksControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}    It validates required fields when updating a new book...";
 
     $book = $this->bookFactory();
-    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}");
-
-    $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->response->getStatusCode());
-    $this->assertArrayHasKey('error', $data);
-    $this->assertArrayHasKey('message', $data['error']);
-    $this->assertArrayHasKey('status', $data['error']);
-    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+    $this->assertInvalidData('put', $this->url . "/{$book->id}");
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -66,13 +52,10 @@ class BooksControllerValidationTest extends TestCase
     $data = $this->jwtAuthTest('post', $this->url, $postData);
 
     $this
-      ->seeStatusCode(Response::HTTP_BAD_REQUEST)
+      ->seeStatusCode(422)
       ->notSeeInDatabase('book', ['title' => $book->title]);
-
-    $this->assertArrayHasKey('error', $data);
-    $this->assertArrayHasKey('message', $data['error']);
-    $this->assertArrayHasKey('status', $data['error']);
-    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+    $this->assertArrayHasKey('title', $data);
+    $this->assertEquals(['The title field must be less than 256 characters.'], $data['title']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -95,12 +78,10 @@ class BooksControllerValidationTest extends TestCase
     $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
 
     $this
-      ->seeStatusCode(Response::HTTP_BAD_REQUEST)
+      ->seeStatusCode(422)
       ->notSeeInDatabase('book', ['title' => $book->title]);
-    $this->assertArrayHasKey('error', $data);
-    $this->assertArrayHasKey('message', $data['error']);
-    $this->assertArrayHasKey('status', $data['error']);
-    $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+    $this->assertArrayHasKey('title', $data);
+    $this->assertEquals(['The title field must be less than 256 characters.'], $data['title']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -153,4 +134,18 @@ class BooksControllerValidationTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
+  private function assertInvalidData($method, $url, $body = [])
+  {
+
+    $data = $this->jwtAuthTest($method, $url, $body);
+
+    $fields = ["title", "description", "author_id"];
+
+    $this->seeStatusCode(422);
+
+    foreach ($fields as $field) {
+      $this->assertArrayHasKey($field, $data);
+      $this->assertEquals(["The {$field} field is required."], $data[$field]);
+    }
+  }
 }

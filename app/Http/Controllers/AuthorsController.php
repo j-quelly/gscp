@@ -67,7 +67,12 @@ class AuthorsController extends Controller
       ],
       'biography' => 'required',
     ], [
-      'gender.regex' => "Gender format is invalid: must equal 'male' or 'female'",
+      'name.required'      => 'The name field is required.',
+      'name.max'           => 'The name field must be less than 256 characters.',
+      'gender.required'    => 'The gender field is required.',
+      'gender.regex'       => "Gender format is invalid: must equal 'male' or 'female'",
+      'biography.required' => 'The biography field is required.',
+
     ]);
   }
 

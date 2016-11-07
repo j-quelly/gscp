@@ -2,13 +2,10 @@
 
 namespace Tests\App\Http\Controllers;
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
 use TestCase;
 
 class AuthorsControllerValidationTest extends TestCase
 {
-  // use DatabaseMigrations;
-
   private $yellow = "\e[1;33m";
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
@@ -26,21 +23,25 @@ class AuthorsControllerValidationTest extends TestCase
       ['method' => 'put', 'url' => $this->url . "/{$author->id}"],
     ];
 
+    $fields = ['name', 'gender', 'biography'];
+
     foreach ($tests as $test) {
       $method = $test['method'];
       $data   = $this->jwtAuthTest($method, $test['url']);
-      $this->seeStatusCode(400);
-      $this->assertArrayHasKey('error', $data);
-      $this->assertArrayHasKey('message', $data['error']);
-      $this->assertArrayHasKey('status', $data['error']);
-      $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+
+      $this->seeStatusCode(422);
+
+      foreach ($fields as $field) {
+        $this->assertArrayHasKey($field, $data);
+        $this->assertEquals(["The {$field} field is required."], $data[$field]);
+      }
     }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
   /** @test **/
-  public function validation_is_valid_when_name_is_just_long_enough()
+  public function ac_validation_is_valid_when_name_is_just_long_enough()
   {
     echo "\n\r{$this->yellow}    Validation is valid when name is just long enough...";
 
@@ -56,7 +57,7 @@ class AuthorsControllerValidationTest extends TestCase
   }
 
   /** @test **/
-  public function store_returns_a_valid_location_header()
+  public function ac_store_returns_a_valid_location_header()
   {
     echo "\n\r{$this->yellow}    Store returns a valid location header...";
 
@@ -80,7 +81,7 @@ class AuthorsControllerValidationTest extends TestCase
   }
 
   /** @test **/
-  public function validation_invalidates_incorrect_gender_data()
+  public function ac_validation_invalidates_incorrect_gender_data()
   {
     echo "\n\r{$this->yellow}    Validation invalidates incorrect gender data...";
 
@@ -90,19 +91,18 @@ class AuthorsControllerValidationTest extends TestCase
 
       $data = $this->jwtAuthTest($method, $test['url'], $test['data']);
 
-      $this->seeStatusCode(400);
+      $this->seeStatusCode(422);
+
       $this->assertCount(1, $data);
-      $this->assertArrayHasKey('error', $data);
-      $this->assertArrayHasKey('message', $data['error']);
-      $this->assertArrayHasKey('status', $data['error']);
-      $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);
+      $this->assertArrayHasKey('gender', $data);
+      $this->assertEquals(["Gender format is invalid: must equal 'male' or 'female'"], $data['gender']);
     }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
   /** @test **/
-  public function validation_invalidates_name_when_name_is_just_too_long()
+  public function ac_validation_invalidates_name_when_name_is_just_too_long()
   {
     echo "\n\r{$this->yellow}    Validation invalidates name when name is just too long...";
 
@@ -112,12 +112,11 @@ class AuthorsControllerValidationTest extends TestCase
 
       $data = $this->jwtAuthTest($method, $test['url'], $test['data']);
 
-      $this->seeStatusCode(400);
+      $this->seeStatusCode(422);
       $this->assertCount(1, $data);
-      $this->assertArrayHasKey('error', $data);
-      $this->assertArrayHasKey('message', $data['error']);
-      $this->assertArrayHasKey('status', $data['error']);
-      $this->assertEquals('The given data failed to pass validation.', $data['error']['message']);}
+      $this->assertArrayHasKey('name', $data);
+      $this->assertEquals(['The name field must be less than 256 characters.'], $data['name']);
+    }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
