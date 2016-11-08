@@ -60,7 +60,10 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ### Users
 - [x] crud user
-- [ ] user roles https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
+- [ ] user roles (will have to create own middleware)
+	- https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
+	- https://github.com/Zizaco/entrust
+	- https://lumen.laravel.com/docs/5.3/middleware
 - [ ] write tests
 
 ### Servers

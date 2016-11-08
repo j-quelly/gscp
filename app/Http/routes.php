@@ -19,7 +19,6 @@ $version = 'v1';
 
 $app->group([
   'prefix'    => $version,
-  'namespace' => 'App\Http\Controllers',
 ], function ($app) {
   $app->post('/auth/login', ['uses' => 'Auth\AuthController@postLogin', 'as' => 'api.auth.login']);
 });
@@ -30,7 +29,6 @@ $app->group([
 $app->group([
   'prefix'     => $version . '/auth',
   'middleware' => 'jwt.auth',
-  'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', ['uses' => 'APIController@getIndex', 'as' => 'api.index']);
   $app->get('/user', ['uses' => 'Auth\AuthController@getUser', 'as' => 'api.auth.user']);
@@ -44,7 +42,6 @@ $app->group([
 $app->group([
   'prefix'     => $version . '/users',
   'middleware' => 'jwt.auth',
-  'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', 'UsersController@index');
   $app->get('/{id:[\d]+}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
@@ -59,7 +56,6 @@ $app->group([
 $app->group([
   'prefix'     => $version . '/books',
   'middleware' => 'jwt.auth',
-  'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', 'BooksController@index');
   $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
@@ -74,7 +70,6 @@ $app->group([
 $app->group([
   'prefix'     => $version . '/authors',
   'middleware' => 'jwt.auth',
-  'namespace'  => 'App\Http\Controllers',
 ], function ($app) {
   $app->get('/', 'AuthorsController@index');
   $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);  
