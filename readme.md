@@ -1,4 +1,4 @@
-# lumen gscp api 0.2.0
+# lumen gscp api 0.2.1
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -94,3 +94,4 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ### Bugs
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
+- [x] remove namespace from routes.php [11/8/2016]
