@@ -1,4 +1,4 @@
-# lumen gscp api 0.2.1
+# lumen gscp api 0.3.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -43,7 +43,6 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] test restricted routes [11/6/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
-- [ ] find a way to properly mock user authentication 
 
 ### Authors
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
@@ -64,7 +63,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
 	- https://github.com/Zizaco/entrust
 	- https://lumen.laravel.com/docs/5.3/middleware
-- [ ] write tests
+- [x] write tests [11/9/2016]
 
 ### Servers
 - [ ] crud server
@@ -90,7 +89,9 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] setup cache
 	- [ ] confirm there is no issue with memcached 
 	- [ ] may need php_memcache.dll and memcached service		
-	- [ ] othewise switch to redis?		
+	- [ ] othewise switch to redis?	
+- [ ] check that remote is still working
+- [ ] put api in a subdomain	
 
 ### Bugs
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]

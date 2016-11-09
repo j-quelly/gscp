@@ -145,7 +145,7 @@ class AuthControllerTest extends TestCase
     $this->seeStatusCode(200);
     $this->assertArrayHasKey('data', $body);
     $this->assertArrayHasKey('message', $body['data']);
-    $this->assertEquals('Lumen (5.3.1) (Laravel Components 5.3.*)', $body['data']['message']);
+    $this->assertEquals('Lumen (5.3.2) (Laravel Components 5.3.*)', $body['data']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }

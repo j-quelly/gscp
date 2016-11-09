@@ -2,7 +2,6 @@
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-
 class TestCase extends Laravel\Lumen\Testing\TestCase
 {
   use MockeryPHPUnitIntegration;
@@ -16,7 +15,7 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     $app = require __DIR__ . '/../bootstrap/app.php';
 
     // return require __DIR__ . '/../bootstrap/app.php';
-    return $app;    
+    return $app;
   }
 
 /**
@@ -78,10 +77,10 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
  *
  * @return $user
  */
-  protected function userFactory()
+  protected function userFactory($count = 1)
   {
 
-    $user = factory(\App\User::class, 1)->create(['password' => app('hash')->make('supersecret')]);
+    $user = factory(\App\User::class, $count)->create(['password' => app('hash')->make('supersecret')]);
 
     return $user;
   }

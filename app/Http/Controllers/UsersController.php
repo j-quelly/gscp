@@ -73,12 +73,13 @@ class UsersController extends Controller
       ], 404);
     }
 
+    // todo: validate name?
     $this->validate($request, [
       'email'       => 'required|email|max:255',
       'password'    => 'required|min:8',
     ]);    
 
-    // todo: name field
+    $user->name = $request->name;
     $user->email = $request->email;
     $user->password = app('hash')->make($request->password);
     $user->update();
