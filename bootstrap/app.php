@@ -65,6 +65,9 @@ $app->withFacades();
 class_exists(JWTAuth::class) or class_alias(Tymon\JWTAuth\Facades\JWTAuth::class, JWTAuth::class);
 class_exists(JWTFactory::class) or class_alias(Tymon\JWTAuth\Facades\JWTFactory::class, JWTFactory::class);
 
+// role-based auth w/ entrust
+class_exists(EntrustFacade::class) or class_alias(Zizaco\Entrust\EntrustFacade::class, EntrustFacade::class);
+
 $app->withEloquent();
 
 
@@ -116,9 +119,11 @@ $app->middleware([
 $app->routeMiddleware([
     // 'hello' => App\Http\Middleware\HelloMiddleware::class,
     // 'auth' => App\Http\Middleware\Authenticate::class,
-    // 'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
     'jwt.auth'    => App\Http\Middleware\GetUserFromToken::class,
     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,    
+    'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
+    'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
+    'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,    
 ]);
 
 /*
@@ -149,6 +154,10 @@ $app->configure('jwt');
 $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+
+// role-based auth w/ entrust
+$app->configure('auth');
+$app->register(Zizaco\Entrust\EntrustServiceProvider::class);
 
 
 /*

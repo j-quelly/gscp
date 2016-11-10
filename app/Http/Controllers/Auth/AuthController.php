@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Permission;
+use App\Role;
+use App\User;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
+use Log;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -26,8 +31,8 @@ class AuthController extends Controller
         'email'    => 'required|email|max:255',
         'password' => 'required',
       ], [
-        'email.required' => 'The email field is required.',
-        'email.email' => 'The email field must be a valid email.', 
+        'email.required'    => 'The email field is required.',
+        'email.email'       => 'The email field must be a valid email.',
         'password.required' => 'The password field is required.',
       ]);
     } catch (HttpResponseException $e) {
@@ -122,4 +127,71 @@ class AuthController extends Controller
       'data' => JWTAuth::parseToken()->authenticate(),
     ]);
   }
+
+  /**
+   * Create user role.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function createRole(Request $request)
+  {
+
+    $role       = new Role();
+    $role->name = $request->input('name');
+    $role->save();
+
+    // todo: improve this response
+    return response()->json("created");
+
+  }
+
+  /**
+   * Create user permission.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function createPermission(Request $request)
+  {
+
+    $viewUsers       = new Permission();
+    $viewUsers->name = $request->input('name');
+    $viewUsers->save();
+
+    // todo: improve this response
+    return response()->json("created");
+
+  }
+
+  /**
+   * Assign user role.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function assignRole(Request $request)
+  {
+    $user = User::where('email', '=', $request->input('email'))->first();
+
+    $role = Role::where('name', '=', $request->input('role'))->first();
+    //$user->attachRole($request->input('role'));
+    $user->roles()->attach($role->id);
+
+    // todo: improve this response
+    return response()->json("created");
+  }
+
+  /**
+   * Attach permission to user.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function attachPermission(Request $request)
+  {
+    $role       = Role::where('name', '=', $request->input('role'))->first();
+    $permission = Permission::where('name', '=', $request->input('name'))->first();
+    $role->attachPermission($permission);
+
+    // todo: improve this response
+    return response()->json("created");
+  }
+
 }

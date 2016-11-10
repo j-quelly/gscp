@@ -5,8 +5,8 @@ Building an open source game server control panel API with Lumen 5.3
 $ php -S localhost:8888 -t public
 
 ### mirgrating db
-$ php artisan migrate
-$ php artisan migrate -database=mysql-prod
+- $ php artisan migrate
+- $ php artisan migrate -database=mysql-prod
 
 ### seeding db
 1. $ composer dump-autoload
@@ -59,10 +59,16 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ### Users
 - [x] crud user
-- [ ] user roles (will have to create own middleware)
+- [x] user roles (will have to create own middleware) [11/10/2016]
 	- https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
 	- https://github.com/Zizaco/entrust
 	- https://lumen.laravel.com/docs/5.3/middleware
+	- [ ] fork entrust and publish a package for lumen
+	- [ ] possibly publish a boilerplate too
+	- [ ] couple this with a blog post and share in related github issues/comments
+- [ ] come up with needed roles
+- [ ] come up with needed permissions
+- [ ] ensure these are correctly applied to the routes
 - [x] write tests [11/9/2016]
 
 ### Servers

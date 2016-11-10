@@ -18,9 +18,10 @@ $version = 'v1';
  */
 
 $app->group([
-  'prefix'    => $version,
+  'prefix' => $version . '/auth',
 ], function ($app) {
-  $app->post('/auth/login', ['uses' => 'Auth\AuthController@postLogin', 'as' => 'api.auth.login']);
+// Authentication route
+  $app->post('/login', ['uses' => 'Auth\AuthController@postLogin', 'as' => 'api.auth.login']);
 });
 
 /**
@@ -34,6 +35,18 @@ $app->group([
   $app->get('/user', ['uses' => 'Auth\AuthController@getUser', 'as' => 'api.auth.user']);
   $app->patch('/refresh', ['uses' => 'Auth\AuthController@patchRefresh', 'as' => 'api.auth.refresh']);
   $app->delete('/invalidate', ['uses' => 'Auth\AuthController@deleteInvalidate', 'as' => 'api.auth.invalidate']);
+
+/**
+ * Roles/Permissions w/ Entrust
+ */
+// Route to create a new role
+  $app->post('/role', 'Auth\AuthController@createRole');
+// Route to create a new permission
+  $app->post('/permission', 'Auth\AuthController@createPermission');
+// Route to assign role to user
+  $app->post('/assign-role', 'Auth\AuthController@assignRole');
+// Route to attach permission to a role
+  $app->post('/attach-permission', 'Auth\AuthController@attachPermission');
 });
 
 /**
@@ -41,7 +54,8 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/users',
-  'middleware' => 'jwt.auth',
+  // 'middleware' => 'jwt.auth',
+  'middleware' => ['ability:admin,create-users'],
 ], function ($app) {
   $app->get('/', 'UsersController@index');
   $app->get('/{id:[\d]+}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
@@ -72,7 +86,7 @@ $app->group([
   'middleware' => 'jwt.auth',
 ], function ($app) {
   $app->get('/', 'AuthorsController@index');
-  $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);  
+  $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);
   $app->post('/', 'AuthorsController@store');
   $app->put('/{id:[\d]+}', 'AuthorsController@update');
   $app->delete('/{id:[\d]+}', 'AuthorsController@destroy');

@@ -13,7 +13,8 @@
         "illuminate/hashing": "^5.3",
         "tymon/jwt-auth": "0.5.*",
         "illuminate/cookie": "^5.3",
-        "flipbox/lumen-generator": "^5.3"        
+        "flipbox/lumen-generator": "^5.3",
+        "zizaco/entrust": "5.2.x-dev"      
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
