@@ -1,4 +1,4 @@
-# lumen gscp api 0.3.0
+# lumen gscp api 0.4.1
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
