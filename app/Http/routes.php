@@ -30,6 +30,7 @@ $app->group([
 $app->group([
   'prefix'     => $version . '/auth',
   'middleware' => 'jwt.auth',
+  // 'middleware' => ['role:admin'],
 ], function ($app) {
   $app->get('/', ['uses' => 'APIController@getIndex', 'as' => 'api.index']);
   $app->get('/user', ['uses' => 'Auth\AuthController@getUser', 'as' => 'api.auth.user']);
@@ -54,8 +55,7 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/users',
-  // 'middleware' => 'jwt.auth',
-  'middleware' => ['ability:admin,create-users'],
+  'middleware' => ['jwt.auth', 'role:admin'],
 ], function ($app) {
   $app->get('/', 'UsersController@index');
   $app->get('/{id:[\d]+}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
@@ -69,7 +69,7 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/books',
-  'middleware' => 'jwt.auth',
+  'middleware' => ['ability:admin,god-mode'],
 ], function ($app) {
   $app->get('/', 'BooksController@index');
   $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
@@ -83,7 +83,8 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/authors',
-  'middleware' => 'jwt.auth',
+  // 'middleware' => 'jwt.auth',
+  'middleware' => ['ability:admin,god-mode'],
 ], function ($app) {
   $app->get('/', 'AuthorsController@index');
   $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);

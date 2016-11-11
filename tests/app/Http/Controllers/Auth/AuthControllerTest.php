@@ -52,6 +52,10 @@ class AuthControllerTest extends TestCase
       ['method' => 'patch', 'url' => $this->url . '/refresh'],
       ['method' => 'delete', 'url' => $this->url . '/invalidate'],
       ['method' => 'get', 'url' => $this->url . '/user'],
+      ['method' => 'post', 'url' => $this->url . '/role'],
+      ['method' => 'post', 'url' => $this->url . '/permission'],
+      ['method' => 'post', 'url' => $this->url . '/assign-role'],
+      ['method' => 'post', 'url' => $this->url . '/role'],
     ];
 
     foreach ($tests as $test) {
@@ -197,22 +201,22 @@ class AuthControllerTest extends TestCase
       ['method' => 'get', 'url' => '/v1/books/1'],
       ['method' => 'post', 'url' => '/v1/books'],
       ['method' => 'put', 'url' => '/v1/books/1'],
-      ['method' => 'delete', 'url' => '/v1/books/1'], 
+      ['method' => 'delete', 'url' => '/v1/books/1'],
 
       ['method' => 'get', 'url' => '/v1/authors'],
       ['method' => 'get', 'url' => '/v1/authors/1'],
       ['method' => 'post', 'url' => '/v1/authors'],
       ['method' => 'put', 'url' => '/v1/authors/1'],
-      ['method' => 'delete', 'url' => '/v1/authors/1'],             
+      ['method' => 'delete', 'url' => '/v1/authors/1'],
     ];
 
-    foreach($tests as $test) {
+    foreach ($tests as $test) {
       $this->assertTokenNotProvided($test['method'], $test['url']);
       echo "\n\r        {$this->green}{$test['url']}{$this->white}";
     }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
-  }  
+  }
 
   /**
    * Provides boilerplate test instructions for assertions.
@@ -239,6 +243,8 @@ class AuthControllerTest extends TestCase
     }
 
     $body = json_decode($this->response->getContent(), true);
+
+    dd($body);
 
     $this->assertArrayHasKey('error', $body);
     $this->assertEquals('Token not provided', $body['error']['message']);

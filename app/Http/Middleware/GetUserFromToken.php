@@ -44,6 +44,8 @@ class GetUserFromToken extends BaseMiddleware
 
         $this->events->fire('tymon.jwt.valid', $user);
 
+        // dd($request->user());
+
         return $next($request);
     }
 }

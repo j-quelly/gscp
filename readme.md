@@ -43,6 +43,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] test restricted routes [11/6/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
+- [ ] update tests to include roles & permissions
 
 ### Authors
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
@@ -50,12 +51,16 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] validation messages are still not verbose enough for front-end devs 
 [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
+- [ ] come up with needed roles, permissions and apply to route middleware
+- [ ] update tests to include test crud roles & permissions
 
 ### Books
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
 - [x] make sure tests are passing for this as well	[11/5/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
+- [ ] come up with needed roles, permissions and apply to route middleware
+- [ ] update tests to include roles & permissions
 
 ### Users
 - [x] crud user
@@ -66,13 +71,15 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] fork entrust and publish a package for lumen
 	- [ ] possibly publish a boilerplate too
 	- [ ] couple this with a blog post and share in related github issues/comments
-- [ ] come up with needed roles
-- [ ] come up with needed permissions
-- [ ] ensure these are correctly applied to the routes
+- [ ] come up with needed roles, permissions and apply to route middleware
 - [x] write tests [11/9/2016]
+- [ ] update tests to include roles & permissions
 
 ### Servers
 - [ ] crud server
+- [ ] come up with needed roles
+- [ ] come up with needed permissions
+- [ ] ensure these are correctly applied to the routes
 - [ ] write tests
 
 ### To Do
@@ -84,6 +91,8 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book transformer
 	- [ ] book factory
 	- [ ] everything related to authors
+- [x] add role & permission db seeds [11/11/2016]
+- [ ] make sure I'm following API best practices refer to APIGEE manual (http://api.derp.com/v1/noun/verb/?params)
 
 ### Production/Remote
 - [x] add test db
@@ -99,6 +108,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] check that remote is still working
 - [ ] put api in a subdomain	
 
-### Bugs
+### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
 - [x] remove namespace from routes.php [11/8/2016]
+- [x] debug issues with entrust [11/11/2016]
