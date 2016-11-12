@@ -244,8 +244,6 @@ class AuthControllerTest extends TestCase
 
     $body = json_decode($this->response->getContent(), true);
 
-    dd($body);
-
     $this->assertArrayHasKey('error', $body);
     $this->assertEquals('Token not provided', $body['error']['message']);
     $this->seeStatusCode(400);

@@ -1,4 +1,4 @@
-# lumen gscp api 0.4.1
+# lumen gscp api 0.5.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -43,6 +43,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] test restricted routes [11/6/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
+- [x] remove GET /auth endpoint [11/12/2016]
 - [ ] update tests to include roles & permissions
 
 ### Authors
@@ -51,7 +52,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] validation messages are still not verbose enough for front-end devs 
 [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
-- [ ] come up with needed roles, permissions and apply to route middleware
+- [ ] come up with needed roles, permissions and apply to route or controller middleware
 - [ ] update tests to include test crud roles & permissions
 
 ### Books
@@ -59,7 +60,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] make sure tests are passing for this as well	[11/5/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
-- [ ] come up with needed roles, permissions and apply to route middleware
+- [ ] come up with needed roles, permissions and apply to route or controller middleware
 - [ ] update tests to include roles & permissions
 
 ### Users
@@ -71,7 +72,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] fork entrust and publish a package for lumen
 	- [ ] possibly publish a boilerplate too
 	- [ ] couple this with a blog post and share in related github issues/comments
-- [ ] come up with needed roles, permissions and apply to route middleware
+- [ ] come up with needed roles, permissions and apply to route or controller middleware
 - [x] write tests [11/9/2016]
 - [ ] update tests to include roles & permissions
 
@@ -92,7 +93,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book factory
 	- [ ] everything related to authors
 - [x] add role & permission db seeds [11/11/2016]
-- [ ] make sure I'm following API best practices refer to APIGEE manual (http://api.derp.com/v1/noun/verb/?params)
+- [ ] read the APIGEE manual
 
 ### Production/Remote
 - [x] add test db

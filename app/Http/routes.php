@@ -29,17 +29,20 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/auth',
-  'middleware' => 'jwt.auth',
-  // 'middleware' => ['role:admin'],
+  'middleware' => ['jwt.auth'],
 ], function ($app) {
-  $app->get('/', ['uses' => 'APIController@getIndex', 'as' => 'api.index']);
   $app->get('/user', ['uses' => 'Auth\AuthController@getUser', 'as' => 'api.auth.user']);
   $app->patch('/refresh', ['uses' => 'Auth\AuthController@patchRefresh', 'as' => 'api.auth.refresh']);
   $app->delete('/invalidate', ['uses' => 'Auth\AuthController@deleteInvalidate', 'as' => 'api.auth.invalidate']);
+});
 
 /**
  * Roles/Permissions w/ Entrust
  */
+$app->group([
+  'prefix'     => $version . '/auth',
+  'middleware' => ['jwt.auth', 'role:admin'],
+], function ($app) {
 // Route to create a new role
   $app->post('/role', 'Auth\AuthController@createRole');
 // Route to create a new permission
@@ -69,7 +72,7 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/books',
-  'middleware' => ['ability:admin,god-mode'],
+  'middleware' => ['jwt.auth', 'role:admin'],
 ], function ($app) {
   $app->get('/', 'BooksController@index');
   $app->get('/{id:[\d]+}', ['as' => 'books.show', 'uses' => 'BooksController@show']);
@@ -83,8 +86,7 @@ $app->group([
  */
 $app->group([
   'prefix'     => $version . '/authors',
-  // 'middleware' => 'jwt.auth',
-  'middleware' => ['ability:admin,god-mode'],
+  'middleware' => ['jwt.auth', 'role:admin'],
 ], function ($app) {
   $app->get('/', 'AuthorsController@index');
   $app->get('/{id:[\d]+}', ['as' => 'authors.show', 'uses' => 'AuthorsController@show']);
