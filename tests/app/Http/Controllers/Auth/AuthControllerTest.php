@@ -48,7 +48,6 @@ class AuthControllerTest extends TestCase
     echo "\n\r{$this->yellow}    Auth should error when no token...";
 
     $tests = [
-      ['method' => 'get', 'url' => $this->url],
       ['method' => 'patch', 'url' => $this->url . '/refresh'],
       ['method' => 'delete', 'url' => $this->url . '/invalidate'],
       ['method' => 'get', 'url' => $this->url . '/user'],
@@ -71,10 +70,13 @@ class AuthControllerTest extends TestCase
     echo "\n\r{$this->yellow}    Auth should error when using an invalid token...";
 
     $tests = [
-      ['method' => 'get', 'url' => $this->url],
       ['method' => 'patch', 'url' => $this->url . '/refresh'],
       ['method' => 'delete', 'url' => $this->url . '/invalidate'],
       ['method' => 'get', 'url' => $this->url . '/user'],
+      ['method' => 'post', 'url' => $this->url . '/role'],
+      ['method' => 'post', 'url' => $this->url . '/permission'],
+      ['method' => 'post', 'url' => $this->url . '/assign-role'],
+      ['method' => 'post', 'url' => $this->url . '/role'],      
     ];
 
     foreach ($tests as $test) {
@@ -135,21 +137,6 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertArrayHasKey('token', $body['data']);
     $this->assertEquals('Token generated', $body['data']['message']);
-
-    echo " {$this->green}[OK]{$this->white}\n\r";
-  }
-
-  /** @test **/
-  public function auth_index_should_return_version_when_using_a_valid_token()
-  {
-    echo "\n\r{$this->yellow}    Auth index should return version when using a valid token...";
-
-    $body = $this->jwtAuthTest('get', $this->url);
-
-    $this->seeStatusCode(200);
-    $this->assertArrayHasKey('data', $body);
-    $this->assertArrayHasKey('message', $body['data']);
-    $this->assertEquals('Lumen (5.3.2) (Laravel Components 5.3.*)', $body['data']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }

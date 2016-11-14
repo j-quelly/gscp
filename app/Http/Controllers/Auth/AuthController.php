@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Permission;
 use App\Role;
+use App\Transformer\PermissionTransformer;
+use App\Transformer\RoleTransformer;
 use App\User;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -136,12 +138,17 @@ class AuthController extends Controller
   public function createRole(Request $request)
   {
 
-    $role       = new Role();
-    $role->name = $request->input('name');
+    $this->validateRoles($request);
+
+    $role               = new Role();
+    $role->name         = $request->input('name');
+    $role->display_name = $request->input('display_name');
+    $role->description  = $request->input('description');
     $role->save();
 
-    // todo: improve this response
-    return response()->json("created");
+    $data = $this->item($role, new RoleTransformer());
+
+    return $data;
 
   }
 
@@ -153,12 +160,17 @@ class AuthController extends Controller
   public function createPermission(Request $request)
   {
 
-    $viewUsers       = new Permission();
-    $viewUsers->name = $request->input('name');
+    $this->validateRoles($request);
+
+    $viewUsers               = new Permission();
+    $viewUsers->name         = $request->input('name');
+    $viewUsers->display_name = $request->input('display_name');
+    $viewUsers->description  = $request->input('description');
     $viewUsers->save();
 
-    // todo: improve this response
-    return response()->json("created");
+    $data = $this->item($viewUsers, new PermissionTransformer());
+
+    return $data;
 
   }
 
@@ -169,14 +181,20 @@ class AuthController extends Controller
    */
   public function assignRole(Request $request)
   {
+    $this->validate($request, [
+      'email'         => 'required|email|exists:users,email',
+      'role' => 'required|exists:roles,name',
+    ]);
+
     $user = User::where('email', '=', $request->input('email'))->first();
 
     $role = Role::where('name', '=', $request->input('role'))->first();
     //$user->attachRole($request->input('role'));
     $user->roles()->attach($role->id);
 
-    // todo: improve this response
-    return response()->json("created");
+    return new JsonResponse(['data' => [
+      'message' => 'Created'
+    ]]);
   }
 
   /**
@@ -186,12 +204,32 @@ class AuthController extends Controller
    */
   public function attachPermission(Request $request)
   {
+    $this->validate($request, [
+      'role'         => 'required|exists:roles,name',
+      'name' => 'required|exists:permissions,name',
+    ]);
+
     $role       = Role::where('name', '=', $request->input('role'))->first();
     $permission = Permission::where('name', '=', $request->input('name'))->first();
     $role->attachPermission($permission);
 
-    // todo: improve this response
-    return response()->json("created");
+    return new JsonResponse(['data' => [
+      'message' => 'Created'
+    ]]);
+  }
+
+  /**
+   * Validate auth posts from the request.
+   *
+   * @param Request $request
+   */
+  private function validateRoles(Request $request)
+  {
+    $this->validate($request, [
+      'name'         => 'required',
+      'display_name' => 'required',
+      'description'  => 'required',
+    ]);
   }
 
 }

@@ -5,8 +5,17 @@ use App\Author;
 use App\Transformer\AuthorTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * Class AuthorsController
+ * @package App\Http\Controllers
+ */
 class AuthorsController extends Controller
 {
+
+  /**
+   * GET /authors
+   * @return array
+   */  
   public function index()
   {
     return $this->collection(
@@ -15,11 +24,21 @@ class AuthorsController extends Controller
     );
   }
 
+  /**
+   * GET /authors/{id}
+   * @param integer $id
+   * @return mixed
+   */
   public function show($id)
   {
     return $this->item(Author::findOrFail($id), new AuthorTransformer());
   }
 
+  /**
+   * POST /authors
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response
+   */
   public function store(Request $request)
   {
     $this->validateAuthor($request);
@@ -32,6 +51,12 @@ class AuthorsController extends Controller
     ]);
   }
 
+  /**
+   * PUT /authors/{id}
+   * @param Request $request
+   * @param $id
+   * @return mixed
+   */
   public function update(Request $request, $id)
   {
     $this->validateAuthor($request);
@@ -45,6 +70,11 @@ class AuthorsController extends Controller
     return response()->json($data, 200);
   }
 
+  /**
+   * DELETE /authors/{id}
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function destroy($id)
   {
     Author::findOrFail($id)->delete();
