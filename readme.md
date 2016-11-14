@@ -1,4 +1,4 @@
-# lumen gscp api 0.6.0
+# lumen gscp api 0.7.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -47,11 +47,10 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] update tests to include roles & permissions [11/13/2016]
 - [x] improve new end point respones [11/13/2016]
 	- [ ] perhaps these can be revisisted, among others
-	- [x] add validation [11/13/2016]
-	- [ ] improved validation messages
-	- [x] add transformers for each [11/13/2016]
-	- [ ] perhaps pull these out into their own controllers? 
-	- [ ] will the models need to be updated?
+- [x] add validation [11/13/2016]
+	- [x] improved validation messages [11/14/2016]
+- [x] add transformers for each new method [11/13/2016]
+	- [ ] will the role/permisison models need to be updated?
 - [ ] finish tests
 
 ### Authors

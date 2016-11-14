@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Transformer\UserTransformer;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -36,15 +36,12 @@ class UsersController extends Controller
    */
   public function store(Request $request)
   {
-    $this->validate($request, [
-      'email'       => 'required|email|max:255',
-      'password'    => 'required|min:8',
-    ]);
+    $this->validateUser($request);
 
-    $user = new User();
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->password = app('hash')->make($request->password);
+    $user                 = new User();
+    $user->name           = $request->name;
+    $user->email          = $request->email;
+    $user->password       = app('hash')->make($request->password);
     $user->remember_token = str_random(10);
     $user->save();
 
@@ -53,7 +50,7 @@ class UsersController extends Controller
     return response()->json($data, 201, [
       'Location' => route('users.show', ['id' => $user->id]),
     ]);
-  }  
+  }
 
   /**
    * PUT /users/{id}
@@ -73,19 +70,17 @@ class UsersController extends Controller
       ], 404);
     }
 
-    // todo: validate name?
-    $this->validate($request, [
-      'email'       => 'required|email|max:255',
-      'password'    => 'required|min:8',
-    ]);    
+    $this->validateUser($request);
 
-    $user->name = $request->name;
+    $user->name  = $request->name;
     $user->email = $request->email;
-    $user->password = app('hash')->make($request->password);
+    if ($request->$password) {
+      $user->password = app('hash')->make($request->password);
+    }
     $user->update();
 
     return $this->item($user, new UserTransformer());
-  }  
+  }
 
   /**
    * DELETE /users/{id}
@@ -107,5 +102,6 @@ class UsersController extends Controller
     $user->delete();
 
     return response(null, 204);
-  }  
+  }
+
 }

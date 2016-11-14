@@ -5,6 +5,8 @@ namespace tests\app\Http\Controllers;
 use Illuminate\Support\Facades\Artisan as Artisan;
 use JWTAuth;
 use TestCase;
+use Carbon\Carbon;
+use App\Role;
 
 class AuthControllerTest extends TestCase
 {
@@ -39,7 +41,16 @@ class AuthControllerTest extends TestCase
       static::$dbInitiated = true;
       static::initDB();
     }
+
+    Carbon::setTestNow(Carbon::now('UTC'));
   }
+
+  public function tearDown()
+  {
+    parent::tearDown();
+
+    Carbon::setTestNow();
+  }  
 
   /** @test **/
   public function auth_should_error_when_no_token()
@@ -171,6 +182,83 @@ class AuthControllerTest extends TestCase
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
+
+    /** @test **/
+  public function auth_role_should_create_new_role_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth role should create new role when using a valid token...";
+
+    $postData = [
+      "name" => "test-role",
+      "display_name" => "Testing roles",
+      "description" => "A test role",
+    ];
+
+    $body = $this->jwtAuthTest('post', $this->url . '/role', $postData, 'admin');
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('data', $body);
+    $this->assertEquals($postData['name'], $body['data']['name']); 
+    $this->assertEquals($postData['display_name'], $body['data']['display_name']);
+    $this->assertEquals($postData['description'], $body['data']['description']);
+    $this->assertTrue($body['data']['id'] > 0, 'Expected a positive integer, but did not see one.');
+    $this->assertArrayHasKey('created', $body['data']);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $body['data']['created']);
+    $this->assertArrayHasKey('updated', $body['data']);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $body['data']['updated']);
+    $this->seeInDatabase('roles', ['name' => $postData['name']]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+ 
+     /** @test **/
+  public function auth_permission_should_create_new_permission_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth permission should create new role when using a valid token...";
+
+    $postData = [
+      "name" => "test-permission",
+      "display_name" => "Testing permissions",
+      "description" => "A test permission",
+    ];
+
+    $body = $this->jwtAuthTest('post', $this->url . '/permission', $postData, 'admin');
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('data', $body);
+    $this->assertEquals($postData['name'], $body['data']['name']); 
+    $this->assertEquals($postData['display_name'], $body['data']['display_name']);
+    $this->assertEquals($postData['description'], $body['data']['description']);
+    $this->assertTrue($body['data']['id'] > 0, 'Expected a positive integer, but did not see one.');
+    $this->assertArrayHasKey('created', $body['data']);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $body['data']['created']);
+    $this->assertArrayHasKey('updated', $body['data']);
+    $this->assertEquals(Carbon::now()->toIso8601String(), $body['data']['updated']);
+    $this->seeInDatabase('permissions', ['name' => $postData['name']]);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+     /** @test **/
+  public function auth_assign_role_should_assign_role_to_user_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth assign role should assign a role to a user when using a valid token...";
+
+    $this->markTestIncomplete('pending test');
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+     /** @test **/
+  public function auth_attach_permission_should_attach_permission_to_role_when_using_a_valid_token()
+  {
+    echo "\n\r{$this->yellow}    Auth attach permissions should attach permission to role when using a valid token...";
+
+    $this->markTestIncomplete('pending test');
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
 
   /** @test **/
   public function auth_invalid_users_are_restricted_from_private_routes()

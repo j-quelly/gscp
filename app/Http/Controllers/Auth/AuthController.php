@@ -29,14 +29,7 @@ class AuthController extends Controller
   public function postLogin(Request $request)
   {
     try {
-      $this->validate($request, [
-        'email'    => 'required|email|max:255',
-        'password' => 'required',
-      ], [
-        'email.required'    => 'The email field is required.',
-        'email.email'       => 'The email field must be a valid email.',
-        'password.required' => 'The password field is required.',
-      ]);
+      $this->validateUser($request);
     } catch (HttpResponseException $e) {
       return new JsonResponse([
         'error' => [
@@ -182,8 +175,13 @@ class AuthController extends Controller
   public function assignRole(Request $request)
   {
     $this->validate($request, [
-      'email'         => 'required|email|exists:users,email',
-      'role' => 'required|exists:roles,name',
+      'email' => 'required|email|exists:users,emai|max:255',
+      'role'  => 'required|exists:roles,name',
+    ], [
+      'email.required' => 'The email field is required.',
+      'email.email'    => 'The email field must be a valid email.',
+      'email.max'      => 'The email field must be less than 256 characters.',
+      'role.required'  => 'The role field is required.',
     ]);
 
     $user = User::where('email', '=', $request->input('email'))->first();
@@ -193,7 +191,7 @@ class AuthController extends Controller
     $user->roles()->attach($role->id);
 
     return new JsonResponse(['data' => [
-      'message' => 'Created'
+      'message' => 'Created',
     ]]);
   }
 
@@ -205,8 +203,11 @@ class AuthController extends Controller
   public function attachPermission(Request $request)
   {
     $this->validate($request, [
-      'role'         => 'required|exists:roles,name',
+      'role' => 'required|exists:roles,name',
       'name' => 'required|exists:permissions,name',
+    ], [
+      'role.required' => 'The role field is required.',
+      'name.required' => 'The name field is required.',
     ]);
 
     $role       = Role::where('name', '=', $request->input('role'))->first();
@@ -214,7 +215,7 @@ class AuthController extends Controller
     $role->attachPermission($permission);
 
     return new JsonResponse(['data' => [
-      'message' => 'Created'
+      'message' => 'Created',
     ]]);
   }
 
@@ -229,6 +230,10 @@ class AuthController extends Controller
       'name'         => 'required',
       'display_name' => 'required',
       'description'  => 'required',
+    ], [
+      'name.required'         => 'The name field is required.',
+      'display_name.required' => 'The display name field is required.',
+      'description.required'  => 'The description field is required.',
     ]);
   }
 

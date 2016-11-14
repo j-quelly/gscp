@@ -32,7 +32,6 @@ $factory->define(App\User::class, function ($faker) {
 
 $factory->define(App\Book::class, function ($faker) {
   $title = $faker->sentence(rand(3, 10));
-
   return [
     'title'       => substr($title, 0, strlen($title) - 1),
     'description' => $faker->text,
@@ -46,3 +45,5 @@ $factory->define(App\Author::class, function ($faker) {
     'gender'    => rand(1, 6) % 2 === 0 ? 'male' : 'female',
   ];
 });
+
+

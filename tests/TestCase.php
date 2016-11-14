@@ -1,6 +1,8 @@
 <?php
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use App\User;
+use App\Role;
 
 class TestCase extends Laravel\Lumen\Testing\TestCase
 {
@@ -77,10 +79,17 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
  *
  * @return $user
  */
-  protected function userFactory($count = 1)
+  protected function userFactory($count = 1, $position = '')
   {
 
     $user = factory(\App\User::class, $count)->create(['password' => app('hash')->make('supersecret')]);
+
+    switch ($position) {
+      case 'admin':
+          $role = Role::where('name', '=', $position)->first();
+          $user->roles()->attach($role->id);
+        break;
+    }
 
     return $user;
   }
@@ -90,9 +99,9 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
  *
  * @return $body
  */
-  protected function jwtAuthTest($method, $url, $body = [])
+  protected function jwtAuthTest($method, $url, $body = [], $role = '')
   {
-    $user = $this->userFactory();
+    $user = $this->userFactory(1, $role);
 
     $token = JWTAuth::fromUser($user);
     JWTAuth::setToken($token);
