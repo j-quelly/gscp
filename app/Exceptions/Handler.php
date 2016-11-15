@@ -10,6 +10,8 @@ use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use App\User;
+
 class Handler extends ExceptionHandler
 {
   /**

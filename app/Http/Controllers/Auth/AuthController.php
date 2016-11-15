@@ -175,7 +175,7 @@ class AuthController extends Controller
   public function assignRole(Request $request)
   {
     $this->validate($request, [
-      'email' => 'required|email|exists:users,emai|max:255',
+      'email' => 'required|email|exists:users,email|max:255',
       'role'  => 'required|exists:roles,name',
     ], [
       'email.required' => 'The email field is required.',
@@ -185,9 +185,7 @@ class AuthController extends Controller
     ]);
 
     $user = User::where('email', '=', $request->input('email'))->first();
-
     $role = Role::where('name', '=', $request->input('role'))->first();
-    //$user->attachRole($request->input('role'));
     $user->roles()->attach($role->id);
 
     return new JsonResponse(['data' => [

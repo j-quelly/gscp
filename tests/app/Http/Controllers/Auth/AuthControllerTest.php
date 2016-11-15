@@ -244,10 +244,41 @@ class AuthControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth assign role should assign a role to a user when using a valid token...";
 
-    $this->markTestIncomplete('pending test');
+    // make a role
+    $postData = [
+      "name" => "test-role-2",
+      "display_name" => "Testing roles 2",
+      "description" => "A test role 2",
+    ];
+
+    // create a users with admin access
+    $user = $this->userFactory(1, 'admin');
+
+    // create token with headers
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $headers = array(
+      'Accept'        => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    );    
+    
+    // create a role
+    $this->post($this->url . '/role', $postData, $headers);
+
+    // assign the role to a user
+    $assignRoleData = ["email" => "johndoe@example.com", "role" => "test-role-2"];    
+
+    $this->post($this->url . '/assign-role', $assignRoleData, $headers);
+
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('data', $body);
+    $this->assertArrayHasKey('message', $body['data']);
+    $this->assertEquals('Created', $body['data']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
+
+  // TODO: should not assign non-existent role
 
      /** @test **/
   public function auth_attach_permission_should_attach_permission_to_role_when_using_a_valid_token()
@@ -259,6 +290,7 @@ class AuthControllerTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
+  // TODO: should not attach non-existent permissions
 
   /** @test **/
   public function auth_invalid_users_are_restricted_from_private_routes()

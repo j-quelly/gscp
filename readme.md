@@ -46,7 +46,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] remove GET /auth endpoint [11/12/2016]
 - [x] update tests to include roles & permissions [11/13/2016]
 - [x] improve new end point respones [11/13/2016]
-	- [ ] perhaps these can be revisisted, among others
+	- [ ] perhaps these can be revisisted, among others.  Will need to read up on this
 - [x] add validation [11/13/2016]
 	- [x] improved validation messages [11/14/2016]
 - [x] add transformers for each new method [11/13/2016]
@@ -122,3 +122,5 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
 - [x] remove namespace from routes.php [11/8/2016]
 - [x] debug issues with entrust [11/11/2016]
+- [ ] token invalidate seems to not be working.. need a test for this
+- [x] assigning roles has somehow broken... [11/15/2016]
