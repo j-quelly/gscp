@@ -18,7 +18,7 @@ class AuthorsControllerTest extends TestCase
     echo "\n\r{$this->green}Authors Controller Tests:";
     echo "\n\r{$this->yellow}    Index responds with 200 status code...";
 
-    $body = $this->jwtAuthTest('get', $this->url);
+    $body = $this->jwtAuthTest('get', $this->url, [], 'admin');
 
     $this->seeStatusCode(Response::HTTP_OK);
 
@@ -32,7 +32,7 @@ class AuthorsControllerTest extends TestCase
 
     $authors = factory(\App\Author::class, 2)->create();
 
-    $body = $this->jwtAuthTest('get', $this->url);
+    $body = $this->jwtAuthTest('get', $this->url, [], 'admin');
 
     $this->assertArrayHasKey('data', $body);
     // $this->assertCount(2, $body['data']);
@@ -59,7 +59,7 @@ class AuthorsControllerTest extends TestCase
     $book   = $this->bookFactory();
     $author = $book->author;
 
-    $body = $this->jwtAuthTest('get', $this->url . "/{$author->id}");
+    $body = $this->jwtAuthTest('get', $this->url . "/{$author->id}", [], 'admin');
 
     $this->assertArrayHasKey('data', $body);
     $this->seeJson([
@@ -79,7 +79,7 @@ class AuthorsControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Show should fail on an invalid author...";
     
-    $body = $this->jwtAuthTest('get', $this->url . '/1234'); 
+    $body = $this->jwtAuthTest('get', $this->url . '/1234', [], 'admin');
 
     $this->seeStatusCode(Response::HTTP_NOT_FOUND);
     $this->seeJson([
@@ -103,7 +103,7 @@ class AuthorsControllerTest extends TestCase
     $book   = $this->bookFactory();
     $author = $book->author;
 
-    $body = $this->jwtAuthTest('get', $this->url . "/{$author->id}?include=books"); 
+    $body = $this->jwtAuthTest('get', $this->url . "/{$author->id}?include=books", [], 'admin');
 
     $this->assertArrayHasKey('data', $body);
     $data = $body['data'];
@@ -145,7 +145,7 @@ class AuthorsControllerTest extends TestCase
       'biography' => 'Prolific Science-Fiction Writer',
     ];
 
-    $body = $this->jwtAuthTest('post', $this->url, $postData);
+    $body = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this->seeStatusCode(201);
     $data = $this->response->getData(true);
@@ -170,7 +170,7 @@ class AuthorsControllerTest extends TestCase
       'biography' => 'An updated biography',
     ];
 
-    $body = $this->jwtAuthTest('put', $this->url . "/{$author->id}", $requestData);
+    $body = $this->jwtAuthTest('put', $this->url . "/{$author->id}", $requestData, 'admin');
 
     $this
       ->seeStatusCode(200)
@@ -194,7 +194,7 @@ class AuthorsControllerTest extends TestCase
 
     $author = factory(\App\Author::class)->create();
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/{$author->id}");
+    $body = $this->jwtAuthTest('delete', $this->url . "/{$author->id}", [], 'admin');
 
     $this
       ->seeStatusCode(204)
@@ -209,7 +209,7 @@ class AuthorsControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Deleting an invalid author should return a 404...";
 
-     $body = $this->jwtAuthTest('delete', $this->url . "/9999");
+     $body = $this->jwtAuthTest('delete', $this->url . "/9999", [], 'admin');
 
     $this->seeStatusCode(404);
 

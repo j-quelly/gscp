@@ -61,7 +61,7 @@ class UsersControllerTest extends TestCase
     echo "\n\r{$this->green}Users Controller Tests:";
     echo "\n\r{$this->yellow}    It should see JSON...";
 
-    $data = $this->jwtAuthTest('get', $this->url);
+    $data = $this->jwtAuthTest('get', $this->url, [], 'admin');
     $this->seeStatusCode(200);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
@@ -74,7 +74,7 @@ class UsersControllerTest extends TestCase
 
     $users = $this->userFactory(2);
 
-    $content = $this->jwtAuthTest('get', $this->url);
+    $content = $this->jwtAuthTest('get', $this->url, [], 'admin');
 
     $this->assertArrayHasKey('data', $content);
 
@@ -99,7 +99,7 @@ class UsersControllerTest extends TestCase
 
     $user = $this->userFactory();
 
-    $content = $this->jwtAuthTest('get', $this->url . "/{$user->id}");
+    $content = $this->jwtAuthTest('get', $this->url . "/{$user->id}", [], 'admin');
 
     $this->seeStatusCode(200);
 
@@ -124,7 +124,7 @@ class UsersControllerTest extends TestCase
 
     echo "\n\r{$this->yellow}    Show should fail when the user id does not exist...";
 
-    $data = $this->jwtAuthTest('get', $this->url . "/99999");
+    $data = $this->jwtAuthTest('get', $this->url . "/99999", [], 'admin');
 
     $this
       ->seeStatusCode(404)
@@ -141,7 +141,7 @@ class UsersControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Show should not match an invalid route...";
 
-    $data = $this->jwtAuthTest('get', $this->url . "/this-is-invalid");
+    $data = $this->jwtAuthTest('get', $this->url . "/this-is-invalid", [], 'admin');
 
     $this->assertNotRegExp(
       '/User not found/',
@@ -164,7 +164,7 @@ class UsersControllerTest extends TestCase
       'password' => 'biglysecure',
     ];
 
-    $body = $this->jwtAuthTest('post', $this->url, $postData);
+    $body = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this->assertArrayHasKey('data', $body);
 
@@ -195,7 +195,7 @@ class UsersControllerTest extends TestCase
       'password' => 'thisrpassword',
     ];
 
-    $body = $this->jwtAuthTest('post', $this->url, $postData);
+    $body = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this
       ->seeStatusCode(201)
@@ -224,7 +224,7 @@ class UsersControllerTest extends TestCase
       'password' => 'dontassumemygender',
     ];
 
-    $body = $this->jwtAuthTest('put', $this->url . "/{$user->id}", $postData);
+    $body = $this->jwtAuthTest('put', $this->url . "/{$user->id}", $postData, 'admin');
 
     $this
       ->seeStatusCode(200)
@@ -254,7 +254,7 @@ class UsersControllerTest extends TestCase
     {
       echo "\n\r{$this->yellow}    Update should fail with an invalid id...";
 
-    $body = $this->jwtAuthTest('put', $this->url . "/999999999");
+    $body = $this->jwtAuthTest('put', $this->url . "/999999999", [], 'admin');
 
     $this
         ->seeStatusCode(404)
@@ -272,7 +272,7 @@ class UsersControllerTest extends TestCase
     {
       echo "\n\r{$this->yellow}    Update should not match an invalid route...";
 
-    $body = $this->jwtAuthTest('put', $this->url . "/this-is-invalid");
+    $body = $this->jwtAuthTest('put', $this->url . "/this-is-invalid", [], 'admin');
 
       $this->seeStatusCode(404);
 
@@ -286,7 +286,7 @@ class UsersControllerTest extends TestCase
 
     $user = $this->userFactory();
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/{$user->id}");
+    $body = $this->jwtAuthTest('delete', $this->url . "/{$user->id}", [], 'admin');
 
     $this
         ->seeStatusCode(204)
@@ -302,7 +302,7 @@ class UsersControllerTest extends TestCase
     {
       echo "\n\r{$this->yellow}    Destroy should return a 404 with an invalid id...";
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/99999");
+    $body = $this->jwtAuthTest('delete', $this->url . "/99999", [], 'admin');
 
     $this
         ->seeStatusCode(404)
@@ -311,6 +311,7 @@ class UsersControllerTest extends TestCase
             'message' => 'User not found',
           ],
         ]);
+
       echo " {$this->green}[OK]{$this->white}\n\r";
     }
 
@@ -319,7 +320,7 @@ class UsersControllerTest extends TestCase
     {
       echo "\n\r{$this->yellow}    Destroy should not match an invalid route...";
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/this-is-invalid");
+    $body = $this->jwtAuthTest('delete', $this->url . "/this-is-invalid", [], 'admin');
 
     $this->seeStatusCode(404);
 

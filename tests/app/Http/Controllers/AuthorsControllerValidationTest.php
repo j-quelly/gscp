@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\App\Http\Controllers;
+use Illuminate\Support\Facades\Artisan as Artisan;
 
 use TestCase;
 
@@ -10,6 +11,39 @@ class AuthorsControllerValidationTest extends TestCase
   private $green  = "\e[0;32m";
   private $white  = "\e[0;37m";
   private $url    = "/v1/authors";
+
+  /**
+   * Disclaimer:
+   * the "right" way to do testing, that gives you the greatest
+   * confidence your tests methods don't get subtly interdependent in
+   * bug-hiding ways, is to re-seed your db before every test method, so
+   * just put seeding code in plain setUp if you can afford the
+   * performance penalty
+   */
+
+  protected static $dbInitiated = false;
+
+  protected static function initDB()
+  {
+    echo "\n\r\e[0;31mRefreshing the database...\n\r";
+    Artisan::call('migrate:refresh');
+    Artisan::call('db:seed');
+  }
+
+  public function setUp()
+  {
+    parent::setUp();
+
+    if (!static::$dbInitiated) {
+      static::$dbInitiated = true;
+      static::initDB();
+    }
+  }
+
+  public function tearDown()
+  {
+    parent::tearDown();
+  }
 
   /** @test **/
   public function ac_validation_validates_required_fields()
@@ -27,7 +61,7 @@ class AuthorsControllerValidationTest extends TestCase
 
     foreach ($tests as $test) {
       $method = $test['method'];
-      $data   = $this->jwtAuthTest($method, $test['url']);
+      $data   = $this->jwtAuthTest($method, $test['url'], [], 'admin');
 
       $this->seeStatusCode(422);
 
@@ -48,7 +82,7 @@ class AuthorsControllerValidationTest extends TestCase
     foreach ($this->getValidationTestData() as $test) {
       $method               = $test['method'];
       $test['data']['name'] = str_repeat('a', 255);
-      $data                 = $this->jwtAuthTest($method, $test['url'], $test['data']);
+      $data                 = $this->jwtAuthTest($method, $test['url'], $test['data'], 'admin');
       $this->seeStatusCode($test['status']);
       $this->seeInDatabase('authors', $test['data']);
     }
@@ -67,7 +101,7 @@ class AuthorsControllerValidationTest extends TestCase
       'biography' => 'Prolific Science-Fiction Writer',
     ];
 
-    $data = $this->jwtAuthTest('post', $this->url, $postData);
+    $data = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this->seeStatusCode(201);
     $this->assertArrayHasKey('data', $data);
@@ -89,7 +123,7 @@ class AuthorsControllerValidationTest extends TestCase
       $method                 = $test['method'];
       $test['data']['gender'] = 'unknown';
 
-      $data = $this->jwtAuthTest($method, $test['url'], $test['data']);
+      $data = $this->jwtAuthTest($method, $test['url'], $test['data'], 'admin');
 
       $this->seeStatusCode(422);
 
@@ -110,7 +144,7 @@ class AuthorsControllerValidationTest extends TestCase
       $method               = $test['method'];
       $test['data']['name'] = str_repeat('a', 256);
 
-      $data = $this->jwtAuthTest($method, $test['url'], $test['data']);
+      $data = $this->jwtAuthTest($method, $test['url'], $test['data'], 'admin');
 
       $this->seeStatusCode(422);
       $this->assertCount(1, $data);

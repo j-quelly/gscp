@@ -49,7 +49,7 @@ class BooksControllerValidationTest extends TestCase
       'author_id'   => $book->author->id,
     ];
 
-    $data = $this->jwtAuthTest('post', $this->url, $postData);
+    $data = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this
       ->seeStatusCode(422)
@@ -75,7 +75,7 @@ class BooksControllerValidationTest extends TestCase
       'author_id'   => $book->author->id,
     ];
 
-    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
+    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData, 'admin');
 
     $this
       ->seeStatusCode(422)
@@ -101,7 +101,7 @@ class BooksControllerValidationTest extends TestCase
       'author_id'   => $book->author->id,
     ];
 
-    $data = $this->jwtAuthTest('post', $this->url, $postData);
+    $data = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this
       ->seeStatusCode(Response::HTTP_CREATED)
@@ -125,7 +125,7 @@ class BooksControllerValidationTest extends TestCase
       'author_id'   => $book->author->id,
     ];
 
-    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
+    $data = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData, 'admin');
 
     $this
       ->seeStatusCode(Response::HTTP_OK)
@@ -137,7 +137,7 @@ class BooksControllerValidationTest extends TestCase
   private function assertInvalidData($method, $url, $body = [])
   {
 
-    $data = $this->jwtAuthTest($method, $url, $body);
+    $data = $this->jwtAuthTest($method, $url, $body, 'admin');
 
     $fields = ["title", "description", "author_id"];
 

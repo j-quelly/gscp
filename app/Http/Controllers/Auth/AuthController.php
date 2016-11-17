@@ -175,7 +175,7 @@ class AuthController extends Controller
   public function assignRole(Request $request)
   {
     $this->validate($request, [
-      'email' => 'required|email|exists:users,email|max:255',
+      'email' => 'required|max:255|email|exists:users,email',
       'role'  => 'required|exists:roles,name',
     ], [
       'email.required' => 'The email field is required.',
@@ -230,7 +230,7 @@ class AuthController extends Controller
       'description'  => 'required',
     ], [
       'name.required'         => 'The name field is required.',
-      'display_name.required' => 'The display name field is required.',
+      'display_name.required' => 'The display_name field is required.',
       'description.required'  => 'The description field is required.',
     ]);
   }

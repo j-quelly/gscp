@@ -1,4 +1,4 @@
-# lumen gscp api 0.7.0
+# lumen gscp api 0.9.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -38,6 +38,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- 403 - Forbidden
 	- 404 - Not found		
 	- 405 - Method not allowed
+	- 422 - Unprocessable Entity
 	- 500 - Internal Server Error
 - [x] cleanup tests (remove repeatitive code)
 - [x] test restricted routes [11/6/2016]
@@ -46,12 +47,13 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] remove GET /auth endpoint [11/12/2016]
 - [x] update tests to include roles & permissions [11/13/2016]
 - [x] improve new end point respones [11/13/2016]
-	- [ ] perhaps these can be revisisted, among others.  Will need to read up on this
 - [x] add validation [11/13/2016]
 	- [x] improved validation messages [11/14/2016]
 - [x] add transformers for each new method [11/13/2016]
-	- [ ] will the role/permisison models need to be updated?
-- [ ] finish tests
+- [x] finish tests [11/16/2016]
+- [ ] Make responses more consistent & follow standard practice.  read more on this...
+- [ ] will the role/permisison models need to be updated? - read more about models
+
 
 ### Authors
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
@@ -59,16 +61,17 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] validation messages are still not verbose enough for front-end devs 
 [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
-- [ ] come up with needed roles, permissions and apply to route or controller middleware
-- [ ] update tests to include test crud roles & permissions
+- [x] update tests to include test crud roles & permissions [11/17/2016]
+- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
 
 ### Books
 - [x] run tests not in debug mode to see what responses are [11/5/2016]
 - [x] make sure tests are passing for this as well	[11/5/2016]
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
+- [x] update tests to include roles & permissions [11/17/2016]
+- [ ] include test for checking that an author_id exists 
 - [ ] come up with needed roles, permissions and apply to route or controller middleware
-- [ ] update tests to include roles & permissions
 
 ### Users
 - [x] crud user
@@ -81,7 +84,8 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] couple this with a blog post and share in related github issues/comments
 - [ ] come up with needed roles, permissions and apply to route or controller middleware
 - [x] write tests [11/9/2016]
-- [ ] update tests to include roles & permissions
+- [x] update tests to include roles & permissions [11/17/2016]
+- [ ] finish users validation tests
 
 ### Servers
 - [ ] crud server
@@ -124,3 +128,4 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] debug issues with entrust [11/11/2016]
 - [ ] token invalidate seems to not be working.. need a test for this
 - [x] assigning roles has somehow broken... [11/15/2016]
+- [ ] there is an issue validating email length with all controllers

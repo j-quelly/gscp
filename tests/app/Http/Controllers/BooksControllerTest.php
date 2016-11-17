@@ -60,7 +60,7 @@ class BooksControllerTest extends TestCase
     echo "\n\r{$this->green}Books Controller Tests:";
     echo "\n\r{$this->yellow}    It should see JSON...";
 
-    $data = $this->jwtAuthTest('get', $this->url);
+    $data = $this->jwtAuthTest('get', $this->url, [], 'admin');
     $this->seeStatusCode(200);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
@@ -73,7 +73,7 @@ class BooksControllerTest extends TestCase
 
     $books = $this->bookFactory(2);
 
-    $content = $this->jwtAuthTest('get', $this->url);
+    $content = $this->jwtAuthTest('get', $this->url, [], 'admin');
 
     $this->assertArrayHasKey('data', $content);
 
@@ -99,7 +99,7 @@ class BooksControllerTest extends TestCase
 
     $book = $this->bookFactory();
 
-    $content = $this->jwtAuthTest('get', $this->url . "/{$book->id}");
+    $content = $this->jwtAuthTest('get', $this->url . "/{$book->id}", [], 'admin');
 
     $this->seeStatusCode(200);
 
@@ -125,7 +125,7 @@ class BooksControllerTest extends TestCase
 
     echo "\n\r{$this->yellow}    Show should fail when the book id does not exist...";
 
-    $data = $this->jwtAuthTest('get', $this->url . "/99999");
+    $data = $this->jwtAuthTest('get', $this->url . "/99999", [], 'admin');
 
     $this
       ->seeStatusCode(404)
@@ -142,7 +142,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Show should not match an invalid route...";
 
-    $data = $this->jwtAuthTest('get', $this->url . "/this-is-invalid");
+    $data = $this->jwtAuthTest('get', $this->url . "/this-is-invalid", [], 'admin');
 
     $this->assertNotRegExp(
       '/Book not found/',
@@ -169,7 +169,7 @@ class BooksControllerTest extends TestCase
       'author_id'   => $author->id,
     ];
 
-    $body = $this->jwtAuthTest('post', $this->url, $postData);
+    $body = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this->assertArrayHasKey('data', $body);
 
@@ -206,7 +206,7 @@ class BooksControllerTest extends TestCase
       'author_id'   => $author->id,
     ];
 
-    $body = $this->jwtAuthTest('post', $this->url, $postData);
+    $body = $this->jwtAuthTest('post', $this->url, $postData, 'admin');
 
     $this
       ->seeStatusCode(201)
@@ -235,7 +235,7 @@ class BooksControllerTest extends TestCase
       'author_id'   => 1,
     ];
 
-    $body = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData);
+    $body = $this->jwtAuthTest('put', $this->url . "/{$book->id}", $postData, 'admin');
 
     $this
       ->seeStatusCode(200)
@@ -264,7 +264,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Update should fail with an invalid id...";
 
-    $body = $this->jwtAuthTest('put', $this->url . "/999999999");
+    $body = $this->jwtAuthTest('put', $this->url . "/999999999", [], 'admin');
 
     $this
       ->seeStatusCode(404)
@@ -282,7 +282,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Update should not match an invalid route...";
 
-    $body = $this->jwtAuthTest('put', $this->url . "/this-is-invalid");
+    $body = $this->jwtAuthTest('put', $this->url . "/this-is-invalid", [], 'admin');
 
     // $this->put('/v1/adbooks/this-is-invalid')
     $this->seeStatusCode(404);
@@ -297,7 +297,7 @@ class BooksControllerTest extends TestCase
 
     $book = $this->bookFactory();
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/{$book->id}");
+    $body = $this->jwtAuthTest('delete', $this->url . "/{$book->id}", [], 'admin');
 
     $this
       ->seeStatusCode(204)
@@ -313,7 +313,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Destroy should return a 404 with an invalid id...";
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/99999");
+    $body = $this->jwtAuthTest('delete', $this->url . "/99999", [], 'admin');
 
     $this
       ->seeStatusCode(404)
@@ -330,7 +330,7 @@ class BooksControllerTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Destroy should not match an invalid route...";
 
-    $body = $this->jwtAuthTest('delete', $this->url . "/this-is-invalid");
+    $body = $this->jwtAuthTest('delete', $this->url . "/this-is-invalid", [], 'admin');
 
     $this->seeStatusCode(404);
 

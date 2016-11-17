@@ -74,9 +74,7 @@ class UsersController extends Controller
 
     $user->name  = $request->name;
     $user->email = $request->email;
-    if ($request->$password) {
-      $user->password = app('hash')->make($request->password);
-    }
+    $user->password = app('hash')->make($request->password);
     $user->update();
 
     return $this->item($user, new UserTransformer());
