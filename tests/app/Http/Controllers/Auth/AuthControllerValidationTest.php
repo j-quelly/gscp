@@ -65,8 +65,8 @@ class AuthControllerValidationTest extends TestCase
   {
     echo "\n\r{$this->yellow}    Auth login is valid when email is just long enough...";
 
-    // create user
-    $user = factory(\App\User::class, 1)->create(['email' => 'jamie@' . $this->generateRandomString(63) . '.com', 'password' => app('hash')->make('supersecret')]);
+    // create user so we can test logging in...
+    $user = factory(\App\User::class, 1)->create(['email' => 'jamie@' . str_random(63) . '.com', 'password' => app('hash')->make('supersecret')]);
 
     $this->post($this->url . '/login', [
       'email'    => $user->email,
@@ -108,14 +108,13 @@ class AuthControllerValidationTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
-  // TODO: check this test is working correctly..
   /** @test **/
   public function auth_login_is_invalid_when_email_is_too_long()
   {
     echo "\n\r{$this->yellow}    Auth login is invalid when email is too long...";
 
     // create user
-    $user = factory(\App\User::class, 1)->create(['email' => 'jamie@' . $this->generateRandomString(64) . '.com', 'password' => app('hash')->make('supersecret')]);
+    $user = factory(\App\User::class, 1)->create(['email' => str_random(256) . '@example.com', 'password' => app('hash')->make('supersecret')]);
 
     $this->post($this->url . '/login', [
       'email'    => $user->email,
@@ -124,19 +123,15 @@ class AuthControllerValidationTest extends TestCase
 
     $body = $this->response->getData(true);
 
-    $fields = ["email"];
+    $field = "email";
 
     $this->seeStatusCode(422);
-
-    foreach ($fields as $field) {
-      $this->assertArrayHasKey($field, $body);
-      $this->assertEquals(["The {$field} field must be a valid {$field}."], $body[$field]);
-    }
+    $this->assertArrayHasKey($field, $body);
+    $this->assertEquals("The {$field} field must be less than 256 characters.", $body[$field][1]);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
-  // TODO: pull this out into validation tests
   /** @test **/
   public function auth_attach_permission_should_not_attach_invalid_permission_to_role()
   {
@@ -154,7 +149,6 @@ class AuthControllerValidationTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
-  // TODO: pull this out into validation tests...
   /** @test **/
   public function auth_assign_role_should_not_assign_invalid_role_to_user_when_using_a_valid_token()
   {
@@ -216,10 +210,10 @@ class AuthControllerValidationTest extends TestCase
 
     $postData = [
       "email" => "jerpaderp",
-      "role" => "admin"
+      "role"  => "admin",
     ];
 
-   $body = $this->jwtAuthTest('post', $this->url . '/assign-role', $postData, 'admin');
+    $body = $this->jwtAuthTest('post', $this->url . '/assign-role', $postData, 'admin');
 
     $fields = ["email"];
 
@@ -239,11 +233,11 @@ class AuthControllerValidationTest extends TestCase
     echo "\n\r{$this->yellow}    Auth assign role is invalid when email is too long...";
 
     $postData = [
-      "email" => "jamie@" . $this->generateRandomString(64) . ".com",
-      "role" => "admin"
+      "email" => "jamie@" . str_random(64) . ".com",
+      "role"  => "admin",
     ];
 
-   $body = $this->jwtAuthTest('post', $this->url . '/assign-role', $postData, 'admin');
+    $body = $this->jwtAuthTest('post', $this->url . '/assign-role', $postData, 'admin');
 
     $fields = ["email"];
 
@@ -274,17 +268,6 @@ class AuthControllerValidationTest extends TestCase
     }
 
     echo " {$this->green}[OK]{$this->white}\n\r";
-  }
-
-  private function generateRandomString($length = 10)
-  {
-    $characters       = 'abcdefghijklmnopqrstuvwxyz';
-    $charactersLength = strlen($characters);
-    $randomString     = '';
-    for ($i = 0; $i < $length; $i++) {
-      $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
   }
 
 }

@@ -134,6 +134,34 @@ class BooksControllerValidationTest extends TestCase
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
 
+  /** @test **/
+  public function book_test_fails_when_invalid_author_id()
+  {
+    // Updating a book
+    $book        = $this->bookFactory();
+
+    $postData = [
+      'title'       => $book->title,
+      'description' => $book->description,
+      'author_id'   => 999999999999,
+    ];
+
+    $tests = [
+      ["method" => "post", "url" => $this->url],
+      ["method" => "put", "url" => $this->url . "/1"]
+    ];
+
+    foreach ($tests as $test) {
+      echo "\n\r{$this->yellow}    Book {$test['method']} fails when invalid author_id...";
+      $data = $this->jwtAuthTest($test['method'], $test['url'], $postData, 'admin');
+      $this->seeStatusCode(422);
+      $this->assertArrayHasKey('author_id', $data);
+      $this->assertEquals(['validation.exists'], $data['author_id']);
+      echo " {$this->green}[OK]{$this->white}\n\r";
+    }
+
+  }
+
   private function assertInvalidData($method, $url, $body = [])
   {
 

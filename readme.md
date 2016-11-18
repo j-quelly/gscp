@@ -1,4 +1,4 @@
-# lumen gscp api 0.9.0
+# lumen gscp api 0.10.1
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -6,12 +6,12 @@ $ php -S localhost:8888 -t public
 
 ### mirgrating db
 - $ php artisan migrate
-- $ php artisan migrate -database=mysql-prod
+- $ php artisan migrate --database=mysql-prod
 
 ### seeding db
 1. $ composer dump-autoload
 2. $ php artisan migrate:refresh
-3. $ php artisan db:seed
+3. $ php artisan db:seed or $ php artisan db:seed --database=mysql-prod
 
 ### testing
 $ phpunit --no-globals-backup
@@ -51,8 +51,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [x] improved validation messages [11/14/2016]
 - [x] add transformers for each new method [11/13/2016]
 - [x] finish tests [11/16/2016]
-- [ ] Make responses more consistent & follow standard practice.  read more on this...
-- [ ] will the role/permisison models need to be updated? - read more about models
+- [ ] will the role & permisison models need to be updated? - read more about models
 
 
 ### Authors
@@ -70,8 +69,8 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
 - [x] improve validation error responses [11/7/2016]
 - [x] update tests to include roles & permissions [11/17/2016]
-- [ ] include test for checking that an author_id exists 
-- [ ] come up with needed roles, permissions and apply to route or controller middleware
+- [x] include test for checking that an author_id exists [11/18/2016]
+- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
 
 ### Users
 - [x] crud user
@@ -82,10 +81,10 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] fork entrust and publish a package for lumen
 	- [ ] possibly publish a boilerplate too
 	- [ ] couple this with a blog post and share in related github issues/comments
-- [ ] come up with needed roles, permissions and apply to route or controller middleware
 - [x] write tests [11/9/2016]
 - [x] update tests to include roles & permissions [11/17/2016]
-- [ ] finish users validation tests
+- [x] finish users validation tests [11/18/2016]
+- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
 
 ### Servers
 - [ ] crud server
@@ -95,6 +94,11 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] write tests
 
 ### To Do
+- [x] add role & permission db seeds [11/11/2016]
+- [ ] setup a staging environment
+- [ ] start documenting the API
+- [ ] read the APIGEE manual and more API resources
+	- [ ] Make responses more consistent & follow standard practice.  read more on this...
 - [ ] remove or replace:
 	- [ ] book migration
 	- [ ] book seed
@@ -103,10 +107,9 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book transformer
 	- [ ] book factory
 	- [ ] everything related to authors
-- [x] add role & permission db seeds [11/11/2016]
-- [ ] read the APIGEE manual and more API resources
-- [ ] start documenting the API
 
+### Staging
+- [ ] to do...
 
 ### Production/Remote
 - [x] add test db
@@ -114,18 +117,19 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] ability to migrate and seed the production db
 - [x] test remote is working
 	- [x] memcache removed temporarily, set to file
+- [x] put api in a subdomain [11/18/2016]	
+	- [x] check that remote is still working [11/18/2016]	
 - [ ] look into security concerns with using JWT on client side
 - [ ] setup cache
 	- [ ] confirm there is no issue with memcached 
 	- [ ] may need php_memcache.dll and memcached service		
 	- [ ] othewise switch to redis?	
-- [ ] check that remote is still working
-- [ ] put api in a subdomain	
 
 ### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
 - [x] remove namespace from routes.php [11/8/2016]
 - [x] debug issues with entrust [11/11/2016]
-- [ ] token invalidate seems to not be working.. need a test for this
 - [x] assigning roles has somehow broken... [11/15/2016]
-- [ ] there is an issue validating email length with all controllers
+- [x] there is an issue validating email length with all controllers [11/18/2016]
+- [ ] token invalidate seems to not be working.. need a test for this
+- [ ] production is not parsing JWT

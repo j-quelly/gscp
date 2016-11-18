@@ -58,4 +58,5 @@ class Controller extends BaseController
       'password.min'      => 'The password field must be more than 8 characters.',
     ]);
   }
+   
 }
