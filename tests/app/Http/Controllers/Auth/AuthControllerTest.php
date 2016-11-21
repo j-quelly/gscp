@@ -110,7 +110,7 @@ class AuthControllerTest extends TestCase
   /** @test **/
   public function auth_invalid_login_should_return_an_error()
   {
-    echo "\n\r{$this->yellow}    Auth invalid login should return an error ...";
+    echo "\n\r{$this->yellow}    Auth invalid login should return an error...";
 
     // Test unauthenticated access.
     $this->post($this->url . '/login', [
@@ -131,7 +131,7 @@ class AuthControllerTest extends TestCase
   /** @test **/
   public function auth_valid_login_should_return_a_jwt()
   {
-    echo "\n\r{$this->yellow}    Auth valid login should return a token ...";
+    echo "\n\r{$this->yellow}    Auth valid login should return a token...";
 
     $user = $this->userFactory();
 
@@ -163,21 +163,6 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertArrayHasKey('token', $body['data']);
     $this->assertEquals('Token refreshed', $body['data']['message']);
-
-    echo " {$this->green}[OK]{$this->white}\n\r";
-  }
-
-  /** @test **/
-  public function auth_invalidate_should_delete_jwt_token_when_using_a_valid_token()
-  {
-    echo "\n\r{$this->yellow}    Auth invalidate should delete jwt token when using a valid token...";
-
-    $body = $this->jwtAuthTest('delete', $this->url . '/invalidate');
-
-    $this->seeStatusCode(200);
-    $this->assertArrayHasKey('data', $body);
-    $this->assertArrayHasKey('message', $body['data']);
-    $this->assertEquals('Token invalidated', $body['data']['message']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -316,6 +301,62 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('data', $body);
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertEquals('Created', $body['data']['message']);
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function auth_invalidate_should_blacklist_jwt_token()
+  {
+    echo "\n\r{$this->yellow}    Auth invalidate should blacklist jwt token when using a valid token...";
+
+    // Arrange
+    $user  = $this->userFactory(1, 'admin');
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $payload = JWTAuth::getPayload($token);
+    $headers = array(
+      'Accept'        => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    );
+
+    $this->delete('/v1/auth/invalidate', [], $headers);
+    $body = json_decode($this->response->getContent(), true);
+    $this->seeStatusCode(200);
+    $this->assertArrayHasKey('data', $body);
+    $this->assertArrayHasKey('message', $body['data']);
+    $this->assertEquals('Token invalidated', $body['data']['message']);
+
+    $this->assertTrue(JWTAuth::getBlacklist()->has($payload));
+
+    echo " {$this->green}[OK]{$this->white}\n\r";
+  }
+
+  /** @test **/
+  public function auth_invalidate_should_blacklist_and_deny_access()
+  {
+    echo "\n\r{$this->yellow}    Auth invalidate should assert no access after token invalidated...";
+
+    // Arrange
+    $user  = $this->userFactory(1, 'admin');
+    $token = JWTAuth::fromUser($user);
+    JWTAuth::setToken($token);
+    $payload = JWTAuth::getPayload($token);
+    JWTAuth::invalidate($token);
+    $headers = array(
+      'Accept'        => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    );
+
+    // Sanity check that JWTAuth::invalidate worked
+    $this->assertTrue(JWTAuth::getBlacklist()->has($payload));
+
+    // User data should not be returned and response should have HTTP 500
+    $this->get('/v1/auth/user', $headers);
+    $body = json_decode($this->response->getContent(), true);
+    $this->assertArrayHasKey('error', $body);
+    $this->assertEquals('Token invalid', $body['error']['message']);
+    $this->seeStatusCode(400);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }

@@ -1,4 +1,4 @@
-# lumen gscp api 0.10.1
+# lumen gscp api 0.11.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -51,6 +51,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [x] improved validation messages [11/14/2016]
 - [x] add transformers for each new method [11/13/2016]
 - [x] finish tests [11/16/2016]
+- [x] adds better invalidate tests [11/21/2016]
 - [ ] will the role & permisison models need to be updated? - read more about models
 
 
@@ -131,5 +132,5 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] debug issues with entrust [11/11/2016]
 - [x] assigning roles has somehow broken... [11/15/2016]
 - [x] there is an issue validating email length with all controllers [11/18/2016]
+- [x] production is not parsing headers JWT token [11/21/2016]
 - [ ] token invalidate seems to not be working.. need a test for this
-- [ ] production is not parsing JWT

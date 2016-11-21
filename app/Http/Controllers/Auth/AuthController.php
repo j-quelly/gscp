@@ -89,6 +89,8 @@ class AuthController extends Controller
   {
     $token = JWTAuth::parseToken();
 
+    // dd($token);
+
     $token->invalidate();
 
     return new JsonResponse(['data' => ['message' => 'Token invalidated']]);
