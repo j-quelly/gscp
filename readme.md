@@ -1,4 +1,4 @@
-# lumen gscp api 0.11.0
+# lumen gscp api 0.12.0
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -6,6 +6,7 @@ $ php -S localhost:8888 -t public
 
 ### mirgrating db
 - $ php artisan migrate
+- $ php artisan migrate --database=mysql-staging
 - $ php artisan migrate --database=mysql-prod
 
 ### seeding db
@@ -96,7 +97,6 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ### To Do
 - [x] add role & permission db seeds [11/11/2016]
-- [ ] setup a staging environment
 - [ ] start documenting the API
 - [ ] read the APIGEE manual and more API resources
 	- [ ] Make responses more consistent & follow standard practice.  read more on this...
@@ -108,9 +108,10 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book transformer
 	- [ ] book factory
 	- [ ] everything related to authors
+- [x] generate new jwt token [11/22/2016]
 
 ### Staging
-- [ ] to do...
+- [x] need to set this up [11/22/2016]
 
 ### Production/Remote
 - [x] add test db
@@ -124,7 +125,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] setup cache
 	- [ ] confirm there is no issue with memcached 
 	- [ ] may need php_memcache.dll and memcached service		
-	- [ ] othewise switch to redis?	
+	- [ ] otherwise switch to redis?	
 
 ### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
@@ -133,4 +134,5 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] assigning roles has somehow broken... [11/15/2016]
 - [x] there is an issue validating email length with all controllers [11/18/2016]
 - [x] production is not parsing headers JWT token [11/21/2016]
-- [ ] token invalidate seems to not be working.. need a test for this
+- [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
+- [ ] some responses do not match the headers ie: 400 error saying 401
