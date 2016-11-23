@@ -101,6 +101,7 @@ class AuthControllerTest extends TestCase
       $body = json_decode($this->response->getContent(), true);
       $this->assertArrayHasKey('error', $body);
       $this->assertEquals('Token invalid', $body['error']['message']);
+      $this->assertEquals('400', $body['error']['status']);
       $this->seeStatusCode(400);
     }
 
@@ -124,6 +125,7 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('error', $body);
     $this->assertArrayHasKey('message', $body['error']);
     $this->assertEquals('Invalid credentials', $body['error']['message']);
+    $this->assertEquals('401', $body['error']['status']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -260,6 +262,7 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('data', $body);
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertEquals('Created', $body['data']['message']);
+    $this->assertEquals('200', $body['data']['status']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -301,6 +304,7 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('data', $body);
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertEquals('Created', $body['data']['message']);
+    $this->assertEquals('200', $body['data']['status']);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
   }
@@ -326,6 +330,7 @@ class AuthControllerTest extends TestCase
     $this->assertArrayHasKey('data', $body);
     $this->assertArrayHasKey('message', $body['data']);
     $this->assertEquals('Token invalidated', $body['data']['message']);
+    $this->assertEquals('200', $body['data']['status']);
 
     $this->assertTrue(JWTAuth::getBlacklist()->has($payload));
 
@@ -351,11 +356,11 @@ class AuthControllerTest extends TestCase
     // Sanity check that JWTAuth::invalidate worked
     $this->assertTrue(JWTAuth::getBlacklist()->has($payload));
 
-    // User data should not be returned and response should have HTTP 500
     $this->get('/v1/auth/user', $headers);
     $body = json_decode($this->response->getContent(), true);
     $this->assertArrayHasKey('error', $body);
     $this->assertEquals('Token invalid', $body['error']['message']);
+    $this->assertEquals('400', $body['error']['status']);
     $this->seeStatusCode(400);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
@@ -422,6 +427,7 @@ class AuthControllerTest extends TestCase
 
     $this->assertArrayHasKey('error', $body);
     $this->assertEquals('Token not provided', $body['error']['message']);
+    $this->assertEquals('400', $body['error']['status']);
     $this->seeStatusCode(400);
   }
 

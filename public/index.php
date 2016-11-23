@@ -11,8 +11,8 @@
 |
 */
 
-// $app = require __DIR__.'/../../gscp-api-v1/bootstrap/app.php'; 
-$app = require __DIR__.'/../../gscp-api-staging/bootstrap/app.php'; 
+$app = require __DIR__.'/../../gscp-api-v1/bootstrap/app.php'; 
+// $app = require __DIR__.'/../../gscp-api-staging/bootstrap/app.php'; 
 
 /*
 |--------------------------------------------------------------------------

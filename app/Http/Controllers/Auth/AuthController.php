@@ -90,10 +90,14 @@ class AuthController extends Controller
     $token = JWTAuth::parseToken();
 
     // dd($token);
+    // JWTAuth::invalidate($token);
 
     $token->invalidate();
 
-    return new JsonResponse(['data' => ['message' => 'Token invalidated']]);
+    return new JsonResponse(['data' => [
+      'message' => 'Token invalidated',
+      'status' => 200,
+    ]]);
   }
 
   /**
@@ -192,6 +196,7 @@ class AuthController extends Controller
 
     return new JsonResponse(['data' => [
       'message' => 'Created',
+      'status' => 200,
     ]]);
   }
 
@@ -216,6 +221,7 @@ class AuthController extends Controller
 
     return new JsonResponse(['data' => [
       'message' => 'Created',
+      'status' => 200,
     ]]);
   }
 

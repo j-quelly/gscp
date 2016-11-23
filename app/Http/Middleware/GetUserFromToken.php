@@ -35,7 +35,7 @@ class GetUserFromToken extends BaseMiddleware
         } catch (TokenExpiredException $e) {
             return $this->respond('tymon.jwt.expired', 'Token expired', $e->getStatusCode(), [$e]);
         } catch (JWTException $e) {
-            return $this->respond('tymon.jwt.invalid', 'Token invalid', $e->getStatusCode(), [$e]);
+            return $this->respond('tymon.jwt.invalid', 'Token invalid', 400, [$e]);
         }
 
         if (! $user) {

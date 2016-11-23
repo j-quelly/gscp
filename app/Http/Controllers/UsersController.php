@@ -66,6 +66,7 @@ class UsersController extends Controller
       return response()->json([
         'error' => [
           'message' => 'User not found',
+          'status' => 404,
         ],
       ], 404);
     }
@@ -93,6 +94,7 @@ class UsersController extends Controller
       return response()->json([
         'error' => [
           'message' => 'User not found',
+          'status' => 404,
         ],
       ], 404);
     }

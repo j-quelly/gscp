@@ -158,6 +158,9 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->configure('auth');
 $app->register(Zizaco\Entrust\EntrustServiceProvider::class);
 
+// redis cache
+$app->configure('database');
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

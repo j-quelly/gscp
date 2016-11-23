@@ -1,4 +1,4 @@
-# lumen gscp api 0.12.0
+# lumen gscp api 0.12.1
 Building an open source game server control panel API with Lumen 5.3
 
 ### getting started
@@ -53,26 +53,8 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] add transformers for each new method [11/13/2016]
 - [x] finish tests [11/16/2016]
 - [x] adds better invalidate tests [11/21/2016]
+- [x] adds more assertions [11/23/2016]
 - [ ] will the role & permisison models need to be updated? - read more about models
-
-
-### Authors
-- [x] run tests not in debug mode to see what responses are [11/5/2016]
-- [x] make sure tests are passing for this as well	[11/5/2016]
-- [x] validation messages are still not verbose enough for front-end devs 
-[11/6/2016]
-- [x] improve validation error responses [11/7/2016]
-- [x] update tests to include test crud roles & permissions [11/17/2016]
-- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
-
-### Books
-- [x] run tests not in debug mode to see what responses are [11/5/2016]
-- [x] make sure tests are passing for this as well	[11/5/2016]
-- [x] validation messages are still not verbose enough for front-end devs [11/6/2016]
-- [x] improve validation error responses [11/7/2016]
-- [x] update tests to include roles & permissions [11/17/2016]
-- [x] include test for checking that an author_id exists [11/18/2016]
-- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
 
 ### Users
 - [x] crud user
@@ -86,6 +68,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] write tests [11/9/2016]
 - [x] update tests to include roles & permissions [11/17/2016]
 - [x] finish users validation tests [11/18/2016]
+- [x] adds more assertions [11/23/2016]
 - [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
 
 ### Servers
@@ -110,10 +93,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] everything related to authors
 - [x] generate new jwt token [11/22/2016]
 
-### Staging
-- [x] need to set this up [11/22/2016]
-
-### Production/Remote
+### Remote
 - [x] add test db
 - [x] make sure remote uses production db
 - [x] ability to migrate and seed the production db
@@ -121,11 +101,11 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [x] memcache removed temporarily, set to file
 - [x] put api in a subdomain [11/18/2016]	
 	- [x] check that remote is still working [11/18/2016]	
+- [x] setup staging env [11/22/2016]	
+- [ ] setup cache w/ redis (may not need this for a long time)
+
+### Client
 - [ ] look into security concerns with using JWT on client side
-- [ ] setup cache
-	- [ ] confirm there is no issue with memcached 
-	- [ ] may need php_memcache.dll and memcached service		
-	- [ ] otherwise switch to redis?	
 
 ### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
@@ -135,4 +115,4 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] there is an issue validating email length with all controllers [11/18/2016]
 - [x] production is not parsing headers JWT token [11/21/2016]
 - [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
-- [ ] some responses do not match the headers ie: 400 error saying 401
+- [x] some responses do not match the headers ie: 400 error saying 401 [11/23/2016]

@@ -130,7 +130,7 @@ class UsersControllerTest extends TestCase
       ->seeStatusCode(404)
       ->seeJson([
         'message' => 'Not Found',
-        'status'  => 404,
+        'status' => 404,
       ]);
 
     echo " {$this->green}[OK]{$this->white}\n\r";
@@ -261,6 +261,7 @@ class UsersControllerTest extends TestCase
         ->seeJsonEquals([
           'error' => [
             'message' => 'User not found',
+            'status' => 404,
           ],
         ]);
 
@@ -309,6 +310,7 @@ class UsersControllerTest extends TestCase
         ->seeJsonEquals([
           'error' => [
             'message' => 'User not found',
+            'status' => 404,
           ],
         ]);
 
