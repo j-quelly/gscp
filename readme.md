@@ -1,5 +1,7 @@
-# lumen gscp api 0.12.1
-Building an open source game server control panel API with Lumen 5.3
+# GSCP
+game server control panel API with Lumen 5.3
+
+## server version 0.12.1
 
 ### getting started
 $ php -S localhost:8888 -t public
@@ -69,7 +71,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] update tests to include roles & permissions [11/17/2016]
 - [x] finish users validation tests [11/18/2016]
 - [x] adds more assertions [11/23/2016]
-- [ ] come up with needed roles, permissions and apply to route or controller middleware.  This is really only practice as authors/books will not exist in production.
+- [ ] come up with needed roles, permissions and apply to route or controller middleware. 
 
 ### Servers
 - [ ] crud server
@@ -102,10 +104,6 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] put api in a subdomain [11/18/2016]	
 	- [x] check that remote is still working [11/18/2016]	
 - [x] setup staging env [11/22/2016]	
-- [ ] setup cache w/ redis (may not need this for a long time)
-
-### Client
-- [ ] look into security concerns with using JWT on client side
 
 ### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]
@@ -116,3 +114,9 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] production is not parsing headers JWT token [11/21/2016]
 - [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
 - [x] some responses do not match the headers ie: 400 error saying 401 [11/23/2016]
+
+## Client
+- [ ] look into security concerns with using JWT on client side
+
+### Production 2.x.x
+- [ ] setup cache w/ redis (may not need this for a long time)

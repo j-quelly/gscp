@@ -1,2 +1,6 @@
 sftp-config.json
 sftp-config-alt.json
+node_modules
+.DS_Store
+.env
+npm-debug.log

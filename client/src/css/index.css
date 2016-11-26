@@ -1,0 +1,17 @@
+body {
+    background: #014864;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+
+/**
+ * Utilities
+ */
+
+.red {
+    outline: solid 1px red;
+}
