@@ -1,17 +1,17 @@
 # GSCP Client
 client side to GSCP API
 
-## version 0.1.0
+## client version 0.2.0
 
 ### login component
-- [ ] button states
-- [ ] button border
-- [ ] button text shadow
-- [ ] glyph icons
+- [x] button states
+- [x] button border
+- [x] button text shadow
+- [x] glyph icons
 - [ ] interface with API
 - [ ] remember me
 - [ ] forgot password
-- [ ] pull out form styles for separate component/stylesheet
+- [x] pull out form styles for separate component/stylesheet
 
 ### issues
 - [ ]

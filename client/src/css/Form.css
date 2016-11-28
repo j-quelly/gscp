@@ -1,0 +1,93 @@
+/**
+ * Form Component
+ *
+ */
+
+.form {}
+
+.form__element {
+    position: relative;
+}
+
+.form__element .glyphicon {
+    position: absolute;
+    padding: 17px 0 0 15px;
+    pointer-events: none;
+}
+
+.form__input {
+    border: solid 1px #e4e4e4;
+    border-radius: 6px;
+    color: #999999;
+    font-size: 1.2em;
+    height: 45px;
+    margin: 0 0 15px 0;
+    padding: 15px 15px 15px 15px;
+    width: 100%;
+}
+
+.form__input--glyph {
+    padding: 15px 15px 15px 35px; 
+}
+
+.form__button {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
+    background: rgb(255, 191, 0);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#fea300', GradientType=0);
+    /* IE6-9 */
+    border: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: solid 4px #fe7e00;
+    box-shadow: none;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    height: 45px;
+    margin: 0 0 15px 0;
+    outline: 0;
+    padding: 10px 15px 15px 15px;
+    text-shadow: 0px 1px 0px rgba(254, 108, 0, 1);
+    text-transform: uppercase;
+}
+
+.form__button:hover,
+.form__button:active {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
+    background: rgb(255, 191, 0);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#fea300', GradientType=0);
+    /* IE6-9 */
+    border: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: solid 2px #fe7e00;
+    box-shadow: none;
+    height: 41px;
+    margin: 4px 0 15px 0;
+    outline: 0;
+    padding: 6px 15px 5px 15px;
+}
+
+.form__button:focus {
+    border-bottom: solid 4px #fe7e00;
+    box-shadow: none;
+}

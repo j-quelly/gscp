@@ -7,6 +7,13 @@ body {
     padding: 0;
 }
 
+/**
+ * Globals
+ */
+
+.glyphicon {
+	color: #999;
+}
 
 /**
  * Utilities
