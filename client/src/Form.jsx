@@ -7,10 +7,7 @@ import './css/Form.css';
 const InputForm = function(props) {
   return (
     <form className="form">
-      {props.children}
-      <button type="button" className="form__button btn btn-warning">
-        Login
-      </button>
+      {props.children}    
     </form>
     );
 };
@@ -42,4 +39,19 @@ InputField.defaultProps = {
   inputType: 'text',
 };
 
-export { InputForm, InputField };
+const Btn = function(props) {
+  const btnClass = `form__button ${props.styles} btn`;
+  return (
+      <button type="button" className={btnClass}>
+        {props.children}
+      </button>  
+   );
+};
+Btn.propTypes = {
+  styles: React.PropTypes.string,
+};
+Btn.defaultProps = {
+  styles: '',
+};
+
+export { InputForm, InputField, Btn };

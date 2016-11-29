@@ -8,10 +8,17 @@ client side to GSCP API
 - [x] button border
 - [x] button text shadow
 - [x] glyph icons
+- [x] pull out form styles for separate component/stylesheet
+- [ ] tests
 - [ ] interface with API
+	- [ ] Redux?
 - [ ] remember me
 - [ ] forgot password
-- [x] pull out form styles for separate component/stylesheet
+
+### form component
+- [ ] validation
+- [ ] interface with API
+	- [ ] Redux?
+- [ ] tests
 
 ### issues
-- [ ]

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // components
-import { InputForm, InputField } from './Form';
+import { InputForm, InputField, Btn } from './Form';
 
 // styles
 import './css/Login.css';
@@ -14,8 +14,19 @@ const Login = function(props) {
         <h1 className="login__title">Login</h1>
         <div className="login__body">
           <InputForm>
-            <InputField glyph="user" defaultText="username" inputType="text" />
-            <InputField glyph="lock" defaultText="password" inputType="password" />
+            <InputField
+              glyph="user"
+              defaultText="username"
+              inputType="email"
+            />
+            <InputField
+              glyph="lock"
+              defaultText="password"
+              inputType="password"
+            />
+            <Btn styles="form__button--pull-right">
+              Login
+            </Btn>
           </InputForm>
         </div>
         <small className="login__footer login__footer--right">© Copyright 2013-2016 Studio 174 Inc</small>

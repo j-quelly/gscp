@@ -3,7 +3,19 @@
  *
  */
 
+
+/* block */
+
 .form {}
+
+.form:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+
+/* block element */
 
 .form__element {
     position: relative;
@@ -14,6 +26,9 @@
     padding: 17px 0 0 15px;
     pointer-events: none;
 }
+
+
+/* block element */
 
 .form__input {
     border: solid 1px #e4e4e4;
@@ -26,9 +41,15 @@
     width: 100%;
 }
 
+
+/* block element modifier */
+
 .form__input--glyph {
-    padding: 15px 15px 15px 35px; 
+    padding: 15px 15px 15px 35px;
 }
+
+
+/* block element */
 
 .form__button {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
@@ -54,12 +75,15 @@
     font-size: 1.6em;
     font-weight: bold;
     height: 45px;
-    margin: 0 0 15px 0;
+    margin: 0 0 0 0;
     outline: 0;
     padding: 10px 15px 15px 15px;
     text-shadow: 0px 1px 0px rgba(254, 108, 0, 1);
     text-transform: uppercase;
 }
+
+
+/* block element pseudo selector */
 
 .form__button:hover,
 .form__button:active {
@@ -81,13 +105,22 @@
     border-top-right-radius: 4px;
     border-bottom: solid 2px #fe7e00;
     box-shadow: none;
-    height: 41px;
-    margin: 4px 0 15px 0;
+    color: #fff;
+    height: 43px;
+    margin: 2px 0 0 0;
     outline: 0;
-    padding: 6px 15px 5px 15px;
+    padding: 10px 15px 15px 15px;
 }
 
 .form__button:focus {
     border-bottom: solid 4px #fe7e00;
     box-shadow: none;
+    color: #fff;
+}
+
+
+/* block element modifier */
+
+.form__button--pull-right {
+    float: right;
 }
