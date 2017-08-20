@@ -21,4 +21,7 @@ client side to GSCP API
 	- [ ] Redux?
 - [ ] tests
 
+### to do 
+- [ ] change css to scss
+
 ### issues

@@ -5,7 +5,7 @@ import React from 'react';
 import { InputForm, InputField, Btn } from './Form';
 
 // styles
-import './css/Login.css';
+import '../css/Login.css';
 
 const Login = function(props) {
   return (

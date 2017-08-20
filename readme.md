@@ -1,7 +1,7 @@
 # GSCP
 game server control panel API with Lumen 5.3
 
-## server version 0.12.1
+## server version 0.12.2
 
 ### getting started
 $ php -S localhost:8888 -t public
@@ -114,6 +114,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] production is not parsing headers JWT token [11/21/2016]
 - [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
 - [x] some responses do not match the headers ie: 400 error saying 401 [11/23/2016]
+- [x] set CACHE_DRIVER to array instead of redis until I learn how to setup redis caching [8/19/2017]
 
 ## Client
 - [ ] look into security concerns with using JWT on client side

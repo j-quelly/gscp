@@ -2,7 +2,7 @@
 import React from 'react';
 
 // styles
-import './css/Form.css';
+import '../css/Form.css';
 
 const InputForm = function(props) {
   return (

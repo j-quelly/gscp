@@ -1,4 +1,4 @@
-import Login from '../Login';
+import Login from '../components/Login';
 import React from 'react';
 import { shallow } from 'enzyme';
 
