@@ -1,5 +1,5 @@
-import App from '../App';
-import Login from '../Login';
+import App from './App';
+import Login from '../login/Login';
 import React from 'react';
 import { shallow } from 'enzyme';
 

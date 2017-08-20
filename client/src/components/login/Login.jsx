@@ -2,10 +2,10 @@
 import React from 'react';
 
 // components
-import { InputForm, InputField, Btn } from './Form';
+import { InputForm, InputField, Btn } from '../form/Form';
 
 // styles
-import './css/Login.css';
+import './Login.css';
 
 const Login = function(props) {
   return (
