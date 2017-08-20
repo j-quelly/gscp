@@ -1,4 +1,4 @@
-import { InputForm, InputField, Btn } from '../components/form';
+import { InputForm, InputField, Btn } from '../form/form';
 import React from 'react';
 import { shallow } from 'enzyme';
 
