@@ -205,7 +205,7 @@ describe('<Btn />', () => {
     ).toBe(true);
   });  
 
-  it('`button` should say Login', () => {
+  it('`button` should display Login', () => {
     expect(
       wrapper.text()
     ).toBe('Login');

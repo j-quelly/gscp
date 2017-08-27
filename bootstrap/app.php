@@ -114,6 +114,7 @@ $app->singleton(
 
 $app->middleware([
     App\Http\Middleware\RequestLogMiddleware::class,
+    \Barryvdh\Cors\HandleCors::class,
 ]);
 
 $app->routeMiddleware([
@@ -161,6 +162,10 @@ $app->register(Zizaco\Entrust\EntrustServiceProvider::class);
 // redis cache
 $app->configure('database');
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
+
+// enable CORS
+$app->configure('cors');
+$app->register(Barryvdh\Cors\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

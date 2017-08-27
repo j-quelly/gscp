@@ -2,7 +2,7 @@
 import React from 'react';
 
 // styles
-import './Form.css';
+import './Forms.css';
 
 const InputForm = function(props) {
   return (
@@ -28,6 +28,7 @@ const InputField = function(props) {
         name={props.name}
         value={props.value}
         onChange={(e) => props.handleChange(e)}
+        onKeyPress={(e) => props.handleChange(e)}
       />
     </div>
   );
@@ -46,21 +47,15 @@ InputField.defaultProps = {
 };
 
 const InputError = function(props) {
-
   if (props.errorMessage) {
-
     return (
       <p className="form__error">
         {props.errorMessage}
       </p>      
     );
-
   } else {
-
-    return null;
-    
+    return null;    
   }
-
 };
 InputError.propTypes = {
   errorMessage: React.PropTypes.string,

@@ -3,9 +3,7 @@
  *
  */
 
-
 /* block */
-
 .form {}
 
 .form:after {
@@ -14,12 +12,7 @@
     display: table;
 }
 
-
-
-
-
 /* block element */
-
 .form__element {
     position: relative;
 }
@@ -30,12 +23,7 @@
     pointer-events: none;
 }
 
-
-
-
-
 /* block element */
-
 .form__input {
     border: solid 1px #e4e4e4;
     border-radius: 6px;
@@ -47,31 +35,18 @@
     width: 100%;
 }
 
-
-
-
 /* block element */
-
 .form__error {
     font-size: 1.2em;
     color: red;
 }
 
-
-
-
 /* block element modifier */
-
 .form__input--glyph {
     padding: 15px 15px 15px 35px;
 }
 
-
-
-
-
 /* block element */
-
 .form__button {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
     background: rgb(255, 191, 0);
@@ -103,12 +78,7 @@
     text-transform: uppercase;
 }
 
-
-
-
-
 /* block element pseudo selector */
-
 .form__button:hover,
 .form__button:active {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
@@ -140,12 +110,10 @@
     border-bottom: solid 4px #fe7e00;
     box-shadow: none;
     color: #fff;
+    outline: none;
 }
 
-
-
 /* block element modifier */
-
 .form__button--pull-right {
     float: right;
 }
