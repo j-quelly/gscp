@@ -94,6 +94,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] book factory
 	- [ ] everything related to authors
 - [x] generate new jwt token [11/22/2016]
+- [ ] need a proper release cycle to stage and prod
 
 ### Remote
 - [x] add test db

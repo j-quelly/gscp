@@ -7,9 +7,9 @@ import './Form.css';
 const InputForm = function(props) {
   return (
     <form className="form">
-      {props.children}    
+      {props.children}
     </form>
-    );
+  );
 };
 
 const InputField = function(props) {
@@ -17,6 +17,7 @@ const InputField = function(props) {
   const glyph = (props.glyph ? <i className={glyphClass}></i> : '');
   const inputModifier = (glyph ? 'form__input--glyph' : '');
   const inputClass = `form__input ${inputModifier}`;
+
   return (
     <div className="form__element">
       {glyph}
@@ -24,34 +25,70 @@ const InputField = function(props) {
         className={inputClass}
         type={props.inputType}
         placeholder={props.defaultText}
+        name={props.name}
+        value={props.value}
+        onChange={(e) => props.handleChange(e)}
       />
     </div>
-    );
+  );
 };
 InputField.propTypes = {
   glyph: React.PropTypes.string,
   defaultText: React.PropTypes.string,
   inputType: React.PropTypes.string,
+  value: React.PropTypes.string,
 };
 InputField.defaultProps = {
   glyph: '',
   defaultText: '',
   inputType: 'text',
+  value: '',
+};
+
+const InputError = function(props) {
+
+  if (props.errorMessage) {
+
+    return (
+      <p className="form__error">
+        {props.errorMessage}
+      </p>      
+    );
+
+  } else {
+
+    return null;
+    
+  }
+
+};
+InputError.propTypes = {
+  errorMessage: React.PropTypes.string,
+};
+InputError.defaultProps = {
+  errorMessage: '',
 };
 
 const Btn = function(props) {
   const btnClass = `form__button ${props.styles} btn`;
+
   return (
-      <button type="button" className={btnClass}>
-        {props.children}
-      </button>  
-   );
+    <button
+      type="button"
+      className={btnClass}
+      onClick={() => props.handleClick()}
+    >
+      {props.children}
+    </button>
+  );
+
 };
 Btn.propTypes = {
   styles: React.PropTypes.string,
+  handleClick: React.PropTypes.func.isRequired,
 };
 Btn.defaultProps = {
   styles: '',
 };
 
-export { InputForm, InputField, Btn };
+export { InputForm, InputField, InputError, Btn };

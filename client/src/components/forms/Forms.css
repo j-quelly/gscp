@@ -15,6 +15,9 @@
 }
 
 
+
+
+
 /* block element */
 
 .form__element {
@@ -26,6 +29,9 @@
     padding: 17px 0 0 15px;
     pointer-events: none;
 }
+
+
+
 
 
 /* block element */
@@ -42,11 +48,26 @@
 }
 
 
+
+
+/* block element */
+
+.form__error {
+    font-size: 1.2em;
+    color: red;
+}
+
+
+
+
 /* block element modifier */
 
 .form__input--glyph {
     padding: 15px 15px 15px 35px;
 }
+
+
+
 
 
 /* block element */
@@ -83,6 +104,9 @@
 }
 
 
+
+
+
 /* block element pseudo selector */
 
 .form__button:hover,
@@ -117,6 +141,7 @@
     box-shadow: none;
     color: #fff;
 }
+
 
 
 /* block element modifier */
