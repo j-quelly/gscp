@@ -2,7 +2,10 @@
 import React, { Component } from 'react';
 
 // components
-import { InputForm, InputField, InputError, Btn } from '../form/Form';
+import { InputForm, InputField, InputError, Btn } from '../forms/Forms';
+
+// helpers
+import client from '../../lib/Client.js';
 
 // styles
 import './Login.css';
@@ -36,20 +39,31 @@ class Login extends Component {
       },
     });
 
+    if (e.key === 'Enter') {
+      this.onFormSubmit();
+    }
+
   }
 
   validateData(formData) {
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const errors = {};
 
     // validate username
     if (!formData.username || formData.username === '' || formData.username === null) {
-      errors.username = 'The username you\'ve entered does not match an account.';
+      errors.username = 'The username entered does not match an account.';
+      return errors;
+    }
+
+    // validate email address
+    if (!emailRegex.test(formData.username)) {
+      errors.username = 'Please enter a valid email address.';
       return errors;
     }
 
     // validate password
     if (!formData.password || formData.password === '' || formData.password === null) {
-      errors.password = 'The password you\'ve entered is incorrect.';
+      errors.password = 'The password entered is incorrect.';
       return errors;
     }
 
@@ -68,16 +82,17 @@ class Login extends Component {
     // if any field errors then return
     if (Object.keys(fieldErrors).length) return;
 
-    // TODO: need actual validation from api 
-    console.log('need actual validation from api ');
+    const userData = {
+      email: this.state.fields.username,
+      password: this.state.fields.password,
+    };
 
-    // TODO: update form data
-    const username = this.state.fields.username;
-    const password = this.state.fields.password;
-
-    // TODO: invoke some function passed as props to log into the applicaiton?
-    //       or just a method as part of this class...
-    console.log('invoke some function passed as props to log into the applicaiton?');    
+    client.login(userData, (err) => {
+      console.error(err);
+    }, (data) => {
+      // TODO: getting error possibly due to CORS issue
+      console.log(data);
+    }); 
 
     this.setState({
       fields: {},
