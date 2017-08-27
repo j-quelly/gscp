@@ -1,8 +1,7 @@
 # GSCP
 game server control panel API with Lumen 5.3
 
-## server version 0.13.0
-## client version 0.4.2
+## server version 0.14.0
 
 ### getting started
 $ php -S localhost:8888 -t public
@@ -84,6 +83,8 @@ $ php vendor/phpunit/phpunit/phpunit
 ### To Do
 - [x] add role & permission db seeds [11/11/2016]
 - [x] enable CORS with new middleware [8/26/2017]
+- [x] disable CORS [8/27/2017]
+- [ ] API should accept JSON & URI
 - [ ] start documenting the API
 - [ ] read the APIGEE manual and more API resources
 	- [ ] Make responses more consistent & follow standard practice.  read more on this...
@@ -121,6 +122,7 @@ $ php vendor/phpunit/phpunit/phpunit
 
 ## Client
 - [ ] look into security concerns with using JWT on client side
+- [ ] use cookies for session handling per paper in client readme
 
-### Production 2.x.x
+### Production 1.x.x
 - [ ] setup cache w/ redis (may not need this for a long time)
