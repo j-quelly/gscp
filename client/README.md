@@ -1,7 +1,7 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.4.2
+## client version 0.4.4
 
 ### login component
 - [x] button states
@@ -32,10 +32,10 @@ client side to GSCP API
 - [ ] implement cookie storage after valid login
 - [ ] need a proper release cycle to stage and prod
 - [ ] redux
-- [ ] add a task runner for version bumping
+- [x] add a task runner for version bumping [8/27/2017]
 
 ### issues
 - [x] form component paths [8/26/2017]
 - [x] login component should allow the enter key [8/26/2017]
-- [ ] unable to proxy requests to api server
-	- [ ] able to make request to local backend server, but still having issue
+- [x] unable to proxy requests to api server [8/27/2017]
+- [x] 422 error when posting from login componet [8/27/2017]

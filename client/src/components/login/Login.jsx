@@ -90,14 +90,12 @@ class Login extends Component {
     client.login(userData, (err) => {
       console.error(err);
     }, (data) => {
-      // TODO: getting error possibly due to CORS issue
-      console.log(data);
+      // TODO: create a cookie and redirect the user to the dashboard...
+      this.setState({
+        fields: {},
+        fieldErrors: {},
+      });
     }); 
-
-    this.setState({
-      fields: {},
-      fieldErrors: {},
-    });
 
   }
 
