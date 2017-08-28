@@ -1,3 +1,4 @@
+// TODO: rewrite this as a proper es6/7 class
 function login(userData, onError, cb) {
   return fetch('/v1/auth/login', {
     method: 'post',

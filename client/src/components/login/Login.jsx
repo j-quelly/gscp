@@ -17,10 +17,16 @@ class Login extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.validateData = this.validateData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.processLogin = this.processLogin.bind(this);
+    this.loginFailed = this.loginFailed.bind(this);
+    this.displayLoader = this.displayLoader.bind(this);
 
     this.state = {
       fields: {},
       fieldErrors: {},
+      token: false,
+      spinner: 'login__spinner login__spinner--inactive',
+      loading: 'login__loading login__loading--inactive',
     };
 
   }
@@ -35,10 +41,11 @@ class Login extends Component {
     this.setState({
       fields: {
         ...fields,
-        ...newFields
+        ...newFields,
       },
     });
 
+    // TODO: impove this, I don't like that I have to event listeners 
     if (e.key === 'Enter') {
       this.onFormSubmit();
     }
@@ -87,47 +94,90 @@ class Login extends Component {
       password: this.state.fields.password,
     };
 
-    client.login(userData, (err) => {
-      console.error(err);
-    }, (data) => {
-      // TODO: create a cookie and redirect the user to the dashboard...
-      this.setState({
-        fields: {},
-        fieldErrors: {},
-      });
-    }); 
+    this.processLogin(userData);
 
+  }
+
+  processLogin(userData) {
+    this.displayLoader(true);
+    client.login(userData, (err) => {
+      this.loginFailed();
+    }, (res) => {
+      if (res.data.token) {
+        // TODO: some redirection here
+        this.setState({
+          fields: {},
+          fieldErrors: {},
+          token: res.data.token,
+        });
+      } else {
+        // TODO: some fallback here...
+        console.log('something went wrong...');
+      }
+      this.displayLoader(false);
+    });
+  }
+
+  displayLoader(loading) {
+    if (loading) {
+      this.setState({
+        spinner: 'login__spinner login__spinner--active',
+        loading: 'login__loading login__loading--active',
+      });
+    } else {
+      this.setState({
+        spinner: 'login__spinner login__spinner--inactive',
+        loading: 'login__loading login__loading--inactive',
+      });
+    }
+  }
+
+  loginFailed() {
+    // TODO: do not mutate or start using redux...
+    this.setState({
+      fieldErrors: {
+        password: 'The username or password entered does not match an account.'
+      },
+      fields: {
+        username: this.state.fields.username,
+        password: '',
+      },
+    });
+    this.displayLoader(false);
   }
 
   render() {
     return (
       <div className="row">
         <div className="login col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
+          <div className={this.state.spinner}></div>
           <h1 className="login__title">Login</h1>
-          <div className="login__body">
-            <InputForm>
-              <InputField
-                glyph="user"
-                defaultText="username"
-                inputType="email"
-                name="username"
-                value={this.state.fields.username || ''}
-                handleChange={(e) => this.onInputChange(e)}
-              />
-              <InputError errorMessage={this.state.fieldErrors.username} />
-              <InputField
-                glyph="lock"
-                defaultText="password"
-                inputType="password"
-                name="password"
-                value={this.state.fields.password || ''}
-                handleChange={(e) => this.onInputChange(e)}
-              />
-              <InputError errorMessage={this.state.fieldErrors.password} />
-              <Btn styles="form__button--pull-right" handleClick={this.onFormSubmit}>
-                Login
-              </Btn>
-            </InputForm>
+          <div className={this.state.loading}>
+            <div className="login__body">
+              <InputForm>
+                <InputField
+                  glyph="user"
+                  defaultText="username"
+                  inputType="email"
+                  name="username"
+                  value={this.state.fields.username || ''}
+                  handleChange={(e) => this.onInputChange(e)}
+                />
+                <InputError errorMessage={this.state.fieldErrors.username} />
+                <InputField
+                  glyph="lock"
+                  defaultText="password"
+                  inputType="password"
+                  name="password"
+                  value={this.state.fields.password || ''}
+                  handleChange={(e) => this.onInputChange(e)}
+                />
+                <InputError errorMessage={this.state.fieldErrors.password} />
+                <Btn styles="form__button--pull-right" handleClick={this.onFormSubmit}>
+                  Login
+                </Btn>
+              </InputForm>
+            </div>
           </div>
           <small className="login__footer login__footer--right">© Copyright 2013-2016 Studio 174 Inc</small>
         </div>
