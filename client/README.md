@@ -1,14 +1,20 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.5.0
+## client version 0.6.0
 
 ### to do 
-- [ ] improve application structure to something scalable and maintainable (redux)
-- [ ] implement react router
+- [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
+	- [ ] http://redux.js.org/docs/recipes/ReducingBoilerplate.html
+	- [ ] normalize
+- [ ] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
 - [ ] need a proper release cycle to stage and prod
+- [ ] now might be a good time for sass
 - [x] add a task runner for version bumping [8/27/2017]
 - [ ] invest a day into cleaning up the entire client application
+	- [ ] performance
+	- [ ] comments/documenting
+	- [ ] refactoring
 
 ### login component
 - [x] button states
@@ -24,9 +30,6 @@ client side to GSCP API
 - [x] session handling should be stateless [8/27/2017]
 - [x] implement some loading state for better perceived performance [8/27/2017]
 - [x] improve the loading state with some animation... [8/27/2017]
-- [ ] now might be a good time for sass
-- [ ] now is a good time for redux
-- [ ] routing / redirection
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me
@@ -44,4 +47,4 @@ client side to GSCP API
 - [x] login component should allow the enter key [8/26/2017]
 - [x] unable to proxy requests to api server [8/27/2017]
 - [x] 422 error when posting from login componet [8/27/2017]
-- [ ] client should now throw an error in console
+- [ ] client should not throw an error in console
