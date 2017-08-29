@@ -1,5 +1,9 @@
 // dependencies
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
+// actions
+import { setToken } from '../../actions';
 
 // components
 import { InputForm, InputField, InputError, Btn } from '../forms/Forms';
@@ -10,7 +14,9 @@ import client from '../../lib/Client.js';
 // styles
 import './Login.css';
 
-class Login extends Component {
+// TODO: reafactor container component / presentational component
+
+class LoginRepresentation extends Component {
   constructor(props) {
     super(props);
 
@@ -21,10 +27,11 @@ class Login extends Component {
     this.loginFailed = this.loginFailed.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
 
+    // UI state
+    // may not need to use state?
     this.state = {
       fields: {},
       fieldErrors: {},
-      token: false,
       spinner: 'login__spinner login__spinner--inactive',
       loading: 'login__loading login__loading--inactive',
     };
@@ -37,7 +44,9 @@ class Login extends Component {
 
     newFields[e.target.name] = e.target.value;
 
-    // NOTE: this is probably not very good for performance...
+    // NOTE: this is probably not very good for performance 
+    //       considering this is only UI state there may be no 
+    //       reason to use spread operator
     this.setState({
       fields: {
         ...fields,
@@ -45,7 +54,7 @@ class Login extends Component {
       },
     });
 
-    // TODO: impove this, I don't like that I have to event listeners 
+    // TODO: impove this; I don't like that I have two event listeners 
     if (e.key === 'Enter') {
       this.onFormSubmit();
     }
@@ -108,8 +117,8 @@ class Login extends Component {
         this.setState({
           fields: {},
           fieldErrors: {},
-          token: res.data.token,
         });
+        this.props.onSuccess(res.data.token);
       } else {
         // TODO: some fallback here...
         console.log('something went wrong...');
@@ -133,13 +142,12 @@ class Login extends Component {
   }
 
   loginFailed() {
-    // TODO: do not mutate or start using redux...
     this.setState({
       fieldErrors: {
         password: 'The username or password entered does not match an account.'
       },
       fields: {
-        username: this.state.fields.username,
+        ...this.state.fields,
         password: '',
       },
     });
@@ -186,5 +194,22 @@ class Login extends Component {
   }
 
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.token,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSuccess: (token) => {
+      dispatch(setToken(token));
+    }
+  };
+};
+
+const Login = connect(mapStateToProps, mapDispatchToProps)(LoginRepresentation);
 
 export default Login;

@@ -84,6 +84,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] add role & permission db seeds [11/11/2016]
 - [x] enable CORS with new middleware [8/26/2017]
 - [x] disable CORS [8/27/2017]
+- [ ] setup a local db to improve dev performance
 - [ ] API should accept JSON & URI
 - [ ] start documenting the API
 - [ ] read the APIGEE manual and more API resources
@@ -119,10 +120,6 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
 - [x] some responses do not match the headers ie: 400 error saying 401 [11/23/2016]
 - [x] set CACHE_DRIVER to array instead of redis until I learn how to setup redis caching [8/19/2017]
-
-## Client
-- [ ] look into security concerns with using JWT on client side
-- [ ] use cookies for session handling per paper in client readme
 
 ### Production 1.x.x
 - [ ] setup cache w/ redis (may not need this for a long time)
