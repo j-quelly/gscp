@@ -51,10 +51,10 @@ const InputError = function(props) {
     return (
       <p className="form__error">
         {props.errorMessage}
-      </p>      
+      </p>
     );
   } else {
-    return null;    
+    return null;
   }
 };
 InputError.propTypes = {
