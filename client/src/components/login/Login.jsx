@@ -32,8 +32,8 @@ class LoginRepresentation extends Component {
     this.state = {
       fields: {},
       fieldErrors: {},
-      spinner: 'login__spinner login__spinner--inactive',
-      loading: 'login__loading login__loading--inactive',
+      spinner: false,
+      loading: false,
     };
 
   }
@@ -44,8 +44,8 @@ class LoginRepresentation extends Component {
 
     newFields[e.target.name] = e.target.value;
 
-    // NOTE: this is probably not very good for performance 
-    //       considering this is only UI state there may be no 
+    // NOTE: this is probably not very good for performance
+    //       considering this is only UI state there may be no
     //       reason to use spread operator
     this.setState({
       fields: {
@@ -54,7 +54,7 @@ class LoginRepresentation extends Component {
       },
     });
 
-    // TODO: impove this; I don't like that I have two event listeners 
+    // TODO: impove this; I don't like that I have two event listeners
     if (e.key === 'Enter') {
       this.onFormSubmit();
     }
@@ -128,17 +128,10 @@ class LoginRepresentation extends Component {
   }
 
   displayLoader(loading) {
-    if (loading) {
-      this.setState({
-        spinner: 'login__spinner login__spinner--active',
-        loading: 'login__loading login__loading--active',
-      });
-    } else {
-      this.setState({
-        spinner: 'login__spinner login__spinner--inactive',
-        loading: 'login__loading login__loading--inactive',
-      });
-    }
+    this.setState({
+      spinner: loading,
+      loading: loading,
+    });
   }
 
   loginFailed() {
@@ -158,9 +151,9 @@ class LoginRepresentation extends Component {
     return (
       <div className="row">
         <div className="login col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
-          <div className={this.state.spinner}></div>
+          <div className={this.state.spinner ? "login__spinner login__spinner--active" : "login__spinner login__spinner--inactive"}></div>
           <h1 className="login__title">Login</h1>
-          <div className={this.state.loading}>
+          <div className={this.state.loading ? "login__loading login__loading--active" : "login__loading login__loading--inactive"}>
             <div className="login__body">
               <InputForm>
                 <InputField
@@ -194,7 +187,6 @@ class LoginRepresentation extends Component {
   }
 
 }
-
 
 const mapStateToProps = (state) => {
   return {
