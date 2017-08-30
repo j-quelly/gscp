@@ -1,14 +1,15 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.6.0
+## client version 0.7.0
 
-### to do 
+### to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
 	- [ ] http://redux.js.org/docs/recipes/ReducingBoilerplate.html
-	- [ ] normalize
+	- [ ] normalize data
+	- [ ] normalize es6/7 api
 - [ ] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
-- [ ] need a proper release cycle to stage and prod
+- [ ] need a proper release cycle from dev to stage and prod
 - [ ] now might be a good time for sass
 - [x] add a task runner for version bumping [8/27/2017]
 - [ ] invest a day into cleaning up the entire client application
@@ -30,6 +31,11 @@ client side to GSCP API
 - [x] session handling should be stateless [8/27/2017]
 - [x] implement some loading state for better perceived performance [8/27/2017]
 - [x] improve the loading state with some animation... [8/27/2017]
+- [x] container / presentational components: [8/29/2017]
+    - [x] https://www.youtube.com/watch?v=KYzlpRvWZ6c&t=1351
+    - [x] https://medium.com/@learnreact/container-components-c0e67432e005
+    - [ ] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
+    - [ ] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me

@@ -1,10 +1,9 @@
 # GSCP
-game server control panel API with Lumen 5.3
 
 ## server version 0.14.0
 
 ### getting started
-$ php -S localhost:8888 -t public
+$ php -S 0.0.0.0:8888 -t public
 
 ### mirgrating db
 - $ php artisan migrate
