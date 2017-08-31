@@ -1,21 +1,23 @@
 // dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 // actions
-import { setToken } from '../actions';
+import { setToken } from '../../actions';
 
 // components
-import Login from '../components/login/Login';
+import Login from './Login';
 
 // helpers
-import client from '../lib/Client.js';
+import client from '../../lib/Client.js';
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
 
     this.onInputChange = this.onInputChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.validateData = this.validateData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.processLogin = this.processLogin.bind(this);
@@ -52,12 +54,12 @@ class LoginContainer extends Component {
       },
     });
 
-    // TODO: impove this; I don't like that I have two event 
-    // listeners on the form presentational components
+  }
+
+  onKeyPress(e) {
     if (e.key === 'Enter') {
       this.onFormSubmit();
     }
-
   }
 
   validateData(formData) {
@@ -108,18 +110,16 @@ class LoginContainer extends Component {
   processLogin(userData) {
     this.displayLoader(true);
     client.login(userData, (err) => {
-      this.loginFailed();
+      this.loginFailed('The username or password entered does not match an account.');
     }, (res) => {
       if (res.data.token) {
-        // TODO: some redirection here
         this.setState({
           fields: {},
           fieldErrors: {},
         });
         this.props.onSuccess(res.data.token);
       } else {
-        // TODO: some fallback here...
-        console.log('something went wrong...');
+        this.loginFailed('Something went wrong, please try again.');
       }
       this.displayLoader(false);
     });
@@ -132,10 +132,10 @@ class LoginContainer extends Component {
     });
   }
 
-  loginFailed() {
+  loginFailed(msg) {
     this.setState({
       fieldErrors: {
-        password: 'The username or password entered does not match an account.'
+        password: msg,
       },
       fields: {
         ...this.state.fields,
@@ -146,12 +146,19 @@ class LoginContainer extends Component {
   }
 
   render() {
+    const {token} = this.props;
+
+    if (token) {
+      return (<Redirect to="/potato" />);
+    }
+
     return (
       <Login
         spinner={this.state.spinner}
         loading={this.state.loading}
         fields={this.state.fields}
         handleChange={this.onInputChange}
+        handleKeyPress={this.onKeyPress}
         fieldErrors={this.state.fieldErrors}
         handleFormSubmit={this.onFormSubmit}
       />
@@ -165,7 +172,7 @@ LoginContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.token,
+    token: state.authentication.token,
   };
 };
 

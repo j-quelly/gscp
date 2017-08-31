@@ -1,16 +1,16 @@
 import App from './App';
-import Login from '../login/Login';
+import LoginComponent from '../Login/LoginContainer';
 import React from 'react';
 import { shallow } from 'enzyme';
 
 describe('App', () => {
 
-  it('should render the <Login /> component', () => {
+  it('should render the <LoginContainer /> component', () => {
     const wrapper = shallow(<App />);
     expect(
       wrapper.contains(
         <div className="App">
-          <Login />
+          <LoginComponent />
         </div>
       )
     ).toBe(true);

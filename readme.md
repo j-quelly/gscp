@@ -83,7 +83,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] add role & permission db seeds [11/11/2016]
 - [x] enable CORS with new middleware [8/26/2017]
 - [x] disable CORS [8/27/2017]
-- [ ] setup a local db to improve dev performance
+- [x] setup a local db to improve dev performance [8/30/2017]
 - [ ] API should accept JSON & URI
 - [ ] start documenting the API
 - [ ] read the APIGEE manual and more API resources
