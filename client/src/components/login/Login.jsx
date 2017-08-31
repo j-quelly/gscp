@@ -21,8 +21,9 @@ const Login = function(props) {
                 defaultText="username"
                 inputType="email"
                 name="username"
-                value={props.fields.username || ''}
-                handleChange={(e) => props.handleChange(e)}
+                value={props.fields.username}
+                handleChange={props.handleChange}
+                handleKeyPress={props.handleKeyPress}
               />
               <InputError errorMessage={props.fieldErrors.username} />
               <InputField
@@ -30,8 +31,9 @@ const Login = function(props) {
                 defaultText="password"
                 inputType="password"
                 name="password"
-                value={props.fields.password || ''}
-                handleChange={(e) => props.handleChange(e)}
+                value={props.fields.password}
+                handleChange={props.handleChange}
+                handleKeyPress={props.handleKeyPress}
               />
               <InputError errorMessage={props.fieldErrors.password} />
               <Btn styles="form__button--pull-right" handleClick={props.handleFormSubmit}>
@@ -50,6 +52,7 @@ Login.PropTypes = {
   loading: React.PropTypes.bool,
   fields: React.PropTypes.object,
   handleChange: React.PropTypes.func,
+  handleKeyPress: React.PropTypes.func,
   fieldErrors: React.PropTypes.object,
   handleFormSubmit: React.PropTypes.func,
 };

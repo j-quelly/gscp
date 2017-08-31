@@ -4,13 +4,11 @@ import React from 'react';
 // styles
 import './Forms.css';
 
-const InputForm = function(props) {
-  return (
-    <form className="form">
-      {props.children}
-    </form>
-  );
-};
+const InputForm = (props) => (
+  <form className="form">
+    {props.children}
+  </form>
+);
 
 const InputField = function(props) {
   const glyphClass = `glyphicon glyphicon-${props.glyph}`;
@@ -28,7 +26,7 @@ const InputField = function(props) {
         name={props.name}
         value={props.value}
         onChange={(e) => props.handleChange(e)}
-        onKeyPress={(e) => props.handleChange(e)}
+        onKeyPress={(e) => props.handleKeyPress(e)}
       />
     </div>
   );

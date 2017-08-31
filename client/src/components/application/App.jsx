@@ -1,17 +1,25 @@
 // dependencies
-import React, { Component } from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // components
-import LoginComponent from '../../containers/LoginContainer';
+import LoginComponent from '../login/LoginContainer';
+import Dashboard from '../dashboard/Dashboard';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <LoginComponent />
+const App = ({store}) => (
+  <Provider store={store}>
+    <Router>
+      <div>
+        <Route path="/" component={LoginComponent} />
+        <Route path="/potato" component={Dashboard} />
       </div>
-    );
-  }
-}
+    </Router>
+  </Provider>
+);
+
+App.propTypes = {
+  store: React.PropTypes.object.isRequired,
+};
 
 export default App;

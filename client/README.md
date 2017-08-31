@@ -1,7 +1,7 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.7.0
+## client version 0.8.1
 
 ### to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
@@ -16,6 +16,18 @@ client side to GSCP API
 	- [ ] performance
 	- [ ] comments/documenting
 	- [ ] refactoring
+- [ ] rewrite client utility as a proper es6/7 class
+
+### app component
+- [x] unit tests [8/30/2017]
+- [ ] comment / clean up / refactor
+
+### forms component
+- [x] unit tests [8/26/2017]
+	- [ ] refactor tests for easier maintainability
+- [x] removed btn glow [8/26/2017]
+- [ ] comment / clean up / refactor
+- [ ] prop types & default props
 
 ### login component
 - [x] button states
@@ -36,21 +48,16 @@ client side to GSCP API
     - [x] https://medium.com/@learnreact/container-components-c0e67432e005
     - [ ] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
     - [ ] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
+- [ ] prop types & default props    
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me
 - [ ] forgot password
-
-### forms component
-- [x] unit tests [8/26/2017]
-- [x] removed btn glow [8/26/2017]
-- [ ] refactor tests for easier maintainability
-- [ ] comment components
-- [ ] end to end tests?
 
 ### issues
 - [x] form component paths [8/26/2017]
 - [x] login component should allow the enter key [8/26/2017]
 - [x] unable to proxy requests to api server [8/27/2017]
 - [x] 422 error when posting from login componet [8/27/2017]
-- [ ] client should not throw an error in console
+- [x] client should not throw an error in console [8/30/2017]
+- [x] token is not available in container [8/30/2017]
