@@ -24,9 +24,6 @@ class LoginContainer extends Component {
     this.loginFailed = this.loginFailed.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
 
-    /**
-     * NOTE: may not need to use react state for UI state
-     */
     this.state = {
       fields: {},
       fieldErrors: {},
@@ -147,7 +144,7 @@ class LoginContainer extends Component {
 
   render() {
     const {token} = this.props;
-
+    console.log(this.props);
     if (token) {
       return (<Redirect to="/potato" />);
     }

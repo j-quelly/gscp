@@ -26,9 +26,9 @@ $ php vendor/phpunit/phpunit/phpunit
 ### Authentication
 - [x] authentication middleware (JWT)
 - [x] restrict put post and delete endpoints
-- [x] finish writing tests for auth controller	
+- [x] finish writing tests for auth controller
 - [x] refactor auth tests again (remove repeatitive code)
-- [x] test invalid token	
+- [x] test invalid token
 - [x] test validation
 - [x] auth controller should return data in the same format as other controllers
 - [x] work on status codes
@@ -38,7 +38,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- 400 - Bad Request
 	- 401 - Unauthorized
 	- 403 - Forbidden
-	- 404 - Not found		
+	- 404 - Not found
 	- 405 - Method not allowed
 	- 422 - Unprocessable Entity
 	- 500 - Internal Server Error
@@ -70,7 +70,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] update tests to include roles & permissions [11/17/2016]
 - [x] finish users validation tests [11/18/2016]
 - [x] adds more assertions [11/23/2016]
-- [ ] come up with needed roles, permissions and apply to route or controller middleware. 
+- [ ] come up with needed roles, permissions and apply to route or controller middleware.
 
 ### Servers
 - [ ] crud server
@@ -98,6 +98,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] everything related to authors
 - [x] generate new jwt token [11/22/2016]
 - [ ] need a proper release cycle to stage and prod
+- [ ] need instructions for installing dependencies
 
 ### Remote
 - [x] add test db
@@ -105,9 +106,9 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] ability to migrate and seed the production db
 - [x] test remote is working
 	- [x] memcache removed temporarily, set to file
-- [x] put api in a subdomain [11/18/2016]	
-	- [x] check that remote is still working [11/18/2016]	
-- [x] setup staging env [11/22/2016]	
+- [x] put api in a subdomain [11/18/2016]
+	- [x] check that remote is still working [11/18/2016]
+- [x] setup staging env [11/22/2016]
 
 ### Issues
 - [x] TestCase.php jwtAuthTest() method invalid headers [11/5/2016]

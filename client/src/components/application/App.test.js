@@ -1,7 +1,10 @@
-import App from './App';
-import LoginComponent from '../Login/LoginContainer';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
+
+import gscpApp from '../../reducers'
+
+import LoginComponent from '../Login/LoginContainer';
 
 describe('App', () => {
 

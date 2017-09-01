@@ -20,7 +20,8 @@ client side to GSCP API
 
 ### app component
 - [x] unit tests [8/30/2017]
-- [ ] comment / clean up / refactor
+- [x] comment / clean up / refactor / prop types / default props [8/31/2017]
+- [ ] refactor tests to account for react router/redux - https://medium.freecodecamp.org/real-integration-tests-with-react-redux-and-react-router-417125212638
 
 ### forms component
 - [x] unit tests [8/26/2017]
@@ -46,9 +47,10 @@ client side to GSCP API
 - [x] container / presentational components: [8/29/2017]
     - [x] https://www.youtube.com/watch?v=KYzlpRvWZ6c&t=1351
     - [x] https://medium.com/@learnreact/container-components-c0e67432e005
-    - [ ] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
+    - [x] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
+        - [ ] possible move container component back into container folder so that presentation is fully separated from container components?
     - [ ] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
-- [ ] prop types & default props    
+- [ ] prop types & default props
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me
