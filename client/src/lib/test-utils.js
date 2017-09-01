@@ -2,7 +2,6 @@ import { combineReducers, createStore } from 'redux';
 import { ReactWrapper } from 'enzyme';
 import { routerStateReducer } from 'redux-router';
 
-
 /* Sets up basic variables to be used by integration tests
  * Params:
  *   reducers: should be an object with all the reducers your page uses
