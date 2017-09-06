@@ -3,7 +3,8 @@
 ## server version 0.14.0
 
 ### getting started
-$ php -S 0.0.0.0:8888 -t public
+1. $ composer install
+2. $ php -S 0.0.0.0:8888 -t public
 
 ### mirgrating db
 - $ php artisan migrate
