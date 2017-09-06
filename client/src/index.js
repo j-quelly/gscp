@@ -6,8 +6,8 @@ import { createStore } from 'redux';
 // reducers
 import gscpApp from './reducers'
 
-// components 
-import App from './components/application/App.jsx';
+// components
+import App from './components/App';
 
 // styles
 import './index.css';

@@ -1,14 +1,15 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.8.1
+## client version 0.9.0
 
 ### to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
 	- [ ] http://redux.js.org/docs/recipes/ReducingBoilerplate.html
 	- [ ] normalize data
 	- [ ] normalize es6/7 api
-- [ ] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
+- [x] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
+    - [ ] learn how to test router with redux
 - [ ] need a proper release cycle from dev to stage and prod
 - [ ] now might be a good time for sass
 - [x] add a task runner for version bumping [8/27/2017]
@@ -17,18 +18,26 @@ client side to GSCP API
 	- [ ] comments/documenting
 	- [ ] refactoring
 - [ ] rewrite client utility as a proper es6/7 class
+    - [ ] comment/document
+- [ ] add a working linter
+- [ ] context types?
+
+### list
+- [ ] comment/document
+- [ ] proptypes/default props
+- [ ] lint/format
+- [ ] performance
 
 ### app component
 - [x] unit tests [8/30/2017]
 - [x] comment / clean up / refactor / prop types / default props [8/31/2017]
 - [ ] refactor tests to account for react router/redux - https://medium.freecodecamp.org/real-integration-tests-with-react-redux-and-react-router-417125212638
 
-### forms component
+### forms component [complete]
 - [x] unit tests [8/26/2017]
-	- [ ] refactor tests for easier maintainability
 - [x] removed btn glow [8/26/2017]
-- [ ] comment / clean up / refactor
-- [ ] prop types & default props
+- [x] prop types & default props [9/6/2017]
+- [x] comment / document [9/6/2017]
 
 ### login component
 - [x] button states
@@ -48,9 +57,10 @@ client side to GSCP API
     - [x] https://www.youtube.com/watch?v=KYzlpRvWZ6c&t=1351
     - [x] https://medium.com/@learnreact/container-components-c0e67432e005
     - [x] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
-        - [ ] possible move container component back into container folder so that presentation is fully separated from container components?
+        - [x] move container component back into container folder so that presentation is fully separated from container components [9/6/2017]
     - [ ] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
-- [ ] prop types & default props
+- [x] prop types & default props
+- [x] improve email validation [9/6/2016]
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me
@@ -63,3 +73,4 @@ client side to GSCP API
 - [x] 422 error when posting from login componet [8/27/2017]
 - [x] client should not throw an error in console [8/30/2017]
 - [x] token is not available in container [8/30/2017]
+- [x] app is rendering both components when hitting /dashboard [9/6/2017]

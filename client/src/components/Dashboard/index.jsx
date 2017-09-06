@@ -1,13 +1,14 @@
 // dependencies
 import React from 'react';
 
+// components
+import ListContainer from '../../containers/ListContainer'
+
 // styles
 import './Dashboard.css';
 
 const Dashboard = (props) => (
-  <div>
-    <h1>HIMELOW WARLD</h1>
-  </div>
+    <ListContainer />
 );
 
 export default Dashboard;
