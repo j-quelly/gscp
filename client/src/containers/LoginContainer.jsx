@@ -1,16 +1,17 @@
 // dependencies
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import Isemail from 'isemail';
 
 // actions
-import { setToken } from '../../actions';
+import { setToken } from '../actions';
 
 // components
-import Login from './Login';
+import Login from '../components/Login';
 
 // helpers
-import client from '../../lib/Client.js';
+import client from '../lib/Client.js';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -24,9 +25,6 @@ class LoginContainer extends Component {
     this.loginFailed = this.loginFailed.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
 
-    /**
-     * NOTE: may not need to use react state for UI state
-     */
     this.state = {
       fields: {},
       fieldErrors: {},
@@ -63,7 +61,6 @@ class LoginContainer extends Component {
   }
 
   validateData(formData) {
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const errors = {};
 
     // validate username
@@ -73,7 +70,7 @@ class LoginContainer extends Component {
     }
 
     // validate email address
-    if (!emailRegex.test(formData.username)) {
+    if (!Isemail.validate(formData.username)) {
       errors.username = 'Please enter a valid email address.';
       return errors;
     }
@@ -149,7 +146,7 @@ class LoginContainer extends Component {
     const {token} = this.props;
 
     if (token) {
-      return (<Redirect to="/potato" />);
+      return (<Redirect to="/dashboard" />);
     }
 
     return (

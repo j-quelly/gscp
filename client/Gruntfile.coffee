@@ -1,21 +1,21 @@
 module.exports = (grunt) ->
 	grunt.initConfig
 		path: require "path"
-		client: "0.8.1"
+		client: "0.9.0"
 		server: "0.14.0"
 
 		# list our available tasks
 		availabletasks:
 			tasks:
 				options:
-					filter: "include", 
-					tasks: [ 
+					filter: "include",
+					tasks: [
 						"string-replace"
 					]
 					descriptions:
 						"string-replace:server": "Version bump server"
 						"string-replace:client": "Version bump client"
-				
+
 
 
 
@@ -34,18 +34,18 @@ module.exports = (grunt) ->
 						{
 							pattern: /(## client version (\d){1,}\.(\d){1,}\.(\d){1,})/ig,
 							replacement: '## client version <%= client %>'
-						},						
-					]		
+						},
+					]
 			server:
-				files:				
+				files:
 					'..<%= path.sep %>readme.md' : '..<%= path.sep %>readme.md',
 				options:
 					replacements: [
 						{
 							pattern: /(## server version (\d){1,}\.(\d){1,}\.(\d){1,})/ig,
 							replacement: '## server version <%= server %>'
-						},					
-					]	
+						},
+					]
 
 	# require our tasks
 	grunt.loadNpmTasks "grunt-string-replace"

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // components
-import { InputForm, InputField, InputError, Btn } from '../forms/Forms';
+import { InputForm, InputField, InputError, Btn } from '../Forms';
 
 // styles
 import './Login.css';
@@ -56,5 +56,11 @@ Login.PropTypes = {
   fieldErrors: React.PropTypes.object,
   handleFormSubmit: React.PropTypes.func,
 };
+Login.defaultProps = {
+  spinner: false,
+  loading: false,
+  fields: {},
+  fieldErrors: {},
+}
 
 export default Login;

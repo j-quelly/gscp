@@ -1,11 +1,14 @@
-import { InputForm, InputField, InputError, Btn } from '../forms/forms';
+// dependencies
 import React from 'react';
 import { shallow } from 'enzyme';
+
+// components
+import { InputForm, InputField, InputError, Btn } from '../Forms';
 
 describe('<InputForm />', () => {
   let wrapper;
 
-  beforeEach(() => { 
+  beforeEach(() => {
     wrapper = shallow(<InputForm />);
   });
 
@@ -21,7 +24,7 @@ describe('<InputForm />', () => {
     expect(
       wrapper.find('form').props().className
     ).toBe('form')
-  });  
+  });
 
   it('should render child components', () => {
     wrapper = shallow(
@@ -32,7 +35,7 @@ describe('<InputForm />', () => {
     expect(
       wrapper.find('InputField').length
     ).toBe(1);
-  });  
+  });
 
 });
 
@@ -64,57 +67,57 @@ describe('<InputField />', () => {
     expect(
       wrapper.find('div').props().className
     ).toBe('form__element');
-  });  
+  });
 
   it('`<div>` element should render a glyph when passed as props', () => {
     wrapper = wrapper.find('div');
     expect(
       wrapper.find('i').length
     ).toBe(1);
-  });   
+  });
 
   it('`<div>` glyph should be `potato`', () => {
     wrapper = wrapper.find('div');
     expect(
       wrapper.find('i').props().className
     ).toBe(`glyphicon glyphicon-${props.glyph}`);
-  });    
+  });
 
   it('`<div>` should have an `<input>` element', () => {
     expect(
       wrapper.find('input').length
     ).toBe(1);
-  });  
+  });
 
   it('`<input>` element should have a className attribute of type `form__input`', () => {
     expect(
       wrapper.find('input').props().className
     ).toBe(`form__input form__input--glyph`);
-  });   
+  });
 
   it('`<input>` element should have a type attribute of type `text` when passed as props', () => {
     expect(
       wrapper.find('input').props().type
     ).toBe(props.inputType);
-  });   
+  });
 
   it('`<input>` element should have a placeholder attribute of type `derp` when passed as props', () => {
     expect(
       wrapper.find('input').props().placeholder
     ).toBe(props.defaultText);
-  });     
+  });
 
   it('`<input>` element should have a name attribute of type `username` when passed as props', () => {
     expect(
       wrapper.find('input').props().name
     ).toBe(props.name);
-  });    
+  });
 
   it('`<input>` element should have a value attribute of type `johndoe@example.com` when passed as props', () => {
     expect(
       wrapper.find('input').props().value
     ).toBe(props.value);
-  }); 
+  });
 
   it('`<input>` element should have an onChange attribute', () => {
     expect(
@@ -126,7 +129,7 @@ describe('<InputField />', () => {
     expect(
       typeof wrapper.find('input').props().onChange === 'function'
     ).toBe(true);
-  });    
+  });
 
 });
 
@@ -147,7 +150,7 @@ describe('<InputError />', () => {
     props = { errorMessage: 'You fked up' };
     wrapper = shallow(<InputError {...props} />);
     expect(wrapper.find('p').text()).toBe(props.errorMessage);
-  }); 
+  });
 
   it('should contain a `<p>` element', () => {
     props = { errorMessage: 'You fked up' };
@@ -155,7 +158,7 @@ describe('<InputError />', () => {
     expect(
       wrapper.find('p').length
     ).toBe(1);
-  });   
+  });
 
   it('`<p>` element should have a className attribute of type `form__error`', () => {
     props = { errorMessage: 'You fked up' };
@@ -163,7 +166,7 @@ describe('<InputError />', () => {
     expect(
       wrapper.find('p').props().className
     ).toBe('form__error');
-  });  
+  });
 
 });
 
@@ -173,7 +176,7 @@ describe('<Btn />', () => {
   beforeEach(() => {
     props = {
       handleClick: () => {},
-      styles: 'potato' 
+      styles: 'potato'
     };
     wrapper = shallow(
       <Btn {...props}>
@@ -203,12 +206,12 @@ describe('<Btn />', () => {
     expect(
       typeof button.props().onClick === 'function'
     ).toBe(true);
-  });  
+  });
 
   it('`button` should display Login', () => {
     expect(
       wrapper.text()
     ).toBe('Login');
-  });  
+  });
 
 });
