@@ -9,7 +9,8 @@ client side to GSCP API
 	- [ ] normalize data
 	- [ ] normalize es6/7 api
 - [x] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
-    - [ ] learn how to test router with redux
+    - [x] learn how to unit test router with redux [9/7/2017]
+    - [ ] e2e/integration test router & redux
 - [ ] need a proper release cycle from dev to stage and prod
 - [ ] now might be a good time for sass
 - [x] add a task runner for version bumping [8/27/2017]
@@ -20,13 +21,7 @@ client side to GSCP API
 - [ ] rewrite client utility as a proper es6/7 class
     - [ ] comment/document
 - [ ] add a working linter
-- [ ] context types?
-
-### list
-- [ ] comment/document
-- [ ] proptypes/default props
-- [ ] lint/format
-- [ ] performance
+- [ ] context whitelisting
 
 ### app component [coverage: partial]
 - [x] unit tests [8/30/2017]
@@ -34,11 +29,22 @@ client side to GSCP API
 - [x] refactor tests to account for react router & redux [9/7/2017]
 - [ ] integration tests to assert components render when the route changes...
 
+### dashboard component [coverage: complete]
+- [x] unit tests [9/7/2017]
+- [x] comment [9/7/2017]
+
 ### forms component [coverage: complete]
 - [x] unit tests [8/26/2017]
 - [x] removed btn glow [8/26/2017]
 - [x] prop types & default props [9/6/2017]
 - [x] comment / document [9/6/2017]
+
+### list [coverage: none]
+- [x] comment/document
+- [ ] proptypes/default props
+- [ ] lint/format
+- [ ] performance
+- [ ] tests
 
 ### login component
 - [x] button states

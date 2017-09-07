@@ -52,22 +52,6 @@ describe(`${APP}`, () => {
         expect(wrapper.find(Route).at(0).props().exact).toBeTruthy()
       })
 
-      it('should have props of type `path` that equal `/`', () => {
-        expect(wrapper.find(Route).at(0).props().path).toEqual('/')
-      })
-
-      it('should have props of type `component` that equal `LoginComponent`', () => {
-        expect(wrapper.find(Route).at(0).props().component).toEqual(LoginComponent)
-      })
-
-      it('should have props of type `path` that equal `/dashboard`', () => {
-        expect(wrapper.find(Route).at(1).props().path).toEqual('/dashboard')
-      })
-
-      it('should have props of type `component` that equal `Dashboard`', () => {
-        expect(wrapper.find(Route).at(1).props().component).toEqual(Dashboard)
-      })
-
       // this is a more succint way of testing the above and makes the above redundant
       it('should render the correct components when the route changes', () => {
         const pathMap = wrapper.find(Route).reduce((pathMap, route) => {
