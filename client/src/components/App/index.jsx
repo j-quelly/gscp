@@ -6,12 +6,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // components
 import LoginComponent from '../../containers/LoginContainer';
-import Dashboard from '../Dashboard'; // TODO
+import Dashboard from '../Dashboard'; // TODO: finish this...
 
 /**
- * @description entry point for gscp application
+ * @description App component represents GSCP application
  *
- * @param {object} store - contains application state
+ * @param {object} store - The application state
+ *
+ * @returns {<App />}
  */
 const App = ({store}) => (
   <Provider store={store}>
@@ -23,7 +25,6 @@ const App = ({store}) => (
     </Router>
   </Provider>
 );
-
 App.propTypes = {
   store: PropTypes.object.isRequired,
 };

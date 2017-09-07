@@ -1,7 +1,7 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.9.0
+## client version 0.10.0
 
 ### to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
@@ -28,12 +28,13 @@ client side to GSCP API
 - [ ] lint/format
 - [ ] performance
 
-### app component
+### app component [coverage: partial]
 - [x] unit tests [8/30/2017]
 - [x] comment / clean up / refactor / prop types / default props [8/31/2017]
-- [ ] refactor tests to account for react router/redux - https://medium.freecodecamp.org/real-integration-tests-with-react-redux-and-react-router-417125212638
+- [x] refactor tests to account for react router & redux [9/7/2017]
+- [ ] integration tests to assert components render when the route changes...
 
-### forms component [complete]
+### forms component [coverage: complete]
 - [x] unit tests [8/26/2017]
 - [x] removed btn glow [8/26/2017]
 - [x] prop types & default props [9/6/2017]
