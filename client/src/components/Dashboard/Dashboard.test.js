@@ -3,19 +3,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 // components
-import Dashboard from 'index';
+import Dashboard from '../Dashboard';
+import ListContainer from '../../containers/ListContainer'
 
 describe('Dashboard', () => {
 
-  it('should render the `Dashboard`', () => {
+  it('should render the `<ListContainer />`', () => {
     const wrapper = shallow(<Dashboard />);
-    expect(
-      wrapper.contains(
-          <div>
-            <h1>Dashboard</h1>
-          </div>
-      )
-    ).toBe(true);
+    expect(wrapper.contains(<ListContainer />)).toBe(true);
   });
 
 });

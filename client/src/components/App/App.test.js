@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 // components
 import App from '../App';
@@ -50,22 +50,6 @@ describe(`${APP}`, () => {
 
       it('should have props of type `exact`', () => {
         expect(wrapper.find(Route).at(0).props().exact).toBeTruthy()
-      })
-
-      it('should have props of type `path` that equal `/`', () => {
-        expect(wrapper.find(Route).at(0).props().path).toEqual('/')
-      })
-
-      it('should have props of type `component` that equal `LoginComponent`', () => {
-        expect(wrapper.find(Route).at(0).props().component).toEqual(LoginComponent)
-      })
-
-      it('should have props of type `path` that equal `/dashboard`', () => {
-        expect(wrapper.find(Route).at(1).props().path).toEqual('/dashboard')
-      })
-
-      it('should have props of type `component` that equal `Dashboard`', () => {
-        expect(wrapper.find(Route).at(1).props().component).toEqual(Dashboard)
       })
 
       // this is a more succint way of testing the above and makes the above redundant
