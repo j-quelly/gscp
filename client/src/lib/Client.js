@@ -1,8 +1,24 @@
 // TODO: rewrite this as a proper es6/7 class
+// TODO: comment/document
+
 function login(userData, onError, cb) {
   return fetch('/v1/auth/login', {
     method: 'post',
     body: serialize(userData),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(cb)
+    .catch(onError);
+}
+
+function getUserDetails(token, onError, cb) {
+  return fetch('/v1/auth/user', {
+    method: 'get',
+    body: serialize(token),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -23,7 +39,7 @@ function serialize(obj) {
 }
 
 function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {    
+  if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
     const error = new Error(`HTTP Error ${response.statusText}`);
@@ -39,6 +55,7 @@ function parseJSON(response) {
 
 const Client = {
   login,
+  getUserDetails,
 };
 
 export default Client;

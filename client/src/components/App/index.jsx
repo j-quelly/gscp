@@ -2,11 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 // components
-import LoginComponent from '../../containers/LoginContainer';
-import Dashboard from '../Dashboard'; // TODO: finish this...
+import Header from '../Header';
+
+// containers
+import SidebarContainer from '../../containers/SidebarContainer';
+import MainContainer from '../../containers/MainContainer';
 
 /**
  * @description App component represents GSCP application
@@ -18,9 +21,14 @@ import Dashboard from '../Dashboard'; // TODO: finish this...
 const App = ({store}) => (
   <Provider store={store}>
     <Router>
-      <div>
-        <Route exact path="/" component={LoginComponent} />
-        <Route path="/dashboard" component={Dashboard} />
+      <div className="wrapper">
+        <Header />
+        <div className="container-fluid container-fluid--fullscreen">
+          <div className="row row--fullscreen">
+            <SidebarContainer />
+            <MainContainer />
+          </div>
+        </div>
       </div>
     </Router>
   </Provider>

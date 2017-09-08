@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 // components
 import App from '../App';

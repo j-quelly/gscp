@@ -21,6 +21,7 @@
     position: absolute;
     padding: 17px 0 0 15px;
     pointer-events: none;
+    color: #999;
 }
 
 /* block element */

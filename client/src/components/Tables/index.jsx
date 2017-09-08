@@ -10,6 +10,18 @@ const Table = (props) => (
   </table>
 );
 
+const TableHead = (props) => (
+  <thead>
+    {props.children}
+  </thead>
+);
+
+const TableBody = (props) => (
+  <tbody>
+    {props.children}
+  </tbody>
+);
+
 const Row = (props) => (
   <tr className="table__row">
     {props.children}
@@ -22,4 +34,4 @@ const Cell = (props) => (
   </td>
 );
 
-export { Table, Row, Cell };
+export { Table, TableHead, TableBody, Row, Cell };

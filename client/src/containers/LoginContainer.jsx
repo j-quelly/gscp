@@ -3,17 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Isemail from 'isemail';
+import PropTypes from 'prop-types';
 
 // actions
 import { setToken } from '../actions';
 
 // components
-import Login from '../components/Login';
+import LoginComponent from '../components/Login';
 
 // helpers
 import client from '../lib/Client.js';
 
-class LoginContainer extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -143,14 +144,15 @@ class LoginContainer extends Component {
   }
 
   render() {
-    const {token} = this.props;
+    const { token } = this.props;
+    console.log(this.props)
 
     if (token) {
       return (<Redirect to="/dashboard" />);
     }
 
     return (
-      <Login
+      <LoginComponent
         spinner={this.state.spinner}
         loading={this.state.loading}
         fields={this.state.fields}
@@ -163,8 +165,8 @@ class LoginContainer extends Component {
   }
 
 }
-LoginContainer.propTypes = {
-  onSuccess: React.PropTypes.func,
+Login.propTypes = {
+  onSuccess: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -181,6 +183,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 
-export default LoginComponent;
+export default LoginContainer;
