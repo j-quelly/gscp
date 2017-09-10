@@ -1,0 +1,11 @@
+/*
+ * Main content
+ */
+.main {
+  padding: 71px 20px;
+}
+
+.main .page-header {
+  margin-top: 0;
+  border: none;
+}

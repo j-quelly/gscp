@@ -5,9 +5,10 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // components
-import Header from '../Header';
+import Wrapper from '../Wrapper';
 
 // containers
+import HeaderContainer from '../../containers/HeaderContainer';
 import SidebarContainer from '../../containers/SidebarContainer';
 import MainContainer from '../../containers/MainContainer';
 
@@ -21,15 +22,15 @@ import MainContainer from '../../containers/MainContainer';
 const App = ({store}) => (
   <Provider store={store}>
     <Router>
-      <div className="wrapper">
-        <Header />
+      <Wrapper>
+        <HeaderContainer />
         <div className="container-fluid container-fluid--fullscreen">
           <div className="row row--fullscreen">
             <SidebarContainer />
             <MainContainer />
           </div>
         </div>
-      </div>
+      </Wrapper>
     </Router>
   </Provider>
 );

@@ -16,17 +16,18 @@ function login(userData, onError, cb) {
 }
 
 function getUserDetails(token, onError, cb) {
-  return fetch('/v1/auth/user', {
-    method: 'get',
-    body: serialize(token),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  }).then(checkStatus)
-    .then(parseJSON)
-    .then(cb)
-    .catch(onError);
+  return cb(true);
+  // return fetch('/v1/auth/user', {
+  //   method: 'get',
+  //   body: serialize(token),
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //   },
+  // }).then(checkStatus)
+  //   .then(parseJSON)
+  //   .then(cb)
+  //   .catch(onError);
 }
 
 function serialize(obj) {

@@ -16,7 +16,7 @@ import { SET_TOKEN } from '../actions';
 // TODO: delete token?
 // (previousState, action) => newState
 const authentication = (state = {
-    token: false
+    token: true
   }, action) => {
   switch (action.type) {
     case SET_TOKEN:

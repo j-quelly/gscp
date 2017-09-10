@@ -1,7 +1,7 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.10.0
+## client version 0.12.0
 
 ### to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
@@ -23,21 +23,21 @@ client side to GSCP API
 - [ ] add a working linter & rules to ST3
 - [ ] context whitelisting?
 - [ ] refactor & improve naming convention
+- [ ] app component should be moved to a container to include auth logic so sidebar and header can be hidden or use the new Wrapper component to handle all auth and redirect logic
+- [x] add a catch-all that redirects to dashboard [9/9/2017]
+- [ ] logout component
 
 ### app component [coverage: partial]
 - [x] unit tests [8/30/2017]
 - [x] comment / clean up / refactor / prop types / default props [8/31/2017]
 - [x] refactor tests to account for react router & redux [9/7/2017]
+- [x] refactor app component [9/8/2017]
 - [ ] integration tests to assert components render when the route changes...
-- [ ] app component should be moved to a container to include auth logic so sidebar and header can be hidden
 
 ### dashboard component [coverage: complete]
 - [x] unit tests [9/7/2017]
 - [x] comment [9/7/2017]
-- [ ] component should render:
-    - [x] sidebar [9/8/2017]
-    - [x] header [9/8/2017]
-    - [ ] list: should be dynamic depending on chosen module
+- [x] refactor dashboard component [9/8/2017]
 
 ### forms component [coverage: complete]
 - [x] unit tests [8/26/2017]
@@ -46,16 +46,19 @@ client side to GSCP API
 - [x] comment / document [9/6/2017]
 
 ### header container
+- [x] create header container [9/9/2017]
 - [ ] logic for displaying correct modules based on roles/permissions
 - [ ] logic for getting user info (details, role, permissions)
 
 ### header component
+- [x] add header component [9/8/2017]
 - [ ] active classes
 - [ ] tests
 - [ ] finish styling
 
 ### list [coverage: none]
-- [x] comment/document
+- [x] add list component [9/8/2017]
+- [x] comment/document list component [9/8/2017]
 - [ ] proptypes/default props
 - [ ] lint/format
 - [ ] performance
@@ -89,10 +92,12 @@ client side to GSCP API
 - [ ] forgot password
 
 ### sidebar container
+- [x] add sidebar container [9/8/2017]
 - [ ] logic for displaying correct modules based on roles/permissions
 - [ ] logic for getting user info (details, role, permissions)
 
 ### sidebar component
+- [x] add sidebar component [9/8/2017]
 - [ ] active classes
 - [ ] tests
 - [ ] finish styling
@@ -106,3 +111,4 @@ client side to GSCP API
 - [x] token is not available in container [8/30/2017]
 - [x] app is rendering both components when hitting /dashboard [9/6/2017]
 - [x] react-router is not rendering component passed to route component [9/8/2017]
+- [ ] mobile menu should close when the route changes or when user clicks on a link
