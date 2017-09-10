@@ -148,7 +148,7 @@ class Login extends Component {
     console.log(this.props)
 
     if (token) {
-      return (<Redirect to="/dashboard" />);
+      return (<Redirect to="/" />);
     }
 
     return (

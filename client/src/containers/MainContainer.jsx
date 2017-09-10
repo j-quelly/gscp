@@ -12,13 +12,12 @@ import LoginContainer from './LoginContainer.jsx'
 
 class Main extends Component {
   render() {
-    console.log(this.props)
-    console.log(this.context)
     return(
       <div className="wrapper">
         <Route exact path="/" component={Dashboard} />
         <Route path="/login" component={LoginContainer} />
         <Route path="/users" component={List} />
+        <Route path="*" componennt={Dashboard} />
       </div>
     );
   }

@@ -1,9 +1,13 @@
 // dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 // components
 import SidebarComponent from '../components/Sidebar';
+
+// helpers
+import client from '../lib/Client.js';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -13,24 +17,34 @@ class Sidebar extends Component {
   }
 
   componentWillMount() {
-    // console.log('before component mounts, get user details...');
     this.getUserDetails();
   }
 
   getUserDetails() {
-    // const { token } = this.props;
+    const { token } = this.props;
 
-    // client.getUserDetails(token, (err) => {
-    //   console.log('something bad happened');
-    // }, (res) => {
-    //   console.log('something good might have happened');
-    // });
+    client.getUserDetails(token, (err) => {
+      console.log('something bad happened');
+    }, (res) => {
+      console.log('something good might have happened');
+    });
   }
 
   render() {
-    // console.log(this.props);
-    return(
-      <SidebarComponent />
+    const { token } = this.props;
+
+    // TODO: refactor this logic is this logic can be determined elsewhere
+    //       and passed as props from mapStateToProps
+    const isLoggedOut = !token ? true : false;
+
+    // TODO: refactor this logic is this logic can be determined elsewhere
+    //       and passed as props from mapStateToProps
+    if (!token) {
+      return (<Redirect to="/login" />);
+    }
+
+    return (
+      <SidebarComponent isLoggedOut={isLoggedOut} />
     );
   }
 }
