@@ -5,12 +5,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // components
-import Wrapper from '../Wrapper';
+import ContainerComponent from '../Container';
 
 // containers
 import HeaderContainer from '../../containers/HeaderContainer';
 import SidebarContainer from '../../containers/SidebarContainer';
 import MainContainer from '../../containers/MainContainer';
+import WrapperContainer from '../../containers/WrapperContainer';
 
 /**
  * @description App component represents GSCP application
@@ -22,15 +23,13 @@ import MainContainer from '../../containers/MainContainer';
 const App = ({store}) => (
   <Provider store={store}>
     <Router>
-      <Wrapper>
+      <WrapperContainer>
         <HeaderContainer />
-        <div className="container-fluid container-fluid--fullscreen">
-          <div className="row row--fullscreen">
-            <SidebarContainer />
-            <MainContainer />
-          </div>
-        </div>
-      </Wrapper>
+        <ContainerComponent>
+          <SidebarContainer />
+          <MainContainer />
+        </ContainerComponent>
+      </WrapperContainer>
     </Router>
   </Provider>
 );

@@ -31,11 +31,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { token } = this.props;
-
-    // TODO: refactor this logic is this logic can be determined elsewhere
-    //       and passed as props from mapStateToProps
-    const isLoggedOut = !token ? true : false;
+    const { token, isLoggedOut } = this.props;
 
     // TODO: refactor this logic is this logic can be determined elsewhere
     //       and passed as props from mapStateToProps
@@ -52,6 +48,7 @@ class Sidebar extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.authentication.token,
+    isLoggedOut: state.authentication.isLoggedOut,
   };
 };
 

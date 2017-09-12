@@ -6,6 +6,14 @@ import classnames from 'classnames';
 // styles
 import './Header.css';
 
+/**
+ * @description HeaderComponent represents the application header
+ *
+ * @param {object} props - Component props
+ * @param {boolean} props.isLoggedOut - User auth status used to hide component
+ *
+ * @returns {<HeaderComponent />}
+ */
 const HeaderComponent = (props) => {
   const { isLoggedOut } = props;
 

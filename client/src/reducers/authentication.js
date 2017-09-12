@@ -1,4 +1,4 @@
-import { SET_TOKEN } from '../actions';
+import { SET_TOKEN, SET_LOGIN_STATUS } from '../actions';
 
 /**
  * Reducers
@@ -16,13 +16,19 @@ import { SET_TOKEN } from '../actions';
 // TODO: delete token?
 // (previousState, action) => newState
 const authentication = (state = {
-    token: true
+    token: false,
+    isLoggedOut: true,
   }, action) => {
   switch (action.type) {
     case SET_TOKEN:
       return {
         ...state,
         token: action.token,
+      };
+    case SET_LOGIN_STATUS:
+      return {
+        ...state,
+        isLoggedOut: action.isLoggedOut,
       };
     default:
       return state;
