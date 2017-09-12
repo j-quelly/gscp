@@ -6,7 +6,7 @@ import Isemail from 'isemail';
 import PropTypes from 'prop-types';
 
 // actions
-import { setToken } from '../actions';
+import { setToken, setLoginStatus } from '../actions';
 
 // components
 import LoginComponent from '../components/Login';
@@ -29,7 +29,6 @@ class Login extends Component {
     this.state = {
       fields: {},
       fieldErrors: {},
-      spinner: false,
       loading: false,
     };
 
@@ -125,8 +124,7 @@ class Login extends Component {
 
   displayLoader(loading) {
     this.setState({
-      spinner: loading,
-      loading: loading,
+      loading
     });
   }
 
@@ -145,7 +143,6 @@ class Login extends Component {
 
   render() {
     const { token } = this.props;
-    console.log(this.props)
 
     if (token) {
       return (<Redirect to="/" />);
@@ -153,7 +150,6 @@ class Login extends Component {
 
     return (
       <LoginComponent
-        spinner={this.state.spinner}
         loading={this.state.loading}
         fields={this.state.fields}
         handleChange={this.onInputChange}
@@ -179,6 +175,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSuccess: (token) => {
       dispatch(setToken(token));
+      // TODO: is this good or bad practice?
+      // http://jamesknelson.com/can-i-dispatch-multiple-actions-from-redux-action-creators/
+      //
+      dispatch(setLoginStatus(true));
     }
   };
 };

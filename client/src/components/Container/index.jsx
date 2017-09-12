@@ -3,19 +3,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * @description Container component to wrap other components or containers
+ * @description ContainerComponent wraps other components or containers
  *
  * @param {object} props - Component props
- * @param {object} props.children - Child components passed to Container
+ * @param {object} props.children - Child components passed to ContainerComponent
  *
- * @returns {<Container></Container>}
+ * @returns {<ContainerComponent></ContainerComponent>}
  */
-const Container = (props) => (
-  <div className="wrapper">
-    {props.children}
+const ContainerComponent = (props) => (
+  <div className="container-fluid container-fluid--fullscreen">
+    <div className="row row--fullscreen">
+      {props.children}
+    </div>
   </div>
 );
+ContainerComponent.propTypes = {
+  children: PropTypes.node,
+};
 
-// todo: prop types?
-
-export default Container;
+export default ContainerComponent;

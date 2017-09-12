@@ -5,13 +5,17 @@ import { connect } from 'react-redux';
 // components
 import HeaderComponent from '../components/Header';
 
+/**
+ * @description Header container contains logic for header component
+ *
+ * @param {object} props - Application props
+ * @param {object} props.isLoggedOut -
+ *
+ * @returns {<HeaderContainer />}
+ */
 class Header extends Component {
   render() {
-    const { token } = this.props;
-
-    // TODO: refactor this logic is this logic can be determined elsewhere
-    //       and passed as props from mapStateToProps
-    const isLoggedOut = !token ? true : false;
+    const { isLoggedOut } = this.props;
 
     return(
       <HeaderComponent isLoggedOut={isLoggedOut} />
@@ -21,7 +25,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.authentication.token,
+    isLoggedOut: state.authentication.isLoggedOut,
   };
 };
 

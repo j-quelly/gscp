@@ -1,9 +1,9 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.12.0
+## client version 0.13.0
 
-### to do
+## to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
 	- [ ] http://redux.js.org/docs/recipes/ReducingBoilerplate.html
 	- [ ] normalize data
@@ -14,25 +14,35 @@ client side to GSCP API
 - [ ] need a proper release cycle from dev to stage and prod
 - [ ] now might be a good time for sass
 - [x] add a task runner for version bumping [8/27/2017]
-- [ ] invest a day into cleaning up the entire client application
-	- [ ] performance
-	- [ ] comments/documenting
-	- [ ] refactoring
 - [ ] rewrite client utility as a proper es6/7 class
     - [ ] comment/document
 - [ ] add a working linter & rules to ST3
+- [ ] add auto-formatting for jsx to st3 on mac
 - [ ] context whitelisting?
 - [ ] refactor & improve naming convention
-- [ ] app component should be moved to a container to include auth logic so sidebar and header can be hidden or use the new Wrapper component to handle all auth and redirect logic
+- [x] new Wrapper container to handle all auth and redirect logic [9/11/2017]
+    - [ ] this doesn't really seem like such a good pattern yet...
 - [x] add a catch-all that redirects to dashboard [9/9/2017]
 - [ ] logout component
+- [ ] invest a day into cleaning up the entire client application
+    - [ ] performance
+    - [ ] comments/documenting
+    - [ ] refactoring
+        - [ ] refactor naming convention to remove *Container from container names and add *View to components instead of *Component? --this could make the app more difficult to reason about
+        - [ ] find a better solution to redirecting to /login and perhaps just hide header/siderbar/ and all other applicable components and just display the login component?
 
+## components
 ### app component [coverage: partial]
 - [x] unit tests [8/30/2017]
 - [x] comment / clean up / refactor / prop types / default props [8/31/2017]
 - [x] refactor tests to account for react router & redux [9/7/2017]
 - [x] refactor app component [9/8/2017]
-- [ ] integration tests to assert components render when the route changes...
+
+### container component
+- [x] comment [9/11/2017]
+- [x] proptypes [9/11/2017]
+- [x] rename this component [9/11/2017]
+- [ ] tests
 
 ### dashboard component [coverage: complete]
 - [x] unit tests [9/7/2017]
@@ -45,18 +55,14 @@ client side to GSCP API
 - [x] prop types & default props [9/6/2017]
 - [x] comment / document [9/6/2017]
 
-### header container
-- [x] create header container [9/9/2017]
-- [ ] logic for displaying correct modules based on roles/permissions
-- [ ] logic for getting user info (details, role, permissions)
-
 ### header component
 - [x] add header component [9/8/2017]
-- [ ] active classes
+- [x] document [9/11/2017]
+- [ ] active classes for nav
 - [ ] tests
 - [ ] finish styling
 
-### list [coverage: none]
+### list component [coverage: none]
 - [x] add list component [9/8/2017]
 - [x] comment/document list component [9/8/2017]
 - [ ] proptypes/default props
@@ -83,13 +89,28 @@ client side to GSCP API
     - [x] https://medium.com/@learnreact/container-components-c0e67432e005
     - [x] https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
         - [x] move container component back into container folder so that presentation is fully separated from container components [9/6/2017]
-    - [ ] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
+    - [x] https://gist.github.com/chantastic/fc9e3853464dffdb1e3c
 - [x] prop types & default props
 - [x] improve email validation [9/6/2016]
+- [x] refactor loading classes and use classname package [9/11/2017]
+- [x] comments [9/11/2017]
 - [ ] unit tests
 - [ ] end to end tests
 - [ ] remember me
 - [ ] forgot password
+
+
+### tables components
+- [ ] comments
+- [ ] proptypes
+- [ ] tests
+
+## containers
+### header container
+- [x] create header container [9/9/2017]
+- [ ] logic for displaying correct modules based on roles/permissions
+- [ ] logic for getting user info (details, role, permissions)
+- [ ] document
 
 ### sidebar container
 - [x] add sidebar container [9/8/2017]
@@ -102,7 +123,13 @@ client side to GSCP API
 - [ ] tests
 - [ ] finish styling
 
-### issues
+### wrapper container
+- [ ] change this to a container and put auth/redirect logic here...
+- [ ] tests
+- [ ] comments
+- [ ] proptypes
+
+## issues
 - [x] form component paths [8/26/2017]
 - [x] login component should allow the enter key [8/26/2017]
 - [x] unable to proxy requests to api server [8/27/2017]
@@ -112,3 +139,4 @@ client side to GSCP API
 - [x] app is rendering both components when hitting /dashboard [9/6/2017]
 - [x] react-router is not rendering component passed to route component [9/8/2017]
 - [ ] mobile menu should close when the route changes or when user clicks on a link
+- [ ] issue with full height elements
