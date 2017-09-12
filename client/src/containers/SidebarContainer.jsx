@@ -2,12 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // components
 import SidebarComponent from '../components/Sidebar';
 
 // helpers
-import client from '../lib/Client.js';
+import client from '../lib/Client';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -24,9 +25,9 @@ class Sidebar extends Component {
     const { token } = this.props;
 
     client.getUserDetails(token, (err) => {
-      console.log('something bad happened');
+      // console.log(err);
     }, (res) => {
-      console.log('something good might have happened');
+      // console.log(res);
     });
   }
 
@@ -44,13 +45,21 @@ class Sidebar extends Component {
     );
   }
 }
+Sidebar.propTypes = {
+  token: PropTypes.bool,
+  isLoggedOut: PropTypes.bool,
+};
+Sidebar.defaultProps = {
+  token: false,
+  isLoggedOut: true,
+};
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     token: state.authentication.token,
     isLoggedOut: state.authentication.isLoggedOut,
-  };
-};
+  }
+);
 
 const SidebarContainer = connect(mapStateToProps, null)(Sidebar);
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // components
 import ContainerComponent from '../Container';
@@ -20,7 +20,7 @@ import WrapperContainer from '../../containers/WrapperContainer';
  *
  * @returns {<App />}
  */
-const App = ({store}) => (
+const App = ({ store }) => (
   <Provider store={store}>
     <Router>
       <WrapperContainer>
@@ -34,7 +34,10 @@ const App = ({store}) => (
   </Provider>
 );
 App.propTypes = {
-  store: PropTypes.object.isRequired,
+  store: PropTypes.shape.isRequired,
+};
+App.defaultProps = {
+  store: {},
 };
 
 export default App;

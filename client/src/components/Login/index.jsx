@@ -22,15 +22,15 @@ import './Login.css';
  *
  * @returns {<LoginComponent />}
  */
-const LoginComponent = function(props) {
-  const { loading } = props;
+const LoginComponent = (props) => {
+  const { loading, fields, handleChange, handleKeyPress, fieldErrors } = props;
 
   return (
     <div className="row row--fullscreen row--blue-bg">
       <div className="login col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
-        <div className={ classnames('login__spinner', { 'login__spinner--active': loading, 'login__spinner--inactive': !loading }) }></div>
+        <div className={classnames('login__spinner', { 'login__spinner--active': loading, 'login__spinner--inactive': !loading })} />
         <h1 className="login__title">Login</h1>
-        <div className={ classnames('login__loading', { 'login__loading--active': loading, 'login__loading--inactive': !loading }) }>
+        <div className={classnames('login__loading', { 'login__loading--active': loading, 'login__loading--inactive': !loading })}>
           <div className="login__body">
             <InputForm>
               <InputField
@@ -38,44 +38,53 @@ const LoginComponent = function(props) {
                 defaultText="username"
                 inputType="email"
                 name="username"
-                value={props.fields.username}
-                handleChange={props.handleChange}
-                handleKeyPress={props.handleKeyPress}
+                value={fields.username}
+                handleChange={handleChange}
+                handleKeyPress={handleKeyPress}
               />
-              <InputError errorMessage={props.fieldErrors.username} />
+              <InputError errorMessage={fieldErrors.username} />
               <InputField
                 glyph="lock"
                 defaultText="password"
                 inputType="password"
                 name="password"
-                value={props.fields.password}
-                handleChange={props.handleChange}
-                handleKeyPress={props.handleKeyPress}
+                value={fields.password}
+                handleChange={handleChange}
+                handleKeyPress={handleKeyPress}
               />
-              <InputError errorMessage={props.fieldErrors.password} />
+              <InputError errorMessage={fieldErrors.password} />
               <Btn styles="form__button--pull-right" handleClick={props.handleFormSubmit}>
                 Login
               </Btn>
             </InputForm>
           </div>
         </div>
-        <small className="login__footer login__footer--right">© Copyright 2013-2017 Studio 174 Inc</small>
+        <small className="login__footer login__footer--right">© Copyright 2017</small>
       </div>
     </div>
   );
-}
-LoginComponent.PropTypes = {
+};
+LoginComponent.propTypes = {
   loading: PropTypes.bool,
-  fields: PropTypes.object,
+  fields: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string,
+  }),
   handleChange: PropTypes.func,
   handleKeyPress: PropTypes.func,
-  fieldErrors: PropTypes.object,
+  fieldErrors: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string,
+  }),
   handleFormSubmit: PropTypes.func,
 };
 LoginComponent.defaultProps = {
   loading: false,
   fields: {},
   fieldErrors: {},
-}
+  handleChange: null,
+  handleKeyPress: null,
+  handleFormSubmit: null,
+};
 
 export default LoginComponent;

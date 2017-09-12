@@ -1,7 +1,7 @@
-// dependencies
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import Proptypes from 'prop-types';
 
 // styles
 import './Sidebar.css';
@@ -22,16 +22,22 @@ const SidebarComponent = (props) => {
       <ul className="nav nav-sidebar">
         <li className="nav-sidebar__logo">gscp</li>
         <li className="nav-sidebar__user">
-          <span className="glyphicon glyphicon-user"></span>
+          <span className="glyphicon glyphicon-user" />
           <strong>de__bug</strong>
           <span>jamie@kellyjg.com</span>
         </li>
         <li className="nav-sidebar__title">Navigation</li>
-        <li><Link to="/"><i className="glyphicon glyphicon-home"></i> Dashboard <span className="sr-only">(current)</span></Link></li>
-        <li><Link to="/users"><i className="glyphicon glyphicon-user"></i> Users</Link></li>
+        <li><Link to="/"><i className="glyphicon glyphicon-home" /> Dashboard</Link></li>
+        <li><Link to="/users"><i className="glyphicon glyphicon-user" /> Users</Link></li>
       </ul>
     </div>
   );
+};
+SidebarComponent.propTypes = {
+  isLoggedOut: Proptypes.bool,
+};
+SidebarComponent.defaultProps = {
+  isLoggedOut: true,
 };
 
 export default SidebarComponent;

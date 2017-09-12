@@ -12,55 +12,10 @@ import { setToken, setLoginStatus } from '../actions';
 import LoginComponent from '../components/Login';
 
 // helpers
-import client from '../lib/Client.js';
+import client from '../lib/Client';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.validateData = this.validateData.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.processLogin = this.processLogin.bind(this);
-    this.loginFailed = this.loginFailed.bind(this);
-    this.displayLoader = this.displayLoader.bind(this);
-
-    this.state = {
-      fields: {},
-      fieldErrors: {},
-      loading: false,
-    };
-
-  }
-
-  onInputChange(e) {
-    const fields = this.state.fields;
-    const newFields = {};
-
-    newFields[e.target.name] = e.target.value;
-
-    /**
-     * NOTE: this is probably not very good for performance
-     *       considering this is only UI state there may be no
-     *       reason to use spread operator, but mutation is bad
-     */
-    this.setState({
-      fields: {
-        ...fields,
-        ...newFields,
-      },
-    });
-
-  }
-
-  onKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.onFormSubmit();
-    }
-  }
-
-  validateData(formData) {
+  static validateData(formData) {
     const errors = {};
 
     // validate username
@@ -82,7 +37,49 @@ class Login extends Component {
     }
 
     return errors;
+  }
 
+  constructor(props) {
+    super(props);
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.validateData = this.validateData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.processLogin = this.processLogin.bind(this);
+    this.loginFailed = this.loginFailed.bind(this);
+    this.displayLoader = this.displayLoader.bind(this);
+
+    this.state = {
+      fields: {},
+      fieldErrors: {},
+      loading: false,
+    };
+  }
+
+  onInputChange(e) {
+    const fields = this.state.fields;
+    const newFields = {};
+
+    newFields[e.target.name] = e.target.value;
+
+    /**
+     * NOTE: this is probably not very good for performance
+     *       considering this is only UI state there may be no
+     *       reason to use spread operator, but mutation is bad
+     */
+    this.setState({
+      fields: {
+        ...fields,
+        ...newFields,
+      },
+    });
+  }
+
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.onFormSubmit();
+    }
   }
 
   onFormSubmit() {
@@ -90,7 +87,7 @@ class Login extends Component {
     const fieldErrors = this.validateData(formData);
 
     this.setState({
-      fieldErrors
+      fieldErrors,
     });
 
     // if any field errors then return
@@ -106,7 +103,7 @@ class Login extends Component {
 
   processLogin(userData) {
     this.displayLoader(true);
-    client.login(userData, (err) => {
+    client.login(userData, () => {
       this.loginFailed('The username or password entered does not match an account.');
     }, (res) => {
       if (res.data.token) {
@@ -124,7 +121,7 @@ class Login extends Component {
 
   displayLoader(loading) {
     this.setState({
-      loading
+      loading,
     });
   }
 
@@ -159,29 +156,33 @@ class Login extends Component {
       />
     );
   }
-
 }
 Login.propTypes = {
   onSuccess: PropTypes.func,
+  token: PropTypes.string,
+};
+Login.defaultProps = {
+  onSuccess: null,
+  token: null,
 };
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     token: state.authentication.token,
-  };
-};
+  }
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = dispatch => (
+  {
     onSuccess: (token) => {
       dispatch(setToken(token));
       // TODO: is this good or bad practice?
       // http://jamesknelson.com/can-i-dispatch-multiple-actions-from-redux-action-creators/
       //
       dispatch(setLoginStatus(true));
-    }
-  };
-};
+    },
+  }
+);
 
 const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 
