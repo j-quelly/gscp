@@ -1,33 +1,29 @@
 // dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom';
 
 // components
 import Dashboard from '../components/Dashboard';
 import List from '../components/List';
 
 // containers
-import LoginContainer from './LoginContainer.jsx'
+import LoginContainer from './LoginContainer';
 
-class Main extends Component {
-  render() {
-    return(
-      <div className="wrapper">
-        <Route exact path="/" component={Dashboard} />
-        <Route path="/login" component={LoginContainer} />
-        <Route path="/users" component={List} />
-        <Route path="*" componennt={Dashboard} />
-      </div>
-    );
-  }
-}
+const Main = () => (
+  <div className="wrapper">
+    <Route exact path="/" component={Dashboard} />
+    <Route path="/login" component={LoginContainer} />
+    <Route path="/users" component={List} />
+    <Route path="*" componennt={Dashboard} />
+  </div>
+);
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     token: state.authentication.token,
-  };
-};
+  }
+);
 
 const MainContainer = withRouter(connect(mapStateToProps, null)(Main));
 

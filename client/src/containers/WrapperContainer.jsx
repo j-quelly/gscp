@@ -1,20 +1,17 @@
 // dependencies
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Wrapper extends Component {
-  render() {
-    return(
-      <div className="wrapper">
-        {this.props.children}
-      </div>
-    );
-  }
-}
+const Wrapper = props => (
+  <div className="wrapper">
+    {props.children}
+  </div>
+);
 Wrapper.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
+  children: PropTypes.node,
+};
+Wrapper.defaultProps = {
+  children: null,
 };
 
 const WrapperContainer = Wrapper;

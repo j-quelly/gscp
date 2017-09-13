@@ -1,25 +1,27 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.13.0
+## client version 0.14.0
 
 ## to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
-	- [ ] http://redux.js.org/docs/recipes/ReducingBoilerplate.html
+	- [x] http://redux.js.org/docs/recipes/ReducingBoilerplate.html [9/12/2017]
+    - [ ] https://www.youtube.com/watch?v=xsSnOQynTHs
 	- [ ] normalize data
 	- [ ] normalize es6/7 api
 - [x] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
     - [x] learn how to unit test router with redux [9/7/2017]
     - [ ] e2e/integration test router & redux
 - [ ] need a proper release cycle from dev to stage and prod
-- [ ] now might be a good time for sass
+- [ ] now might be a good time for sass?
 - [x] add a task runner for version bumping [8/27/2017]
 - [ ] rewrite client utility as a proper es6/7 class
     - [ ] comment/document
-- [ ] add a working linter & rules to ST3
+- [x] add a working linter & rules to ST3 on mac [9/12/2017]
 - [ ] add auto-formatting for jsx to st3 on mac
+- [ ] update lint rules to match mac on pc
+- [ ] update formatting rules to match mac on pc
 - [ ] context whitelisting?
-- [ ] refactor & improve naming convention
 - [x] new Wrapper container to handle all auth and redirect logic [9/11/2017]
     - [ ] this doesn't really seem like such a good pattern yet...
 - [x] add a catch-all that redirects to dashboard [9/9/2017]
@@ -30,6 +32,10 @@ client side to GSCP API
     - [ ] refactoring
         - [ ] refactor naming convention to remove *Container from container names and add *View to components instead of *Component? --this could make the app more difficult to reason about
         - [ ] find a better solution to redirecting to /login and perhaps just hide header/siderbar/ and all other applicable components and just display the login component?
+- [ ] refactor actions to something more maintainable, possibly move them into the reducer folder and have a folder for each reducer, actions and action creators
+- [ ] determine if the wrapper needs to be a container or component?
+- [ ] revalidate proptypes for token and isloggedout considering token is both boolean and string
+
 
 ## components
 ### app component [coverage: partial]
@@ -37,17 +43,19 @@ client side to GSCP API
 - [x] comment / clean up / refactor / prop types / default props [8/31/2017]
 - [x] refactor tests to account for react router & redux [9/7/2017]
 - [x] refactor app component [9/8/2017]
+- [x] refactor unit tests [9/12/2017]
 
-### container component
+### container component [coverage: complete]
 - [x] comment [9/11/2017]
 - [x] proptypes [9/11/2017]
 - [x] rename this component [9/11/2017]
-- [ ] tests
+- [x] tests [9/12/2017]
 
-### dashboard component [coverage: complete]
+### dashboard component [coverage: incomplete]
 - [x] unit tests [9/7/2017]
 - [x] comment [9/7/2017]
 - [x] refactor dashboard component [9/8/2017]
+- [ ] refactor unit tests (not important atm)...
 
 ### forms component [coverage: complete]
 - [x] unit tests [8/26/2017]
@@ -139,4 +147,4 @@ client side to GSCP API
 - [x] app is rendering both components when hitting /dashboard [9/6/2017]
 - [x] react-router is not rendering component passed to route component [9/8/2017]
 - [ ] mobile menu should close when the route changes or when user clicks on a link
-- [ ] issue with full height elements
+- [ ] issue with full height elements on login screen

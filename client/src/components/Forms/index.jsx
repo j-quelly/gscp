@@ -13,11 +13,17 @@ import './Forms.css';
  *
  * @returns {<InputForm></InputForm>}
  */
-const InputForm = (props) => (
+const InputForm = props => (
   <form className="form">
     {props.children}
   </form>
 );
+InputForm.propTypes = {
+  children: PropTypes.node,
+};
+InputForm.defaultProps = {
+  children: null,
+};
 
 /**
  * @description InputField component represents any <input /> element
@@ -35,7 +41,7 @@ const InputForm = (props) => (
  */
 const InputField = (props) => {
   const glyphClass = `glyphicon glyphicon-${props.glyph}`;
-  const glyph = (props.glyph ? <i className={glyphClass}></i> : null);
+  const glyph = (props.glyph ? <i className={glyphClass} /> : null);
   const inputModifier = (glyph ? 'form__input--glyph' : '');
   const inputClass = `form__input ${inputModifier}`;
 
@@ -48,8 +54,8 @@ const InputField = (props) => {
         placeholder={props.defaultText}
         name={props.name}
         value={props.value}
-        onChange={(e) => props.handleChange(e)}
-        onKeyPress={(e) => props.handleKeyPress(e)}
+        onChange={e => props.handleChange(e)}
+        onKeyPress={e => props.handleKeyPress(e)}
       />
     </div>
   );
@@ -64,11 +70,13 @@ InputField.propTypes = {
   handleKeyPress: PropTypes.func,
 };
 InputField.defaultProps = {
-  glyph: '',
-  defaultText: '',
+  glyph: null,
+  defaultText: null,
   inputType: 'text',
-  value: '',
-  name: '',
+  value: null,
+  name: null,
+  handleChange: null,
+  handleKeyPress: null,
 };
 
 /**
@@ -86,15 +94,15 @@ const InputError = (props) => {
         {props.errorMessage}
       </p>
     );
-  } else {
-    return null;
   }
+
+  return null;
 };
 InputError.propTypes = {
   errorMessage: PropTypes.string,
 };
 InputError.defaultProps = {
-  errorMessage: '',
+  errorMessage: null,
 };
 
 /**
@@ -119,14 +127,16 @@ const Btn = (props) => {
       {props.children}
     </button>
   );
-
 };
 Btn.propTypes = {
   styles: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 Btn.defaultProps = {
   styles: '',
+  handleClick: null,
+  children: null,
 };
 
 export { InputForm, InputField, InputError, Btn };

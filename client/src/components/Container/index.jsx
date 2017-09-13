@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {<ContainerComponent></ContainerComponent>}
  */
-const ContainerComponent = (props) => (
+const ContainerComponent = props => (
   <div className="container-fluid container-fluid--fullscreen">
     <div className="row row--fullscreen">
       {props.children}
@@ -19,6 +19,9 @@ const ContainerComponent = (props) => (
 );
 ContainerComponent.propTypes = {
   children: PropTypes.node,
+};
+ContainerComponent.defaultProps = {
+  children: null,
 };
 
 export default ContainerComponent;

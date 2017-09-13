@@ -7,11 +7,9 @@ import './List.css';
 /**
  * @description List component represents a list (table) of data
  *
- * @param {object} props - Component props
- *
  * @returns {<List />}
  */
-const List = (props) => (
+const List = () => (
   <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 className="page-header">Users</h1>
 
@@ -47,11 +45,5 @@ const List = (props) => (
     </div>
   </div>
 );
-List.PropTypes = {
-
-};
-List.defaultProps = {
-
-}
 
 export default List;

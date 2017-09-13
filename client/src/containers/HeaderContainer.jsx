@@ -1,6 +1,7 @@
 // dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // components
 import HeaderComponent from '../components/Header';
@@ -13,21 +14,25 @@ import HeaderComponent from '../components/Header';
  *
  * @returns {<HeaderContainer />}
  */
-class Header extends Component {
-  render() {
-    const { isLoggedOut } = this.props;
+const Header = (props) => {
+  const { isLoggedOut } = props;
 
-    return(
-      <HeaderComponent isLoggedOut={isLoggedOut} />
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    isLoggedOut: state.authentication.isLoggedOut,
-  };
+  return (
+    <HeaderComponent isLoggedOut={isLoggedOut} />
+  );
 };
+Header.propTypes = {
+  isLoggedOut: PropTypes.bool,
+};
+Header.defaultProps = {
+  isLoggedOut: true,
+};
+
+const mapStateToProps = state => (
+  {
+    isLoggedOut: state.authentication.isLoggedOut,
+  }
+);
 
 const HeaderContainer = connect(mapStateToProps, null)(Header);
 

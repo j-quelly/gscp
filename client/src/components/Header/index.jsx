@@ -1,7 +1,7 @@
-// dependencies
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 // styles
 import './Header.css';
@@ -21,11 +21,18 @@ const HeaderComponent = (props) => {
     <nav className={classnames('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 navbar navbar-fixed-top', { hide: isLoggedOut })}>
       <div className="container-fluid">
         <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button
+            type="button"
+            className="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
             <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+            <span className="icon-bar" />
           </button>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
@@ -38,6 +45,12 @@ const HeaderComponent = (props) => {
       </div>
     </nav>
   );
-}
+};
+HeaderComponent.propTypes = {
+  isLoggedOut: PropTypes.bool,
+};
+HeaderComponent.defaultProps = {
+  isLoggedOut: true,
+};
 
 export default HeaderComponent;
