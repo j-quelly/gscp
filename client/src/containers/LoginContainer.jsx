@@ -44,7 +44,6 @@ class Login extends Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.validateData = this.validateData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.processLogin = this.processLogin.bind(this);
     this.loginFailed = this.loginFailed.bind(this);
@@ -84,7 +83,7 @@ class Login extends Component {
 
   onFormSubmit() {
     const formData = this.state.fields;
-    const fieldErrors = this.validateData(formData);
+    const fieldErrors = this.constructor.validateData(formData);
 
     this.setState({
       fieldErrors,
@@ -157,32 +156,28 @@ class Login extends Component {
     );
   }
 }
+
 Login.propTypes = {
   onSuccess: PropTypes.func,
   token: PropTypes.string,
 };
+
 Login.defaultProps = {
   onSuccess: null,
-  token: null,
+  token: '',
 };
 
-const mapStateToProps = state => (
-  {
-    token: state.authentication.token,
-  }
-);
+const mapStateToProps = state => ({
+  token: state.authentication.token,
+});
 
-const mapDispatchToProps = dispatch => (
-  {
-    onSuccess: (token) => {
-      dispatch(setToken(token));
-      // TODO: is this good or bad practice?
-      // http://jamesknelson.com/can-i-dispatch-multiple-actions-from-redux-action-creators/
-      //
-      dispatch(setLoginStatus(true));
-    },
-  }
-);
+const mapDispatchToProps = dispatch => ({
+  onSuccess: (token) => {
+    // TODO: thunk
+    dispatch(setToken(token));
+    dispatch(setLoginStatus(true));
+  },
+});
 
 const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 

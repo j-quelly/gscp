@@ -21,18 +21,18 @@ const Header = (props) => {
     <HeaderComponent isLoggedOut={isLoggedOut} />
   );
 };
+
 Header.propTypes = {
   isLoggedOut: PropTypes.bool,
 };
+
 Header.defaultProps = {
   isLoggedOut: true,
 };
 
-const mapStateToProps = state => (
-  {
-    isLoggedOut: state.authentication.isLoggedOut,
-  }
-);
+const mapStateToProps = state => ({
+  isLoggedOut: state.authentication.isLoggedOut,
+});
 
 const HeaderContainer = connect(mapStateToProps, null)(Header);
 

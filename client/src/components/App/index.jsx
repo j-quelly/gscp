@@ -33,9 +33,17 @@ const App = ({ store }) => (
     </Router>
   </Provider>
 );
+
 App.propTypes = {
-  store: PropTypes.shape.isRequired,
+  store: PropTypes.shape({
+    dispatch: PropTypes.func,
+    subscribe: PropTypes.func,
+    getState: PropTypes.func,
+    replaceReducer: PropTypes.func,
+    Symbol: PropTypes.func,
+  }).isRequired,
 };
+
 App.defaultProps = {
   store: {},
 };

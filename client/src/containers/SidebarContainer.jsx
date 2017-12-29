@@ -45,21 +45,21 @@ class Sidebar extends Component {
     );
   }
 }
+
 Sidebar.propTypes = {
-  token: PropTypes.bool,
+  token: PropTypes.string,
   isLoggedOut: PropTypes.bool,
 };
+
 Sidebar.defaultProps = {
-  token: false,
+  token: '',
   isLoggedOut: true,
 };
 
-const mapStateToProps = state => (
-  {
-    token: state.authentication.token,
-    isLoggedOut: state.authentication.isLoggedOut,
-  }
-);
+const mapStateToProps = state => ({
+  token: state.authentication.token,
+  isLoggedOut: state.authentication.isLoggedOut,
+});
 
 const SidebarContainer = connect(mapStateToProps, null)(Sidebar);
 

@@ -18,9 +18,11 @@ const InputForm = props => (
     {props.children}
   </form>
 );
+
 InputForm.propTypes = {
   children: PropTypes.node,
 };
+
 InputForm.defaultProps = {
   children: null,
 };
@@ -60,6 +62,7 @@ const InputField = (props) => {
     </div>
   );
 };
+
 InputField.propTypes = {
   glyph: PropTypes.string,
   defaultText: PropTypes.string,
@@ -69,11 +72,12 @@ InputField.propTypes = {
   handleChange: PropTypes.func,
   handleKeyPress: PropTypes.func,
 };
+
 InputField.defaultProps = {
   glyph: null,
   defaultText: null,
   inputType: 'text',
-  value: null,
+  value: '',
   name: null,
   handleChange: null,
   handleKeyPress: null,
@@ -98,11 +102,13 @@ const InputError = (props) => {
 
   return null;
 };
+
 InputError.propTypes = {
   errorMessage: PropTypes.string,
 };
+
 InputError.defaultProps = {
-  errorMessage: null,
+  errorMessage: '',
 };
 
 /**
@@ -128,11 +134,13 @@ const Btn = (props) => {
     </button>
   );
 };
+
 Btn.propTypes = {
   styles: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
+
 Btn.defaultProps = {
   styles: '',
   handleClick: null,

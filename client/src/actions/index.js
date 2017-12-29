@@ -25,5 +25,5 @@ export function setLoginStatus(isLoggedOut) {
   return {
     type: SET_LOGIN_STATUS,
     isLoggedOut,
-  }
+  };
 }
