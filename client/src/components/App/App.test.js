@@ -21,7 +21,7 @@ describe('<App />', () => {
   beforeEach(() => {
     state = {
       authentication: {
-        token: true,
+        token: '',
         isLoggedOut: false,
       },
     };

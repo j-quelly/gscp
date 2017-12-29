@@ -33,9 +33,11 @@ const SidebarComponent = (props) => {
     </div>
   );
 };
+
 SidebarComponent.propTypes = {
   isLoggedOut: Proptypes.bool,
 };
+
 SidebarComponent.defaultProps = {
   isLoggedOut: true,
 };

@@ -36,7 +36,11 @@ const App = ({ store }) => (
 
 App.propTypes = {
   store: PropTypes.shape({
-    // TODO:
+    dispatch: PropTypes.func,
+    subscribe: PropTypes.func,
+    getState: PropTypes.func,
+    replaceReducer: PropTypes.func,
+    Symbol: PropTypes.func,
   }).isRequired,
 };
 

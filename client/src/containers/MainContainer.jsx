@@ -19,11 +19,9 @@ const Main = () => (
   </div>
 );
 
-const mapStateToProps = state => (
-  {
-    token: state.authentication.token,
-  }
-);
+const mapStateToProps = state => ({
+  token: state.authentication.token,
+});
 
 const MainContainer = withRouter(connect(mapStateToProps, null)(Main));
 

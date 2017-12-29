@@ -1,24 +1,26 @@
+import 'whatwg-fetch';
+
 // TODO: rewrite this as a proper es6/7 class
 // TODO: comment/document
 
 function serialize(obj) {
-  let str = [];
-  for(let p in obj)
+  const str = [];
+  for (const p in obj) {
     if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
     }
-  return str.join("&");
+  }
+  return str.join('&');
 }
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
-  } else {
-    const error = new Error(`HTTP Error ${response.statusText}`);
-    error.status = response.statusText;
-    error.response = response;
-    throw error;
   }
+  const error = new Error(`HTTP Error ${response.statusText}`);
+  error.status = response.statusText;
+  error.response = response;
+  throw error;
 }
 
 function login(userData, onError, cb) {
@@ -26,7 +28,7 @@ function login(userData, onError, cb) {
     method: 'post',
     body: serialize(userData),
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   }).then(checkStatus)
@@ -49,7 +51,6 @@ function getUserDetails(token, onError, cb) {
   //   .then(cb)
   //   .catch(onError);
 }
-
 
 
 function parseJSON(response) {

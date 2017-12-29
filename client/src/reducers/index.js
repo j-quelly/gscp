@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import authentication from './authentication';
 
 const gscpApp = combineReducers({
-  authentication
+  authentication,
 });
 
 export default gscpApp;

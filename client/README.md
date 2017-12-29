@@ -8,7 +8,7 @@ client side to GSCP API
 	- [x] http://redux.js.org/docs/recipes/ReducingBoilerplate.html [9/12/2017]
     - [ ] https://www.youtube.com/watch?v=xsSnOQynTHs
 	- [ ] normalize data
-	- [ ] normalize es6/7 api
+	- [ ] normalize es6/7 api with a polyfill
 - [x] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
     - [x] learn how to unit test router with redux [9/7/2017]
     - [ ] e2e/integration test router & redux
