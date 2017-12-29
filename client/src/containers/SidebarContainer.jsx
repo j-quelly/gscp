@@ -22,7 +22,7 @@ class Sidebar extends Component {
   }
 
   getUserDetails() {
-    const { token } = this.props;
+    const {token} = this.props;
 
     client.getUserDetails(token, (err) => {
       // console.log(err);
@@ -32,7 +32,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { token, isLoggedOut } = this.props;
+    const {token, isLoggedOut} = this.props;
 
     // TODO: refactor this logic is this logic can be determined elsewhere
     //       and passed as props from mapStateToProps
@@ -45,21 +45,21 @@ class Sidebar extends Component {
     );
   }
 }
+
 Sidebar.propTypes = {
-  token: PropTypes.bool,
+  token: PropTypes.string,
   isLoggedOut: PropTypes.bool,
 };
+
 Sidebar.defaultProps = {
-  token: false,
+  token: '',
   isLoggedOut: true,
 };
 
-const mapStateToProps = state => (
-  {
-    token: state.authentication.token,
-    isLoggedOut: state.authentication.isLoggedOut,
-  }
-);
+const mapStateToProps = state => ({
+  token: state.authentication.token,
+  isLoggedOut: state.authentication.isLoggedOut,
+});
 
 const SidebarContainer = connect(mapStateToProps, null)(Sidebar);
 
