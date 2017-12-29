@@ -17,9 +17,11 @@ const ContainerComponent = props => (
     </div>
   </div>
 );
+
 ContainerComponent.propTypes = {
   children: PropTypes.node,
 };
+
 ContainerComponent.defaultProps = {
   children: null,
 };

@@ -17,7 +17,7 @@ import { SET_TOKEN, SET_LOGIN_STATUS } from '../actions';
 // TODO: delete token?
 // (previousState, action) => newState
 const authentication = (state = {
-  token: false,
+  token: '',
   isLoggedOut: true,
 }, action) => {
   switch (action.type) {
