@@ -11,8 +11,12 @@
 |
 */
 
-$app = require __DIR__.'/../../gscp-api-v1/bootstrap/app.php'; 
-// $app = require __DIR__.'/../../gscp-api-staging/bootstrap/app.php'; 
+// TODO: these paths need to be set dynamically depending on the environment
+// $app = require __DIR__.'/../../gscp-api-v1/bootstrap/app.php';
+// $app = require __DIR__.'/../../gscp-api-staging/bootstrap/app.php';
+
+// for local development
+$app = require __DIR__.'/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +29,9 @@ $app = require __DIR__.'/../../gscp-api-v1/bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
+
+// this causes a bug when the app lives in a sub-folder as the path will be incorrect
+// $app->run();
+
 $request = Illuminate\Http\Request::capture();
 $app->run($request);
-// $app->run(); 
