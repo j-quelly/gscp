@@ -23,10 +23,10 @@
         <env name="APP_ENV" value="testing"/>
         <!-- Test Database -->
         <!-- Creates a lot of exceptions when running tests -->
-        <!-- Currently not using test db -->         
-        <env name="DB_DATABASE" value="gameserv_gscpdev"/>
+        <!-- Currently not using test db -->
+        <!-- <env name="DB_DATABASE" value="gscp_dev"/> -->
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/> 
+        <env name="QUEUE_DRIVER" value="sync"/>
     </php>
 </phpunit>
