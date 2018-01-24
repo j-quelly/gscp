@@ -85,6 +85,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] enable CORS with new middleware [8/26/2017]
 - [x] disable CORS [8/27/2017]
 - [x] setup a local db to improve dev performance [8/30/2017]
+- [ ] make sure prod db does not have test account
 - [ ] API should accept JSON & URI
 - [ ] start documenting the API
 - [ ] read the APIGEE manual and more API resources
@@ -99,7 +100,11 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] everything related to authors
 - [x] generate new jwt token [11/22/2016]
 - [ ] need a proper release cycle to stage and prod
+	- [ ] jenkins?
 - [ ] need instructions for installing dependencies
+	- [ ] docker
+		- https://scotch.io/tutorials/getting-started-with-docker
+		- https://scotch.io/tutorials/get-started-running-laravel-in-a-docker-container
 
 ### Remote
 - [x] add test db
