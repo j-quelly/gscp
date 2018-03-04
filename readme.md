@@ -6,6 +6,7 @@
 1. Install docker http://www.docker.com
 2. $ docker-compose up -d
 3. $ composer install
+4. Navigate to http://localhost:8080
 
 ### mirgrating db
 - $ php artisan migrate
@@ -110,6 +111,7 @@ $ php vendor/phpunit/phpunit/phpunit
 		- https://scotch.io/tutorials/get-started-running-laravel-in-a-docker-container
 		- https://kyleferg.com/laravel-development-with-docker/
 - [ ] migrate to a newer version of lumen
+- [ ] start a new repo for todo app
 
 ### Remote
 - [x] add test db
