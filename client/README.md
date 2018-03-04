@@ -1,14 +1,14 @@
 # GSCP Client
 client side to GSCP API
 
-## client version 0.14.0
+## client version 0.14.1
 
 ## to do
 - [x] improve application structure to something scalable and maintainable (redux) [8/28/2017]
-	- [x] http://redux.js.org/docs/recipes/ReducingBoilerplate.html [9/12/2017]
+  - [x] http://redux.js.org/docs/recipes/ReducingBoilerplate.html [9/12/2017]
     - [ ] https://www.youtube.com/watch?v=xsSnOQynTHs
-	- [ ] normalize data
-	- [ ] normalize es6/7 api with a polyfill
+  - [ ] normalize data
+  - [ ] normalize es6/7 api with a polyfills
 - [x] implement react router https://reacttraining.com/react-router/web/example/auth-workflow
     - [x] learn how to unit test router with redux [9/7/2017]
     - [ ] e2e/integration test router & redux
@@ -35,6 +35,9 @@ client side to GSCP API
 - [ ] refactor actions to something more maintainable, possibly move them into the reducer folder and have a folder for each reducer, actions and action creators
 - [ ] determine if the wrapper needs to be a container or component?
 - [ ] revalidate proptypes for token and isloggedout considering token is both boolean and string
+- [x] migrate to latest version of create-react-app [3/3/2018]
+    - [x] client-side tests passing [3/4/2018]
+    - [ ] deprecate client-old
 
 
 ## components
@@ -146,5 +149,6 @@ client side to GSCP API
 - [x] token is not available in container [8/30/2017]
 - [x] app is rendering both components when hitting /dashboard [9/6/2017]
 - [x] react-router is not rendering component passed to route component [9/8/2017]
+- [x] proxy to new dockerized back-end hitting wrong port [3/3/2018]
 - [ ] mobile menu should close when the route changes or when user clicks on a link
 - [ ] issue with full height elements on login screen
