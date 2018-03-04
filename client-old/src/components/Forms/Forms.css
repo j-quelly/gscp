@@ -1,0 +1,120 @@
+/**
+ * Form Component
+ *
+ */
+
+/* block */
+.form {}
+
+.form:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+/* block element */
+.form__element {
+    position: relative;
+}
+
+.form__element .glyphicon {
+    position: absolute;
+    padding: 17px 0 0 15px;
+    pointer-events: none;
+    color: #999;
+}
+
+/* block element */
+.form__input {
+    border: solid 1px #e4e4e4;
+    border-radius: 6px;
+    color: #999999;
+    font-size: 1.2em;
+    height: 45px;
+    margin: 0 0 15px 0;
+    padding: 15px 15px 15px 15px;
+    width: 100%;
+}
+
+/* block element */
+.form__error {
+    font-size: 1.2em;
+    color: red;
+}
+
+/* block element modifier */
+.form__input--glyph {
+    padding: 15px 15px 15px 35px;
+}
+
+/* block element */
+.form__button {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
+    background: rgb(255, 191, 0);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#fea300', GradientType=0);
+    /* IE6-9 */
+    border: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: solid 4px #fe7e00;
+    box-shadow: none;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    height: 45px;
+    margin: 0 0 0 0;
+    outline: 0;
+    padding: 10px 15px 15px 15px;
+    text-shadow: 0px 1px 0px rgba(254, 108, 0, 1);
+    text-transform: uppercase;
+}
+
+/* block element pseudo selector */
+.form__button:hover,
+.form__button:active {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffbf00+0,fea300+100 */
+    background: rgb(255, 191, 0);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 191, 0, 1) 0%, rgba(254, 163, 0, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#fea300', GradientType=0);
+    /* IE6-9 */
+    border: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: solid 2px #fe7e00;
+    box-shadow: none;
+    color: #fff;
+    height: 43px;
+    margin: 2px 0 0 0;
+    outline: 0;
+    padding: 10px 15px 15px 15px;
+}
+
+.form__button:focus {
+    border-bottom: solid 4px #fe7e00;
+    box-shadow: none;
+    color: #fff;
+    outline: none;
+}
+
+/* block element modifier */
+.form__button--pull-right {
+    float: right;
+}
