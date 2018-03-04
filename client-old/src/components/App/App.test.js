@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // dependencies
 import React from 'react';
 import { mount } from 'enzyme';

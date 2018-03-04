@@ -66,9 +66,6 @@ $ php vendor/phpunit/phpunit/phpunit
 	- https://scotch.io/tutorials/role-based-authentication-in-laravel-with-jwt
 	- https://github.com/Zizaco/entrust
 	- https://lumen.laravel.com/docs/5.3/middleware
-	- [ ] fork entrust and publish a package for lumen
-	- [ ] possibly publish a boilerplate with authentication
-	- [ ] couple this with a blog post and share in related github issues/comments
 - [x] write tests [11/9/2016]
 - [x] update tests to include roles & permissions [11/17/2016]
 - [x] finish users validation tests [11/18/2016]

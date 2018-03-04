@@ -44,6 +44,8 @@ App.propTypes = {
   }).isRequired,
 };
 
-App.defaultProps = {};
+App.defaultProps = {
+  store: {},
+};
 
 export default App;
