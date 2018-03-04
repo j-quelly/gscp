@@ -106,7 +106,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] jenkins
 	- [ ] continuous integration
 - [x] need instructions for installing dependencies
-	- [x] ocker [3/3/2018]d
+	- [x] docker [3/3/2018]
 		- https://scotch.io/tutorials/getting-started-with-docker
 		- https://scotch.io/tutorials/get-started-running-laravel-in-a-docker-container
 		- https://kyleferg.com/laravel-development-with-docker/
