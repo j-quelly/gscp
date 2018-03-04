@@ -1,12 +1,13 @@
 module.exports = {
-  "extends": "airbnb",
-  "plugins": [
-    "jest"
-  ],
-  "env": {
-    "jest/globals": true
+  extends: 'airbnb',
+  env: {
+    'browser': true
   },
-  "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+  rules: {
+    'react/jsx-filename-extension': [ 1, {extensions: [ '.js', '.jsx' ]} ],
+    'no-unused-vars': [1],
+    'import/prefer-default-export': [1],
+    'no-mixed-operators': [0, { 'allowSamePrecedence': true } ],
+    'max-len': [0],
   }
-}
+};
