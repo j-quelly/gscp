@@ -3,8 +3,9 @@
 ## server version 0.14.0
 
 ### getting started
-1. $ composer install
-2. $ php -S 0.0.0.0:8888 -t public
+1. Install docker http://www.docker.com
+2. $ docker-compose up -d
+3. $ composer install
 
 ### mirgrating db
 - $ php artisan migrate
@@ -65,7 +66,7 @@ $ php vendor/phpunit/phpunit/phpunit
 	- https://github.com/Zizaco/entrust
 	- https://lumen.laravel.com/docs/5.3/middleware
 	- [ ] fork entrust and publish a package for lumen
-	- [ ] possibly publish a boilerplate too
+	- [ ] possibly publish a boilerplate with authentication
 	- [ ] couple this with a blog post and share in related github issues/comments
 - [x] write tests [11/9/2016]
 - [x] update tests to include roles & permissions [11/17/2016]
@@ -88,6 +89,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [ ] make sure prod db does not have test account
 - [ ] API should accept JSON & URI
 - [ ] start documenting the API
+	- [ ] swagger
 - [ ] read the APIGEE manual and more API resources
 	- [ ] Make responses more consistent & follow standard practice.  read more on this...
 - [ ] remove or replace:
@@ -100,11 +102,14 @@ $ php vendor/phpunit/phpunit/phpunit
 	- [ ] everything related to authors
 - [x] generate new jwt token [11/22/2016]
 - [ ] need a proper release cycle to stage and prod
-	- [ ] jenkins?
-- [ ] need instructions for installing dependencies
-	- [ ] docker
+	- [ ] jenkins
+	- [ ] continuous integration
+- [x] need instructions for installing dependencies
+	- [x] docker [3/3/2018]
 		- https://scotch.io/tutorials/getting-started-with-docker
 		- https://scotch.io/tutorials/get-started-running-laravel-in-a-docker-container
+		- https://kyleferg.com/laravel-development-with-docker/
+- [ ] migrate to a newer version of lumen
 
 ### Remote
 - [x] add test db
@@ -126,6 +131,7 @@ $ php vendor/phpunit/phpunit/phpunit
 - [x] token invalidate seems to not be working - https://github.com/tymondesigns/jwt-auth/issues/267 [11/22/2016]
 - [x] some responses do not match the headers ie: 400 error saying 401 [11/23/2016]
 - [x] set CACHE_DRIVER to array instead of redis until I learn how to setup redis caching [8/19/2017]
+- [ ] notfoundhttpexception
 
 ### Production 1.x.x
 - [ ] setup cache w/ redis (may not need this for a long time)
