@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // dependencies
 import React from 'react';
 import { shallow } from 'enzyme';
@@ -29,7 +31,7 @@ describe('<InputForm />', () => {
   it('should render child components', () => {
     wrapper = shallow(
       <InputForm>
-        <InputField />
+        <InputField name="field" />
       </InputForm>
     );
     expect(
