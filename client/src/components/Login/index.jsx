@@ -23,7 +23,9 @@ import './Login.css';
  * @returns {<LoginComponent />}
  */
 const LoginComponent = (props) => {
-  const { loading, fields, handleChange, handleKeyPress, fieldErrors } = props;
+  const {
+    loading, fields, handleChange, handleKeyPress, fieldErrors,
+  } = props;
 
   return (
     <div className="row row--fullscreen row--blue-bg">
@@ -64,6 +66,7 @@ const LoginComponent = (props) => {
     </div>
   );
 };
+
 LoginComponent.propTypes = {
   loading: PropTypes.bool,
   fields: PropTypes.shape({
@@ -78,6 +81,7 @@ LoginComponent.propTypes = {
   }),
   handleFormSubmit: PropTypes.func,
 };
+
 LoginComponent.defaultProps = {
   loading: false,
   fields: {},
